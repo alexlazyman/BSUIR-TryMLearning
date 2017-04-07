@@ -1,38 +1,65 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Model;
-using TryMLearning.Persistence.Interface.Repositories;
+using TryMLearning.Persistence.Interface.Daos;
 
 namespace TryMLearning.Application.Services
 {
     public class AlgorithmService : IAlgorithmService
     {
-        private readonly IAlgorithmRepository _algorithmRepository;
+        private readonly IAlgorithmDao _algorithmDao;
+        private readonly IAlgorithmSessionService _algorithmSessionService;
 
-        public AlgorithmService(IAlgorithmRepository algorithmRepository)
+        public AlgorithmService(
+            IAlgorithmDao algorithmDao,
+            IAlgorithmSessionService algorithmSessionService)
         {
-            _algorithmRepository = algorithmRepository;
+            _algorithmDao = algorithmDao;
+            _algorithmSessionService = algorithmSessionService;
         }
 
         public async Task<Algorithm> AddAlgorithmAsync(Algorithm algorithm)
         {
-            algorithm = await _algorithmRepository.AddAsync(algorithm);
+            algorithm = await _algorithmDao.AddAlgorithmAsync(algorithm);
 
             return algorithm;
         }
 
         public async Task<Algorithm> GetAlgorithmAsync(int algorithmId)
         {
-            var algorithm = await _algorithmRepository.GetAsync(algorithmId);
+            var algorithm = await _algorithmDao.GetAlgorithmAsync(algorithmId);
 
             return algorithm;
         }
 
         public async Task<Algorithm> UpdateAlgorithmAsync(Algorithm algorithm)
         {
-            algorithm = await _algorithmRepository.UpdateAsync(algorithm);
+            algorithm = await _algorithmDao.UpdateAlgorithmAsync(algorithm);
 
             return algorithm;
+        }
+
+        public async Task<AlgorithmSession> RunAlgorithmAsync(AlgorithmForm algorithmForm)
+        {
+            // TODO: Validate form.
+
+            var algorithSession = new AlgorithmSession()
+            {
+                AlgorithmId = algorithmForm.AlgorithmId,
+                Parameters = algorithmForm.Parameters.Select(p => new AlgorithmParameterValue()
+                {
+                    AlgorithmParameterId = p.AlgorithmParameterId,
+                    Value = p.Value
+                }).ToList()
+            };
+
+            algorithSession = await _algorithmSessionService.AddAlgorithmSessionAsync(algorithSession);
+
+            await _algorithmDao.AddAlgorithmToRunQueue(algorithSession);
+
+            return algorithSession;
         }
     }
 }

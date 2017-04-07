@@ -10,5 +10,7 @@ namespace TryMLearning.Application.Interface.Services
         Task<Algorithm> GetAlgorithmAsync(int algorithmId);
 
         Task<Algorithm> UpdateAlgorithmAsync(Algorithm algorithm);
+
+        Task<AlgorithmSession> RunAlgorithmAsync(AlgorithmForm algorithmForm);
     }
 }

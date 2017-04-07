@@ -41,10 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm.cs" />
+    <Compile Include="AlgorithmParameterForm.cs" />
+    <Compile Include="AlgorithmSession.cs" />
     <Compile Include="AlgorithmParameter.cs" />
     <Compile Include="AlgorithmParameterType.cs" />
     <Compile Include="AlgorithmParameterValue.cs" />
-    <Compile Include="AlgorithmRunConfig.cs" />
+    <Compile Include="AlgorithmForm.cs" />
+    <Compile Include="AlgorithmSessionStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

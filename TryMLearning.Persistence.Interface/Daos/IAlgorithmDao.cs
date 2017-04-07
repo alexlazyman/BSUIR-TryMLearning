@@ -1,0 +1,16 @@
+﻿using System.Threading.Tasks;
+using TryMLearning.Model;
+
+namespace TryMLearning.Persistence.Interface.Daos
+{
+    public interface IAlgorithmDao
+    {
+        Task<Algorithm> GetAlgorithmAsync(int id);
+
+        Task<Algorithm> AddAlgorithmAsync(Algorithm algorithm);
+
+        Task<Algorithm> UpdateAlgorithmAsync(Algorithm algorithm);
+
+        Task AddAlgorithmToRunQueue(AlgorithmSession algorithmSession);
+    }
+}

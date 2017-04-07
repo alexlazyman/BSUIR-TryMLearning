@@ -2,8 +2,12 @@
 {
     public class AlgorithmParameterValue
     {
+        public int AlgorithmParameterValueId { get; set; }
+
         public int AlgorithmParameterId { get; set; }
 
-        public object Value { get; set; }
+        public int AlgorithmSessionId { get; set; }
+
+        public string Value { get; set; }
     }
 }

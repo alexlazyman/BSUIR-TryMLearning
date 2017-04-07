@@ -13,6 +13,8 @@ namespace TryMLearning.Persistence
 
         public DbSet<AlgorithmDbEntity> Algorithms { get; set; }
 
+        public DbSet<AlgorithmSessionDbEntity> AlgorithmSessions { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

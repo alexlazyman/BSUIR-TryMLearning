@@ -3,8 +3,8 @@ using System.Web.Http;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Application.Services;
 using TryMLearning.Persistence;
-using TryMLearning.Persistence.Interface.Repositories;
-using TryMLearning.Persistence.Repositories;
+using TryMLearning.Persistence.Daos;
+using TryMLearning.Persistence.Interface.Daos;
 using Unity.WebApi;
 
 namespace TryMLearning.WebAPI
@@ -22,13 +22,15 @@ namespace TryMLearning.WebAPI
                 // Infrastructure
                 .RegisterType<TryMLearningDbContext>(new HierarchicalLifetimeManager())
 
-                // Repositories
-                .RegisterType<IAlgorithmRepository, AlgorithmRepository>(new HierarchicalLifetimeManager())
+                // Daos
+                .RegisterType<IAlgorithmDao, AlgorithmDao>(new HierarchicalLifetimeManager())
+                .RegisterType<IAlgorithmSessionDao, AlgorithmSessionDao>(new HierarchicalLifetimeManager())
 
                 // Business Layer
 
                 // Services
-                .RegisterType<IAlgorithmService, AlgorithmService>(new HierarchicalLifetimeManager());
+                .RegisterType<IAlgorithmService, AlgorithmService>(new HierarchicalLifetimeManager())
+                .RegisterType<IAlgorithmSessionService, AlgorithmSessionService>(new HierarchicalLifetimeManager());
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
