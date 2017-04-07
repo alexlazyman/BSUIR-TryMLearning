@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AlgorithmRunner")]
+[assembly: AssemblyTitle("TryMLearning.AlgorithmWebJob")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AlgorithmRunner")]
+[assembly: AssemblyProduct("TryMLearning.AlgorithmWebJob")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("fd80d86b-0af9-4f9f-a530-a59ab040c7f4")]
+[assembly: Guid("8ed5c1ca-24c0-4a77-8310-be08a7f1cbb2")]
 
 // Version information for an assembly consists of the following four values:
 //
