@@ -85,6 +85,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Daos\AlgorithmDao.cs" />
     <Compile Include="Helpers\StorageUtils.cs" />
+    <Compile Include="Transaction.cs" />
+    <Compile Include="TransactionScope.cs" />
     <Compile Include="TryMLearningDbContext.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,8 @@ namespace TryMLearning.AlgorithmWebJob.Functions
         {
             var algorithmSession = await _algorithmSessionService.GetAlgorithmSessionAsync(algorithmSessionId);
 
+            // If algorithmSession is null, then should reencueue message (about 3 times).
+
             Console.WriteLine($"AlgId - {algorithmSession.AlgorithmId}");
             Console.WriteLine($"Status - {algorithmSession.Status}");
             Console.WriteLine($"Params - {algorithmSession.Parameters.Aggregate("", (r, p) => r + " " + p.Value)}");

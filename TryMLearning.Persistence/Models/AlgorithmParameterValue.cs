@@ -11,6 +11,8 @@ namespace TryMLearning.Persistence.Models
 
         public int AlgorithmParameterId { get; set; }
 
+        protected virtual AlgorithmParameterDbEntity AlgorithmParameter { get; set; }
+
         public int AlgorithmSessionId { get; set; }
 
         public string Value { get; set; }

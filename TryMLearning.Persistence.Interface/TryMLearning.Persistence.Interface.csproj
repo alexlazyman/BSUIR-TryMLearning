@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="Daos\IAlgorithmSessionDao.cs" />
     <Compile Include="Daos\IAlgorithmDao.cs" />
+    <Compile Include="ITransactionScope.cs" />
+    <Compile Include="ITransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
