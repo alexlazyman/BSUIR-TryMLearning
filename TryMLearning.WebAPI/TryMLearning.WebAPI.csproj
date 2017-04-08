@@ -183,21 +183,13 @@
       <Project>{1b0d3852-c2de-48b9-8e1b-b4b106624e24}</Project>
       <Name>TryMLearning.Application.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TryMLearning.Application\TryMLearning.Application.csproj">
-      <Project>{46c61935-dbfa-4622-a7ca-86941dca8d2a}</Project>
-      <Name>TryMLearning.Application</Name>
+    <ProjectReference Include="..\TryMLearning.Configuration\TryMLearning.Configuration.csproj">
+      <Project>{db548098-b208-4cc4-aabc-2cb723be254d}</Project>
+      <Name>TryMLearning.Configuration</Name>
     </ProjectReference>
     <ProjectReference Include="..\TryMLearning.Model\TryMLearning.Model.csproj">
       <Project>{7e9ba1af-aac3-4f49-ab1a-acf5811a816b}</Project>
       <Name>TryMLearning.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TryMLearning.Persistence.Interface\TryMLearning.Persistence.Interface.csproj">
-      <Project>{b329896d-badb-44fa-895d-7030acf49256}</Project>
-      <Name>TryMLearning.Persistence.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TryMLearning.Persistence\TryMLearning.Persistence.csproj">
-      <Project>{16d077d7-320c-4728-b6e6-02c42954262c}</Project>
-      <Name>TryMLearning.Persistence</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

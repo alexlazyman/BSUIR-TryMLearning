@@ -3,11 +3,11 @@ using Microsoft.Practices.Unity;
 
 namespace TryMLearning.AlgorithmWebJob.Configuration
 {
-    public class JobActivator : IJobActivator
+    public class UnityJobActivator : IJobActivator
     {
         private readonly IUnityContainer _container;
 
-        public JobActivator(IUnityContainer container)
+        public UnityJobActivator(IUnityContainer container)
         {
             _container = container;
         }

@@ -6,7 +6,7 @@ namespace TryMLearning.Persistence.Configuration
 {
     public static class AutoMapperConfiguration
     {
-        public static void AddDtoMaps(this IMapperConfigurationExpression cfg)
+        public static void RegisterDtoMaps(this IMapperConfigurationExpression cfg)
         {
             cfg.CreateMap<Algorithm, AlgorithmDbEntity>();
             cfg.CreateMap<AlgorithmDbEntity, Algorithm>();

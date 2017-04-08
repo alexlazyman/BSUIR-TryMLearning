@@ -1,4 +1,4 @@
-﻿namespace TryMLearning.Persistence.Constants
+﻿namespace TryMLearning.Model.Constants
 {
     public static class StorageQueueNames
     {

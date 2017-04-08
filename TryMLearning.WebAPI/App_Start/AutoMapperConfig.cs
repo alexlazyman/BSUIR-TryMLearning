@@ -1,5 +1,5 @@
 using AutoMapper;
-using TryMLearning.Persistence.Configuration;
+using TryMLearning.Configuration;
 
 namespace TryMLearning.WebAPI
 {
@@ -9,7 +9,7 @@ namespace TryMLearning.WebAPI
         {
 			Mapper.Initialize(cfg =>
 			{
-			    cfg.AddDtoMaps();
+			    cfg.RegisterCommonMaps();
 			});
         }
     }

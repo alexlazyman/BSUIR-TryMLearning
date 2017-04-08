@@ -48,6 +48,8 @@
     <Compile Include="AlgorithmParameterValue.cs" />
     <Compile Include="AlgorithmForm.cs" />
     <Compile Include="AlgorithmSessionStatus.cs" />
+    <Compile Include="Constants\StorageNames.cs" />
+    <Compile Include="Constants\StorageQueueNames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

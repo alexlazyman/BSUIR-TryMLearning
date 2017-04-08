@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using TryMLearning.Application.Interface.Services;
-using TryMLearning.Persistence.Constants;
+using TryMLearning.Model.Constants;
 
-namespace TryMLearning.AlgorithmWebJob
+namespace TryMLearning.AlgorithmWebJob.Functions
 {
     public class AlgorithmFunctions
     {

@@ -6,6 +6,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 using TryMLearning.Model;
+using TryMLearning.Model.Constants;
 using TryMLearning.Persistence.Constants;
 using TryMLearning.Persistence.Helpers;
 using TryMLearning.Persistence.Interface.Daos;
