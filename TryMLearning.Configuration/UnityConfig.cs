@@ -27,6 +27,7 @@ namespace TryMLearning.Configuration
 
                 // Daos
                 .RegisterType<IAlgorithmDao, AlgorithmDao>(new HierarchicalLifetimeManager())
+                .RegisterType<IAlgorithmParameterDao, AlgorithmParameterDao>(new HierarchicalLifetimeManager())
                 .RegisterType<IAlgorithmSessionDao, AlgorithmSessionDao>(new HierarchicalLifetimeManager())
 
                 // Business Layer

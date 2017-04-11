@@ -41,16 +41,18 @@ namespace TryMLearning.WebAPI.Controllers
         [SwaggerOperation("Update")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public void Put([FromBody] Algorithm algorithm)
+        public async Task<Algorithm> Put([FromBody] Algorithm algorithm)
         {
+            return await _algorithmService.UpdateAlgorithmAsync(algorithm);
         }
 
         // DELETE api/algorithm/5
         [SwaggerOperation("Delete")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
+            await _algorithmService.DeleteAlgorithmAsync(id);
         }
     }
 }

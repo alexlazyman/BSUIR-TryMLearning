@@ -1,16 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TryMLearning.Persistence.Interfaces;
 
 namespace TryMLearning.Persistence.Models
 {
     [Table("Algorithm")]
-    public class AlgorithmDbEntity
+    public class AlgorithmDbEntity : IDbEntity
     {
         public AlgorithmDbEntity()
         {
-            Parameters = new List<AlgorithmParameterDbEntity>();
+            AlgorithmParameters = new List<AlgorithmParameterDbEntity>();
         }
+
+        int IDbEntity.Id { get => AlgorithmId; set => AlgorithmId = value; }
 
         [Key]
         public int AlgorithmId { get; set; }
@@ -20,6 +23,8 @@ namespace TryMLearning.Persistence.Models
 
         public string Description { get; set; }
 
-        public IList<AlgorithmParameterDbEntity> Parameters { get; set; }
+        public ICollection<AlgorithmParameterDbEntity> AlgorithmParameters { get; set; }
+
+        public virtual ICollection<AlgorithmSessionDbEntity> AlgorithmSessions { get; set; }
     }
 }

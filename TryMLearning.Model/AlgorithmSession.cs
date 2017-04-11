@@ -10,6 +10,6 @@ namespace TryMLearning.Model
 
         public AlgorithmSessionStatus Status { get; set; }
 
-        public List<AlgorithmParameterValue> Parameters { get; set; }
+        public List<AlgorithmParameterValue> ParameterValues { get; set; }
     }
 }

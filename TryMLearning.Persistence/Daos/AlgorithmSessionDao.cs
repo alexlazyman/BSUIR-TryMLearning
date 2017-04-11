@@ -25,7 +25,7 @@ namespace TryMLearning.Persistence.Daos
         public async Task<AlgorithmSession> GetAlgorithmSessionAsync(int algorithmSessionId)
         {
             var algorithmSessionDbEntity = await _dbContext.AlgorithmSessions
-                .Include(a => a.Parameters)
+                .Include(a => a.AlgorithmParameterValues)
                 .FirstOrDefaultAsync(a => a.AlgorithmSessionId == algorithmSessionId);
 
             var algorithmSession = Mapper.Map<AlgorithmSession>(algorithmSessionDbEntity);

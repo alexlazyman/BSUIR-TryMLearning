@@ -1,4 +1,8 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Azure;
@@ -26,7 +30,7 @@ namespace TryMLearning.Persistence.Daos
         public async Task<Algorithm> GetAlgorithmAsync(int id)
         {
             var algorithmDbEntity = await _dbContext.Algorithms
-                .Include(a => a.Parameters)
+                .Include(a => a.AlgorithmParameters)
                 .FirstOrDefaultAsync(a => a.AlgorithmId == id);
 
             var algorithm = Mapper.Map<Algorithm>(algorithmDbEntity);
@@ -46,9 +50,24 @@ namespace TryMLearning.Persistence.Daos
             return algorithm;
         }
 
-        public Task<Algorithm> UpdateAlgorithmAsync(Algorithm algorithm)
+        public async Task<Algorithm> UpdateAlgorithmAsync(Algorithm algorithm)
         {
-            throw new System.NotImplementedException();
+            var algorithmDbEntity = Mapper.Map<AlgorithmDbEntity>(algorithm);
+
+            _dbContext.SafeUpdate(algorithmDbEntity);
+            await _dbContext.SaveChangesAsync();
+
+            algorithm = Mapper.Map<Algorithm>(algorithmDbEntity);
+
+            return algorithm;
+        }
+
+        public async Task DeleteAlgorithmAsync(Algorithm algorithm)
+        {
+            var algorithmDbEntity = Mapper.Map<AlgorithmDbEntity>(algorithm);
+
+            _dbContext.SafeDelete(algorithmDbEntity);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task AddAlgorithmToRunQueue(AlgorithmSession algorithmSession)
