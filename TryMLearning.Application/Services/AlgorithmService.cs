@@ -73,16 +73,28 @@ namespace TryMLearning.Application.Services
                 throw new ValidationException("Algorithm is not valid", validationResult.Errors);
             }
             
-            //TODO: Check relationships and if issue exists throw AccessExcetion
-
             var existingAlgorithm = await _algorithmDao.GetAlgorithmAsync(algorithm.AlgorithmId);
+            if (existingAlgorithm == null)
+            {
+                throw new UnauthorizedAccessException("Algorithm does not exist");
+            }
+
+            foreach (var algParam in algorithm.Parameters)
+            {
+                algParam.AlgorithmId = algorithm.AlgorithmId;
+                if (algParam.AlgorithmParameterId > 0 &&
+                    existingAlgorithm.Parameters.All(p => p.AlgorithmParameterId != algParam.AlgorithmParameterId))
+                {
+                    algParam.AlgorithmParameterId = 0;
+                }
+            }
 
             using (var ts = _transactionScope.Begin())
             {
                 try
                 {
                     await _algorithmDao.UpdateAlgorithmAsync(algorithm);
-                    await UpdateAlgorithmParametersAsync(existingAlgorithm.Parameters, algorithm.Parameters, existingAlgorithm.AlgorithmId);
+                    await UpdateAlgorithmParametersAsync(existingAlgorithm.Parameters, algorithm.Parameters);
 
                     ts.Commit();
                 }
@@ -140,7 +152,7 @@ namespace TryMLearning.Application.Services
             return algorithSession;
         }
 
-        private async Task UpdateAlgorithmParametersAsync(List<AlgorithmParameter> existingAlgParams, List<AlgorithmParameter> updatedAlgParams, int algorithmId)
+        private async Task UpdateAlgorithmParametersAsync(List<AlgorithmParameter> existingAlgParams, List<AlgorithmParameter> updatedAlgParams)
         {
             existingAlgParams = existingAlgParams ?? new List<AlgorithmParameter>();
             updatedAlgParams = updatedAlgParams ?? new List<AlgorithmParameter>();
@@ -157,7 +169,6 @@ namespace TryMLearning.Application.Services
             {
                 if (updatedAlgParams[i].AlgorithmParameterId <= 0)
                 {
-                    updatedAlgParams[i].AlgorithmId = algorithmId;
                     updatedAlgParams[i] = await _algorithmParameterDao.AddAlgorithmParameterAsync(updatedAlgParams[i]);
                 }
                 else
