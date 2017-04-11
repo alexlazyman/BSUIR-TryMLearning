@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using TryMLearning.Application.Interface.Services;
+using TryMLearning.Application.Interface.Validation;
 using TryMLearning.Application.Services;
+using TryMLearning.Application.Validation;
+using TryMLearning.Model;
 using TryMLearning.Persistence;
 using TryMLearning.Persistence.Daos;
 using TryMLearning.Persistence.Interface;
@@ -34,7 +37,12 @@ namespace TryMLearning.Configuration
 
                 // Services
                 .RegisterType<IAlgorithmService, AlgorithmService>(new HierarchicalLifetimeManager())
-                .RegisterType<IAlgorithmSessionService, AlgorithmSessionService>(new HierarchicalLifetimeManager());
+                .RegisterType<IAlgorithmSessionService, AlgorithmSessionService>(new HierarchicalLifetimeManager())
+
+                // Valiation
+                .RegisterType<IValidator<Algorithm>, AlgorithmValidator>(new HierarchicalLifetimeManager())
+                .RegisterType<IValidator<AlgorithmParameter>, AlgorithmParameterValidator>(new HierarchicalLifetimeManager())
+                .RegisterType<IValidator<AlgorithmForm>, AlgorithmFormValidator>(new HierarchicalLifetimeManager());
         }
     }
 }

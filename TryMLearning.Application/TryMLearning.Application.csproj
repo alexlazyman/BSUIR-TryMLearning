@@ -43,6 +43,9 @@
     <Compile Include="Services\AlgorithmService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AlgorithmSessionService.cs" />
+    <Compile Include="Validation\AlgorithmParameterValidator.cs" />
+    <Compile Include="Validation\AlgorithmFormValidator.cs" />
+    <Compile Include="Validation\AlgorithmValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TryMLearning.Application.Interface\TryMLearning.Application.Interface.csproj">
