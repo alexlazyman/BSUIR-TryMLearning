@@ -45,7 +45,13 @@ namespace TryMLearning.Application.Services
                 throw new ValidationException("Algorithm is not valid", validationResult.Errors);
             }
 
-            //TODO: Check relationships and if issue exists throw AccessExcetion
+            // Clear Ids of entities
+            algorithm.AlgorithmId = 0;
+            foreach (var algorithmParameter in algorithm.Parameters)
+            {
+                algorithmParameter.AlgorithmId = 0;
+                algorithmParameter.AlgorithmParameterId = 0;
+            }
 
             algorithm = await _algorithmDao.AddAlgorithmAsync(algorithm);
 
@@ -66,7 +72,7 @@ namespace TryMLearning.Application.Services
             {
                 throw new ValidationException("Algorithm is not valid", validationResult.Errors);
             }
-
+            
             //TODO: Check relationships and if issue exists throw AccessExcetion
 
             var existingAlgorithm = await _algorithmDao.GetAlgorithmAsync(algorithm.AlgorithmId);
