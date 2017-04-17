@@ -48,8 +48,11 @@
     <Compile Include="AlgorithmParameterValue.cs" />
     <Compile Include="AlgorithmForm.cs" />
     <Compile Include="AlgorithmSessionStatus.cs" />
+    <Compile Include="ClassificationDataSmaple.cs" />
     <Compile Include="Constants\StorageNames.cs" />
     <Compile Include="Constants\StorageQueueNames.cs" />
+    <Compile Include="DataSet.cs" />
+    <Compile Include="DoubleTuple.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\ValidationError.cs" />
     <Compile Include="Validation\ValidationException.cs" />

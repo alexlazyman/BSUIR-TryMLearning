@@ -10,27 +10,34 @@ namespace TryMLearning.Persistence
         public TryMLearningDbContext()
             : base(DatabaseNames.TryMLearning)
         {
-            this.Configuration.AutoDetectChangesEnabled = false;
         }
 
         public DbSet<AlgorithmDbEntity> Algorithms { get; set; }
 
         public DbSet<AlgorithmParameterDbEntity> AlgorithmParameters { get; set; }
 
+        public DbSet<AlgorithmParameterValueDbEntity> AlgorithmParameterValues { get; set; }
+
         public DbSet<AlgorithmSessionDbEntity> AlgorithmSessions { get; set; }
+
+        public DbSet<DataSetDbEntity> DataSets { get; set; }
+
+        public DbSet<ClassificationDataSmapleDbEntity> ClassificationDataSmaples { get; set; }
+
+        public DbSet<DoubleTupleDbEntity> DoubleTuples { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-
             modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
                 .HasRequired(v => v.AlgorithmSession)
-                .WithMany()
+                .WithMany(s => s.AlgorithmParameterValues)
+                .HasForeignKey(v => v.AlgorithmSessionId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
                 .HasRequired(v => v.AlgorithmParameter)
                 .WithMany()
+                .HasForeignKey(v => v.AlgorithmParameterId)
                 .WillCascadeOnDelete(false);
         }
     }

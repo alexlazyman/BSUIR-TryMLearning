@@ -8,6 +8,10 @@
 
         public int AlgorithmSessionId { get; set; }
 
-        public string Value { get; set; }
+        public int? IntValue { get; set; }
+
+        public double? DoubleValue { get; set; }
+
+        public string StringValue { get; set; }
     }
 }

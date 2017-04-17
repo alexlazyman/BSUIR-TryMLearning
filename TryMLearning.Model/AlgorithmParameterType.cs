@@ -2,7 +2,8 @@
 {
     public enum AlgorithmParameterType
     {
-        Int32 = 0,
-        Float = 1
+        Int = 0,
+        Double = 1,
+        String = 2
     }
 }

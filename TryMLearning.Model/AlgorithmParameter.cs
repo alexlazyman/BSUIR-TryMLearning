@@ -13,9 +13,5 @@
         public string Description { get; set; }
 
         public AlgorithmParameterType ValueType { get; set; }
-
-        public string DefaultValue { get; set; }
-
-        public bool Editable { get; set; }
     }
 }

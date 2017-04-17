@@ -8,11 +8,8 @@ namespace TryMLearning.Application.Validation
 {
     public class AlgorithmFormValidator : IValidator<AlgorithmForm>
     {
-        private readonly IAlgorithmService _algorithmService;
-
-        public AlgorithmFormValidator(IAlgorithmService algorithmService)
+        public AlgorithmFormValidator()
         {
-            _algorithmService = algorithmService;
         }
 
         public Task<ValidationResult> ValidateAsync(AlgorithmForm entity)

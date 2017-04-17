@@ -85,6 +85,9 @@
     <Compile Include="Models\AlgorithmParameterDbEntity.cs" />
     <Compile Include="Models\AlgorithmParameterValueDbEntity.cs" />
     <Compile Include="Models\AlgorithmSessionDbEntity.cs" />
+    <Compile Include="Models\ClassificationDataSmapleDbEntity.cs" />
+    <Compile Include="Models\DataSetDbEntity.cs" />
+    <Compile Include="Models\DoubleTupleDbEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Daos\AlgorithmDao.cs" />
     <Compile Include="Helpers\StorageUtils.cs" />

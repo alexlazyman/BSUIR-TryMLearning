@@ -9,28 +9,29 @@ namespace TryMLearning.Persistence.Models
     [Table("AlgorithmParameter")]
     public class AlgorithmParameterDbEntity : IDbEntity
     {
-        int IDbEntity.Id { get => AlgorithmParameterId; set => AlgorithmParameterId = value; }
+        int IDbEntity.Id
+        {
+            get => AlgorithmParameterId;
+            set => AlgorithmParameterId = value;
+        }
 
         [Key]
         public int AlgorithmParameterId { get; set; }
 
         public int AlgorithmId { get; set; }
 
+        [ForeignKey(nameof(AlgorithmId))]
         public virtual AlgorithmDbEntity Algorithm { get; set; }
 
         [MaxLength(256)]
         public string Name { get; set; }
 
+        [MaxLength(1024)]
         public string Description { get; set; }
 
+        [Column("SeqNum")]
         public short SequentialNumber { get; set; }
 
         public AlgorithmParameterType ValueType { get; set; }
-
-        public string DefaultValue { get; set; }
-
-        public bool Editable { get; set; }
-
-        public virtual ICollection<AlgorithmParameterValueDbEntity> AlgorithmParameterValues { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Application.Interface.Validation;
 using TryMLearning.Application.Validation;
@@ -123,15 +124,7 @@ namespace TryMLearning.Application.Services
                 throw new ValidationException("Algorithm form is not valid", validationResult.Errors);
             }
 
-            var algorithSession = new AlgorithmSession()
-            {
-                AlgorithmId = algorithmForm.AlgorithmId,
-                ParameterValues = algorithmForm.Parameters.Select(p => new AlgorithmParameterValue()
-                {
-                    AlgorithmParameterId = p.AlgorithmParameterId,
-                    Value = p.Value
-                }).ToList()
-            };
+            var algorithSession = Mapper.Map<AlgorithmSession>(algorithmForm);
 
             using (var ts = _transactionScope.Begin())
             {
