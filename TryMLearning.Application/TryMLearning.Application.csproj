@@ -47,6 +47,8 @@
     <Compile Include="Services\AlgorithmService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AlgorithmSessionService.cs" />
+    <Compile Include="Services\ClassificationDataSetSampleService.cs" />
+    <Compile Include="Services\DataSetService.cs" />
     <Compile Include="Validation\AlgorithmParameterValidator.cs" />
     <Compile Include="Validation\AlgorithmSessionValidator.cs" />
     <Compile Include="Validation\AlgorithmValidator.cs" />

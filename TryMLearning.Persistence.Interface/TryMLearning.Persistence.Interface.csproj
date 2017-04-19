@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Daos\IClassificationDataSetSmapleDao.cs" />
+    <Compile Include="Daos\IDataSetDao.cs" />
     <Compile Include="Daos\IAlgorithmParameterDao.cs" />
     <Compile Include="Daos\IAlgorithmSessionDao.cs" />
     <Compile Include="Daos\IAlgorithmDao.cs" />

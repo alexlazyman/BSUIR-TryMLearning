@@ -41,12 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm.cs" />
+    <Compile Include="DataSetType.cs" />
     <Compile Include="AlgorithmSession.cs" />
     <Compile Include="AlgorithmParameter.cs" />
     <Compile Include="AlgorithmParameterType.cs" />
     <Compile Include="AlgorithmParameterValue.cs" />
     <Compile Include="AlgorithmSessionStatus.cs" />
-    <Compile Include="ClassificationDataSmaple.cs" />
+    <Compile Include="ClassificationDataSetSmaple.cs" />
     <Compile Include="Constants\StorageNames.cs" />
     <Compile Include="Constants\StorageQueueNames.cs" />
     <Compile Include="DataSet.cs" />
