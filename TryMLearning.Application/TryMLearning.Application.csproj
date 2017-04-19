@@ -48,7 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AlgorithmSessionService.cs" />
     <Compile Include="Validation\AlgorithmParameterValidator.cs" />
-    <Compile Include="Validation\AlgorithmFormValidator.cs" />
+    <Compile Include="Validation\AlgorithmSessionValidator.cs" />
     <Compile Include="Validation\AlgorithmValidator.cs" />
   </ItemGroup>
   <ItemGroup>

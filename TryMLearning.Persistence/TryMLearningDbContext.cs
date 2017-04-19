@@ -22,7 +22,7 @@ namespace TryMLearning.Persistence
 
         public DbSet<DataSetDbEntity> DataSets { get; set; }
 
-        public DbSet<ClassificationDataSmapleDbEntity> ClassificationDataSmaples { get; set; }
+        public DbSet<ClassificationDataSetSmapleDbEntity> ClassificationDataSmaples { get; set; }
 
         public DbSet<DoubleTupleDbEntity> DoubleTuples { get; set; }
 

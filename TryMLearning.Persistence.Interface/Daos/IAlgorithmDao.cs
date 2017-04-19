@@ -5,7 +5,7 @@ namespace TryMLearning.Persistence.Interface.Daos
 {
     public interface IAlgorithmDao
     {
-        Task<Algorithm> GetAlgorithmAsync(int id);
+        Task<Algorithm> GetAlgorithmAsync(int algorithmId);
 
         Task<Algorithm> AddAlgorithmAsync(Algorithm algorithm);
 

@@ -23,7 +23,7 @@ namespace TryMLearning.AlgorithmWebJob.Functions
 
             Console.WriteLine($"AlgId - {algorithmSession.AlgorithmId}");
             Console.WriteLine($"Status - {algorithmSession.Status}");
-            Console.WriteLine($"Params - {algorithmSession.ParameterValues.Aggregate("", (r, p) => r + " " + p.Value)}");
+            Console.WriteLine($"Params - {algorithmSession.ParameterValues.Aggregate("", (r, p) => r + " " + p.StringValue)}");
         }
     }
 }

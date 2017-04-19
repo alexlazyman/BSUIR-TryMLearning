@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TryMLearning.Model;
 
 namespace TryMLearning.Application.Interface.Services
@@ -13,6 +14,6 @@ namespace TryMLearning.Application.Interface.Services
 
         Task DeleteAlgorithmAsync(int algorithmId);
 
-        Task<AlgorithmSession> RunAlgorithmAsync(AlgorithmForm algorithmForm);
+        Task<AlgorithmSession> RunAlgorithmAsync(int algorithmId, List<AlgorithmParameterValue> parameterValues);
     }
 }

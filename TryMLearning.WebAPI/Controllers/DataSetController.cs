@@ -11,13 +11,13 @@ using TryMLearning.Model;
 
 namespace TryMLearning.WebAPI.Controllers
 {
-    [RoutePrefix("api/algorithm")]
-    public class AlgorithmController : ApiController
+    [RoutePrefix("api/dataset")]
+    public class DataSetControllerController : ApiController
     {
         private readonly IAlgorithmService _algorithmService;
         private readonly IAlgorithmSessionService _algorithmSessionService;
 
-        public AlgorithmController(
+        public DataSetControllerController(
             IAlgorithmService algorithmService,
             IAlgorithmSessionService algorithmSessionService)
         {
@@ -47,18 +47,6 @@ namespace TryMLearning.WebAPI.Controllers
             return await _algorithmService.AddAlgorithmAsync(algorithm);
         }
 
-        // PUT api/algorithm
-        [Route("")]
-        [HttpPut]
-        [SwaggerOperation("Update algorithm")]
-        [SwaggerResponse(HttpStatusCode.OK)]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        public async Task<Algorithm> UpdateAlgorithm(
-            [FromBody] Algorithm algorithm)
-        {
-            return await _algorithmService.UpdateAlgorithmAsync(algorithm);
-        }
-
         // DELETE api/algorithm/5
         [Route("{id:int}")]
         [HttpDelete]
@@ -69,29 +57,6 @@ namespace TryMLearning.WebAPI.Controllers
             [FromUri(Name = "id")] int algorithmId)
         {
             await _algorithmService.DeleteAlgorithmAsync(algorithmId);
-        }
-
-        // POST api/algorithm/5/run
-        [Route("{id:int}/run")]
-        [HttpDelete]
-        [SwaggerOperation("Run algorithm")]
-        [SwaggerResponse(HttpStatusCode.OK)]
-        public async Task<AlgorithmSession> RunAlgorithm(
-            [FromUri(Name = "id")] int algorithmId,
-            [FromBody] List<AlgorithmParameterValue> algorithmParameters)
-        {
-            return await _algorithmService.RunAlgorithmAsync(algorithmId, algorithmParameters);
-        }
-
-        // GET api/algorithm/run/5
-        [Route("run/{id:int}")]
-        [HttpGet]
-        [SwaggerOperation("Get computing status of algorithm")]
-        [SwaggerResponse(HttpStatusCode.OK)]
-        public async Task<AlgorithmSession> GetComputingStatus(
-            [FromUri(Name = "id")] int algorithmSessionId)
-        {
-            return await _algorithmSessionService.GetAlgorithmSessionAsync(algorithmSessionId);
         }
     }
 }

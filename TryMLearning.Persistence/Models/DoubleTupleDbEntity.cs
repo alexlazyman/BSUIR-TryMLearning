@@ -17,10 +17,12 @@ namespace TryMLearning.Persistence.Models
         [Key]
         public int DoubleTupleId { get; set; }
 
+        public byte Count { get; set; }
+
         public int? RelatedDoubleTupleId { get; set; }
 
         [ForeignKey(nameof(RelatedDoubleTupleId))]
-        public virtual DoubleTupleDbEntity RelatedDoubleTuple { get; set; }
+        public DoubleTupleDbEntity RelatedDoubleTuple { get; set; }
 
         #region Values: Value0 - Value63
 

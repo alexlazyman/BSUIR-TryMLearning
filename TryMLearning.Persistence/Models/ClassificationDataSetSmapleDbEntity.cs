@@ -5,17 +5,17 @@ using TryMLearning.Persistence.Interfaces;
 
 namespace TryMLearning.Persistence.Models
 {
-    [Table("ClassificationDataSmaple")]
-    public class ClassificationDataSmapleDbEntity : IDbEntity
+    [Table("ClassificationDataSetSmaple")]
+    public class ClassificationDataSetSmapleDbEntity : IDbEntity
     {
         int IDbEntity.Id
         {
-            get => ClassificationDataSmapleId;
-            set => ClassificationDataSmapleId = value;
+            get => ClassificationDataSetSmapleId;
+            set => ClassificationDataSetSmapleId = value;
         }
 
         [Key]
-        public int ClassificationDataSmapleId { get; set; }
+        public int ClassificationDataSetSmapleId { get; set; }
 
         public int DataSetId { get; set; }
         
