@@ -28,17 +28,20 @@ namespace TryMLearning.Persistence
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
-                .HasRequired(v => v.AlgorithmSession)
-                .WithMany(s => s.AlgorithmParameterValues)
-                .HasForeignKey(v => v.AlgorithmSessionId)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
-            modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
-                .HasRequired(v => v.AlgorithmParameter)
-                .WithMany()
-                .HasForeignKey(v => v.AlgorithmParameterId)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
+            //    .HasRequired(v => v.AlgorithmSession)
+            //    .WithMany(s => s.AlgorithmParameterValues)
+            //    .HasForeignKey(v => v.AlgorithmSessionId)
+            //    .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
+            //    .HasRequired(v => v.AlgorithmParameter)
+            //    .WithMany()
+            //    .HasForeignKey(v => v.AlgorithmParameterId)
+            //    .WillCascadeOnDelete(false);
         }
     }
 }

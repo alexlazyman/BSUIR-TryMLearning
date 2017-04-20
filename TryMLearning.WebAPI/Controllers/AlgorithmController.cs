@@ -26,12 +26,11 @@ namespace TryMLearning.WebAPI.Controllers
         }
 
         // GET api/algorithm/5
-        [Route("{id:int}")]
+        [Route("{algorithmId:int}")]
         [HttpGet]
         [SwaggerOperation("Get algorithm by id")]
         [SwaggerResponse(HttpStatusCode.OK)]
-        public async Task<Algorithm> GetAlgorithm(
-            [FromUri(Name = "id")] int algorithmId)
+        public async Task<Algorithm> GetAlgorithmAsync(int algorithmId)
         {
             return await _algorithmService.GetAlgorithmAsync(algorithmId);
         }
@@ -41,8 +40,7 @@ namespace TryMLearning.WebAPI.Controllers
         [HttpPost]
         [SwaggerOperation("Create algorithm")]
         [SwaggerResponse(HttpStatusCode.Created)]
-        public async Task<Algorithm> CreateAlgorithm(
-            [FromBody] Algorithm algorithm)
+        public async Task<Algorithm> CreateAlgorithmAsync(Algorithm algorithm)
         {
             return await _algorithmService.AddAlgorithmAsync(algorithm);
         }
@@ -53,43 +51,38 @@ namespace TryMLearning.WebAPI.Controllers
         [SwaggerOperation("Update algorithm")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public async Task<Algorithm> UpdateAlgorithm(
-            [FromBody] Algorithm algorithm)
+        public async Task<Algorithm> UpdateAlgorithmAsync(Algorithm algorithm)
         {
             return await _algorithmService.UpdateAlgorithmAsync(algorithm);
         }
 
         // DELETE api/algorithm/5
-        [Route("{id:int}")]
+        [Route("{algorithmId:int}")]
         [HttpDelete]
         [SwaggerOperation("Delete algorithm")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public async Task DeleteAlgorithm(
-            [FromUri(Name = "id")] int algorithmId)
+        public async Task DeleteAlgorithmAsync(int algorithmId)
         {
             await _algorithmService.DeleteAlgorithmAsync(algorithmId);
         }
 
         // POST api/algorithm/5/run
-        [Route("{id:int}/run")]
+        [Route("{algorithmId:int}/run")]
         [HttpDelete]
         [SwaggerOperation("Run algorithm")]
         [SwaggerResponse(HttpStatusCode.OK)]
-        public async Task<AlgorithmSession> RunAlgorithm(
-            [FromUri(Name = "id")] int algorithmId,
-            [FromBody] List<AlgorithmParameterValue> algorithmParameters)
+        public async Task<AlgorithmSession> RunAlgorithmAsync(int algorithmId, List<AlgorithmParameterValue> algorithmParameters)
         {
             return await _algorithmService.RunAlgorithmAsync(algorithmId, algorithmParameters);
         }
 
         // GET api/algorithm/run/5
-        [Route("run/{id:int}")]
+        [Route("run/{algorithmSessionId:int}")]
         [HttpGet]
         [SwaggerOperation("Get computing status of algorithm")]
         [SwaggerResponse(HttpStatusCode.OK)]
-        public async Task<AlgorithmSession> GetComputingStatus(
-            [FromUri(Name = "id")] int algorithmSessionId)
+        public async Task<AlgorithmSession> GetComputingStatusAsync(int algorithmSessionId)
         {
             return await _algorithmSessionService.GetAlgorithmSessionAsync(algorithmSessionId);
         }

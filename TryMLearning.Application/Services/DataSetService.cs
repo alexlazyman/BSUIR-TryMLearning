@@ -1,29 +1,43 @@
 ﻿using System.Threading.Tasks;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Model;
+using TryMLearning.Persistence.Interface.Daos;
 
 namespace TryMLearning.Application.Services
 {
     public class DataSetService : IDataSetService
     {
-        public Task<DataSet> AddDataSetAsync(DataSet dataSet)
+        private readonly IDataSetDao _dataSetDao;
+
+        public DataSetService(
+            IDataSetDao dataSetDao)
         {
-            throw new System.NotImplementedException();
+            _dataSetDao = dataSetDao;
         }
 
-        public Task<DataSet> GetDataSetAsync(int dataSetId)
+        public async Task<DataSet> AddDataSetAsync(DataSet dataSet)
         {
-            throw new System.NotImplementedException();
+            return await _dataSetDao.AddDataSetAsync(dataSet);
         }
 
-        public Task<DataSet> UpdateDataSetAsync(DataSet dataSet)
+        public async Task<DataSet> GetDataSetAsync(int dataSetId)
         {
-            throw new System.NotImplementedException();
+            return await _dataSetDao.GetDataSetAsync(dataSetId);
         }
 
-        public Task DeleteDataSetAsync(int dataSetId)
+        public async Task<DataSet> UpdateDataSetAsync(DataSet dataSet)
         {
-            throw new System.NotImplementedException();
+            return await _dataSetDao.UpdateDataSetAsync(dataSet);
+        }
+
+        public async Task DeleteDataSetAsync(int dataSetId)
+        {
+            var dataSet = new DataSet
+            {
+                DataSetId = dataSetId
+            };
+
+            await _dataSetDao.DeleteDataSetAsync(dataSet);
         }
     }
 }

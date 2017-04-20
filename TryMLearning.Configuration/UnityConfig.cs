@@ -32,14 +32,16 @@ namespace TryMLearning.Configuration
                 .RegisterType<IAlgorithmDao, AlgorithmDao>(new HierarchicalLifetimeManager())
                 .RegisterType<IAlgorithmParameterDao, AlgorithmParameterDao>(new HierarchicalLifetimeManager())
                 .RegisterType<IAlgorithmSessionDao, AlgorithmSessionDao>(new HierarchicalLifetimeManager())
+                
                 .RegisterType<IDataSetDao, DataSetDao>(new HierarchicalLifetimeManager())
-                .RegisterType<IClassificationDataSetSmapleDao, ClassificationDataSetSmapleDao>(new HierarchicalLifetimeManager())
+                .RegisterType<IDataSetSampleDao<ClassificationDataSetSmaple>, ClassificationDataSetSmapleDao>(new HierarchicalLifetimeManager())
 
                 // Business Layer
 
                 // Services
                 .RegisterType<IAlgorithmService, AlgorithmService>(new HierarchicalLifetimeManager())
                 .RegisterType<IAlgorithmSessionService, AlgorithmSessionService>(new HierarchicalLifetimeManager())
+                
                 .RegisterType<IDataSetService, DataSetService>(new HierarchicalLifetimeManager())
                 .RegisterType<IDataSetSampleService<ClassificationDataSetSmaple>, ClassificationDataSetSampleService>(new HierarchicalLifetimeManager())
 

@@ -18,7 +18,7 @@ using TryMLearning.Persistence.Models;
 
 namespace TryMLearning.Persistence.Daos
 {
-    public class ClassificationDataSetSmapleDao : IClassificationDataSetSmapleDao
+    public class ClassificationDataSetSmapleDao : IDataSetSampleDao<ClassificationDataSetSmaple>
     {
         private readonly TryMLearningDbContext _dbContext;
 
@@ -27,9 +27,9 @@ namespace TryMLearning.Persistence.Daos
             _dbContext = dbContext;
         }
 
-        public async Task<List<ClassificationDataSetSmaple>> AddClassificationDataSetSmaplesAsync(List<ClassificationDataSetSmaple> classificationDataSetSmaples)
+        public async Task<List<ClassificationDataSetSmaple>> AddDataSetSamplesAsync(List<ClassificationDataSetSmaple> dataSetSamples)
         {
-            var dbEntities = classificationDataSetSmaples.Select(Mapper.Map<ClassificationDataSetSmapleDbEntity>).ToList();
+            var dbEntities = dataSetSamples.Select(Mapper.Map<ClassificationDataSetSmapleDbEntity>).ToList();
 
             _dbContext.Configuration.AutoDetectChangesEnabled = false;
             dbEntities.ForEach(e => _dbContext.ClassificationDataSmaples.Add(e));
@@ -37,12 +37,12 @@ namespace TryMLearning.Persistence.Daos
 
             await _dbContext.SaveChangesAsync();
 
-            classificationDataSetSmaples = dbEntities.Select(Mapper.Map<ClassificationDataSetSmaple>).ToList();
+            dataSetSamples = dbEntities.Select(Mapper.Map<ClassificationDataSetSmaple>).ToList();
 
-            return classificationDataSetSmaples;
+            return dataSetSamples;
         }
 
-        public async Task<int> GetClassificationDataSetSmapleCountAsync(int dataSetId)
+        public async Task<int> GetDataSetSampleCountAsync(int dataSetId)
         {
             var count = await _dbContext.ClassificationDataSmaples
                 .Where(s => s.DataSetId == dataSetId)
@@ -51,7 +51,18 @@ namespace TryMLearning.Persistence.Daos
             return count;
         }
 
-        public async Task<List<ClassificationDataSetSmaple>> GetClassificationDataSetSmaplesAsync(int dataSetId, int start, int count)
+        public async Task<ClassificationDataSetSmaple> GetDataSetSampleAsync(int dataSetSampleId)
+        {
+            var dbEntity = await _dbContext.ClassificationDataSmaples
+                .AsNoTracking()
+                .FirstOrDefaultAsync(e => e.ClassificationDataSetSmapleId == dataSetSampleId);
+
+            var dataSetSample = Mapper.Map<ClassificationDataSetSmaple>(dbEntity);
+
+            return dataSetSample;
+        }
+
+        public async Task<List<ClassificationDataSetSmaple>> GetDataSetSamplesAsync(int dataSetId, int start, int count)
         {
             var dbEntities = await _dbContext.ClassificationDataSmaples
                 .Where(s => s.DataSetId == dataSetId)
@@ -60,16 +71,30 @@ namespace TryMLearning.Persistence.Daos
                 .Take(count)
                 .ToListAsync();
 
-            var classificationDataSmaples = dbEntities.Select(Mapper.Map<ClassificationDataSetSmaple>).ToList();
+            foreach (var dbEntity in dbEntities)
+            {
+                var doubleTuple = dbEntity.DoubleTuple;
+                while (doubleTuple?.RelatedDoubleTupleId != null)
+                {
+                    await _dbContext.Entry(doubleTuple).Reference(t => t.RelatedDoubleTuple).LoadAsync();
 
-            return classificationDataSmaples;
+                    doubleTuple = doubleTuple.RelatedDoubleTuple;
+                }
+            }
+
+            var dataSetSamples = dbEntities.Select(Mapper.Map<ClassificationDataSetSmaple>).ToList();
+
+            return dataSetSamples;
         }
 
-        public async Task DeleteClassificationDataSetSmapleAsync(ClassificationDataSetSmaple classificationDataSetSmaple)
+        public async Task DeleteDataSetSamplesAsync(List<ClassificationDataSetSmaple> dataSetSamples)
         {
-            var dbEntity = Mapper.Map<ClassificationDataSetSmapleDbEntity>(classificationDataSetSmaple);
+            var dbEntities = Mapper.Map<List<ClassificationDataSetSmapleDbEntity>>(dataSetSamples);
 
-            _dbContext.SafeDelete(dbEntity);
+            _dbContext.Configuration.AutoDetectChangesEnabled = false;
+            dbEntities.ForEach(e => _dbContext.SafeDelete(e));
+            _dbContext.Configuration.AutoDetectChangesEnabled = true;
+
             await _dbContext.SaveChangesAsync();
         }
     }

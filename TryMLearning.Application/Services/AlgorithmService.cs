@@ -7,6 +7,7 @@ using TryMLearning.Application.Interface.Services;
 using TryMLearning.Application.Interface.Validation;
 using TryMLearning.Application.Validation;
 using TryMLearning.Model;
+using TryMLearning.Model.Exceptions;
 using TryMLearning.Model.Validation;
 using TryMLearning.Persistence.Interface;
 using TryMLearning.Persistence.Interface.Daos;

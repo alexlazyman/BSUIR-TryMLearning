@@ -25,6 +25,8 @@ namespace TryMLearning.Persistence.Models
         [MaxLength(256)]
         public string ClassName { get; set; }
 
+        public int Count { get; set; }
+
         public int DoubleTupleId { get; set; }
 
         [ForeignKey(nameof(DoubleTupleId))]

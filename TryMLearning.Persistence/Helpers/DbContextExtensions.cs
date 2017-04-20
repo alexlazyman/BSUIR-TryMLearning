@@ -16,7 +16,7 @@ namespace TryMLearning.Persistence.Helpers
             var existingEntity = context.Set<TEntity>().Local.FirstOrDefault(a => a.Id == entity.Id);
             if (existingEntity == null)
             {
-                context.Set<TEntity>().Attach(entity);
+                context.Entry(entity).State = EntityState.Modified;
             }
             else
             {

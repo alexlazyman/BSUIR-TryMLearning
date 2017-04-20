@@ -27,33 +27,44 @@ namespace TryMLearning.Persistence.Daos
             _dbContext = dbContext;
         }
 
-        public async Task<DataSet> GetDataSetAsync(int dataSetId)
+        public async Task<DataSet> AddDataSetAsync(DataSet dataSet)
         {
-            var dataSetDbEntity = await _dbContext.DataSets
-                .FirstOrDefaultAsync(a => a.DataSetId == dataSetId);
+            var dbEntity = Mapper.Map<DataSetDbEntity>(dataSet);
 
-            var dataSet = Mapper.Map<DataSet>(dataSetDbEntity);
+            _dbContext.DataSets.Add(dbEntity);
+            await _dbContext.SaveChangesAsync();
+
+            dataSet = Mapper.Map<DataSet>(dbEntity);
 
             return dataSet;
         }
 
-        public async Task<DataSet> AddDataSetAsync(DataSet dataSet)
+        public async Task<DataSet> GetDataSetAsync(int dataSetId)
         {
-            var dataSetDbEntity = Mapper.Map<DataSetDbEntity>(dataSet);
+            var dbEntity = await _dbContext.DataSets.FindAsync(dataSetId);
 
-            _dbContext.DataSets.Add(dataSetDbEntity);
+            var dataSet = Mapper.Map<DataSet>(dbEntity);
+
+            return dataSet;
+        }
+
+        public async Task<DataSet> UpdateDataSetAsync(DataSet dataSet)
+        {
+            var dbEntity = Mapper.Map<DataSetDbEntity>(dataSet);
+
+            _dbContext.SafeUpdate(dbEntity);
             await _dbContext.SaveChangesAsync();
 
-            dataSet = Mapper.Map<DataSet>(dataSetDbEntity);
+            dataSet = Mapper.Map<DataSet>(dbEntity);
 
             return dataSet;
         }
 
         public async Task DeleteDataSetAsync(DataSet dataSet)
         {
-            var dataSetDbEntity = Mapper.Map<DataSetDbEntity>(dataSet);
+            var dbEntity = Mapper.Map<DataSetDbEntity>(dataSet);
 
-            _dbContext.SafeDelete(dataSetDbEntity);
+            _dbContext.SafeDelete(dbEntity);
             await _dbContext.SaveChangesAsync();
         }
     }

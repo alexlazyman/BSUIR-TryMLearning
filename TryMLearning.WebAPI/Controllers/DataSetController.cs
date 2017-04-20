@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Newtonsoft.Json.Linq;
 using Swashbuckle.Swagger.Annotations;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Model;
@@ -12,51 +13,95 @@ using TryMLearning.Model;
 namespace TryMLearning.WebAPI.Controllers
 {
     [RoutePrefix("api/dataset")]
-    public class DataSetControllerController : ApiController
+    public class DataSetController : ApiController
     {
-        private readonly IAlgorithmService _algorithmService;
-        private readonly IAlgorithmSessionService _algorithmSessionService;
+        private readonly IDataSetService _dataSetService;
+        private readonly IDataSetSampleService<ClassificationDataSetSmaple> _classificationDataSetSampleService;
 
-        public DataSetControllerController(
-            IAlgorithmService algorithmService,
-            IAlgorithmSessionService algorithmSessionService)
+        public DataSetController(
+            IDataSetService dataSetService,
+            IDataSetSampleService<ClassificationDataSetSmaple> classificationDataSetSampleService)
         {
-            _algorithmService = algorithmService;
-            _algorithmSessionService = algorithmSessionService;
+            _dataSetService = dataSetService;
+            _classificationDataSetSampleService = classificationDataSetSampleService;
         }
 
-        // GET api/algorithm/5
-        [Route("{id:int}")]
+        // GET api/dataset/5
+        [Route("{dataSetId:int}")]
         [HttpGet]
-        [SwaggerOperation("Get algorithm by id")]
-        [SwaggerResponse(HttpStatusCode.OK)]
-        public async Task<Algorithm> GetAlgorithm(
-            [FromUri(Name = "id")] int algorithmId)
+        [SwaggerOperation("Get data set by id")]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(DataSet))]
+        public async Task<DataSet> GetDataSetAsync(int dataSetId)
         {
-            return await _algorithmService.GetAlgorithmAsync(algorithmId);
+            return await _dataSetService.GetDataSetAsync(dataSetId);
         }
 
-        // POST api/algorithm
-        [Route("")]
+        // POST api/dataset
+        [Route]
         [HttpPost]
-        [SwaggerOperation("Create algorithm")]
-        [SwaggerResponse(HttpStatusCode.Created)]
-        public async Task<Algorithm> CreateAlgorithm(
-            [FromBody] Algorithm algorithm)
+        [SwaggerOperation("Create data set")]
+        [SwaggerResponse(HttpStatusCode.Created, Type = typeof(DataSet))]
+        public async Task<DataSet> CreateDataSetAsync(DataSet dataSet)
         {
-            return await _algorithmService.AddAlgorithmAsync(algorithm);
+            return await _dataSetService.AddDataSetAsync(dataSet);
         }
 
-        // DELETE api/algorithm/5
-        [Route("{id:int}")]
-        [HttpDelete]
-        [SwaggerOperation("Delete algorithm")]
-        [SwaggerResponse(HttpStatusCode.OK)]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        public async Task DeleteAlgorithm(
-            [FromUri(Name = "id")] int algorithmId)
+        // PUT api/dataset
+        [Route]
+        [HttpPut]
+        [SwaggerOperation("Update data set")]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(DataSet))]
+        public async Task<DataSet> UpdateDataSetAsync(DataSet dataSet)
         {
-            await _algorithmService.DeleteAlgorithmAsync(algorithmId);
+            return await _dataSetService.UpdateDataSetAsync(dataSet);
         }
+
+        // DELETE api/dataset/5
+        [Route("{dataSetId:int}")]
+        [HttpDelete]
+        [SwaggerOperation("Delete data set")]
+        [SwaggerResponse(HttpStatusCode.OK)]
+        public async Task DeleteDataSetAsync(int dataSetId)
+        {
+            await _dataSetService.DeleteDataSetAsync(dataSetId);
+        }
+
+        #region Classification Data Set Sample
+
+        // GET api/dataset/5/sample/classification/0/10
+        [Route("{dataSetId:int}/sample/classification/{start:int}/{count:int}")]
+        [HttpGet]
+        [SwaggerOperation("Get classification data set samples")]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(List<ClassificationDataSetSmaple>))]
+        public async Task<List<ClassificationDataSetSmaple>> GetClassificationDataSetSamplesAsync(int dataSetId, int start, int count)
+        {
+            var samples = await _classificationDataSetSampleService.GetDataSetSamplesAsync(dataSetId, start, count);
+
+            return samples;
+        }
+
+        // POST api/dataset/5/sample/classification
+        [Route("{dataSetId:int}/sample/classification")]
+        [HttpPost]
+        [SwaggerOperation("Create classification data set samples")]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(List<ClassificationDataSetSmaple>))]
+        public async Task<List<ClassificationDataSetSmaple>> AddClassificationDataSetSamplesAsync(int dataSetId, List<ClassificationDataSetSmaple> samples)
+        {
+            samples = await _classificationDataSetSampleService.AddDataSetSamplesAsync(dataSetId, samples);
+
+            return samples;
+        }
+
+        // DELETE api/dataset/5/classification
+        [Route("{dataSetId:int}/sample/classification")]
+        [HttpDelete]
+        [SwaggerOperation("Delete data set samples")]
+        [SwaggerResponse(HttpStatusCode.OK)]
+        public async Task DeleteClassificationDataSetSamplesAsync(int dataSetId, List<int> dataSetSampleIds)
+        {
+            await _classificationDataSetSampleService.DeleteDataSetSamplesAsync(dataSetId, dataSetSampleIds);
+        }
+
+        #endregion
     }
 }

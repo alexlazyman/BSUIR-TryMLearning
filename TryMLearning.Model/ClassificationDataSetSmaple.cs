@@ -6,10 +6,8 @@
 
         public int DataSetId { get; set; }
 
-        public int ClassName { get; set; }
+        public string ClassName { get; set; }
 
-        public int Count { get; set; }
-
-        public DoubleTuple DoubleTuple { get; set; }
+        public double[] Values { get; set; }
     }
 }
