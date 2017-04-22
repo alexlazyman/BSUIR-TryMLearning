@@ -19,7 +19,6 @@ namespace TryMLearning.Persistence.Models.Map
         [ForeignKey(nameof(ClassificationDataSetSmapleId))]
         public ClassificationDataSetSmapleDbEntity ClassificationDataSetSmaple { get; set; }
 
-        [Column("SeqNum")]
-        public int SequentialNumber { get; set; }
+        public int Order { get; set; }
     }
 }

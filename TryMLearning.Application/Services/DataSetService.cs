@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Model;
 using TryMLearning.Persistence.Interface.Daos;
@@ -18,6 +19,11 @@ namespace TryMLearning.Application.Services
         public async Task<DataSet> AddDataSetAsync(DataSet dataSet)
         {
             return await _dataSetDao.AddDataSetAsync(dataSet);
+        }
+
+        public async Task<List<DataSet>> GetAllDataSetsAsync()
+        {
+            return await _dataSetDao.GetAllDataSetsAsync();
         }
 
         public async Task<DataSet> GetDataSetAsync(int dataSetId)

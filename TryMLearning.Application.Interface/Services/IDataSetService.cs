@@ -8,6 +8,8 @@ namespace TryMLearning.Application.Interface.Services
     {
         Task<DataSet> AddDataSetAsync(DataSet dataSet);
 
+        Task<List<DataSet>> GetAllDataSetsAsync();
+
         Task<DataSet> GetDataSetAsync(int dataSetId);
 
         Task<DataSet> UpdateDataSetAsync(DataSet dataSet);

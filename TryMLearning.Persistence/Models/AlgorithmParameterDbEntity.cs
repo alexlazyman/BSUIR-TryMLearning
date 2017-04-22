@@ -29,8 +29,7 @@ namespace TryMLearning.Persistence.Models
         [MaxLength(1024)]
         public string Description { get; set; }
 
-        [Column("SeqNum")]
-        public short SequentialNumber { get; set; }
+        public short Order { get; set; }
 
         public AlgorithmParameterType ValueType { get; set; }
     }

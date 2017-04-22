@@ -39,6 +39,15 @@ namespace TryMLearning.Persistence.Daos
             return dataSet;
         }
 
+        public async Task<List<DataSet>> GetAllDataSetsAsync()
+        {
+            var dbEntities = await _dbContext.DataSets.ToListAsync();
+
+            var dataSets = dbEntities.Select(Mapper.Map<DataSet>).ToList();
+
+            return dataSets;
+        }
+
         public async Task<DataSet> GetDataSetAsync(int dataSetId)
         {
             var dbEntity = await _dbContext.DataSets.FindAsync(dataSetId);

@@ -36,6 +36,16 @@ namespace TryMLearning.WebAPI.Controllers
             return await _dataSetService.GetDataSetAsync(dataSetId);
         }
 
+        // GET api/dataset
+        [Route]
+        [HttpGet]
+        [SwaggerOperation("Get all data sets")]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(List<DataSet>))]
+        public async Task<List<DataSet>> GetAllDataSetsAsync()
+        {
+            return await _dataSetService.GetAllDataSetsAsync();
+        }
+
         // POST api/dataset
         [Route]
         [HttpPost]

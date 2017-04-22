@@ -1,5 +1,9 @@
-﻿namespace TryMLearning.Model
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
+namespace TryMLearning.Model
 {
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public class DataSet
     {
         public int DataSetId { get; set; }

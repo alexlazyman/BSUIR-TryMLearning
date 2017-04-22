@@ -27,6 +27,17 @@ namespace TryMLearning.Persistence.Daos
             _dbContext = dbContext;
         }
 
+        public async Task<List<Algorithm>> GetAllAlgorithmsAsync()
+        {
+            var algorithmDbEntity = await _dbContext.Algorithms
+                .Include(a => a.AlgorithmParameters)
+                .ToListAsync();
+
+            var algorithms = algorithmDbEntity.Select(Mapper.Map<Algorithm>).ToList();
+
+            return algorithms;
+        }
+
         public async Task<Algorithm> GetAlgorithmAsync(int id)
         {
             var algorithmDbEntity = await _dbContext.Algorithms

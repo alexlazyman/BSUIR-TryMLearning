@@ -8,6 +8,8 @@ namespace TryMLearning.Application.Interface.Services
     {
         Task<Algorithm> AddAlgorithmAsync(Algorithm algorithm);
 
+        Task<List<Algorithm>> GetAllAlgorithmsAsync();
+
         Task<Algorithm> GetAlgorithmAsync(int algorithmId);
 
         Task<Algorithm> UpdateAlgorithmAsync(Algorithm algorithm);

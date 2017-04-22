@@ -50,7 +50,7 @@ namespace TryMLearning.Persistence.Configuration
                         tupleMaps.Add(new ClassificationDataSetSmapleDoubleTupleMap
                         {
                             DoubleTuple = new DoubleTupleDbEntity(selectedValues),
-                            SequentialNumber = i
+                            Order = i
                         });
                     }
 
@@ -64,7 +64,7 @@ namespace TryMLearning.Persistence.Configuration
                         return null;
                     }
 
-                    var tuples = sdb.DoubleTupleMaps.OrderBy(m => m.SequentialNumber).Select(m => m.DoubleTuple).ToArray();
+                    var tuples = sdb.DoubleTupleMaps.OrderBy(m => m.Order).Select(m => m.DoubleTuple).ToArray();
                     var result = new List<double?>(tuples.Length * DoubleTupleDbEntity.MaxCount);
 
                     foreach (var tuple in tuples)
