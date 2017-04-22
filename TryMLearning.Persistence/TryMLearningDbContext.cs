@@ -2,6 +2,7 @@
 using System.Data.Entity.ModelConfiguration.Conventions;
 using TryMLearning.Persistence.Constants;
 using TryMLearning.Persistence.Models;
+using TryMLearning.Persistence.Models.Map;
 
 namespace TryMLearning.Persistence
 {
@@ -10,6 +11,7 @@ namespace TryMLearning.Persistence
         public TryMLearningDbContext()
             : base(DatabaseNames.TryMLearning)
         {
+            var a = this.Configuration;
         }
 
         public DbSet<AlgorithmDbEntity> Algorithms { get; set; }
@@ -28,20 +30,22 @@ namespace TryMLearning.Persistence
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+            modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
+                .HasRequired(v => v.AlgorithmSession)
+                .WithMany(s => s.AlgorithmParameterValues)
+                .HasForeignKey(v => v.AlgorithmSessionId)
+                .WillCascadeOnDelete(false);
 
-            //modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
-            //    .HasRequired(v => v.AlgorithmSession)
-            //    .WithMany(s => s.AlgorithmParameterValues)
-            //    .HasForeignKey(v => v.AlgorithmSessionId)
-            //    .WillCascadeOnDelete(false);
+            modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
+                .HasRequired(v => v.AlgorithmParameter)
+                .WithMany()
+                .HasForeignKey(v => v.AlgorithmParameterId)
+                .WillCascadeOnDelete(false);
 
-            //modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
-            //    .HasRequired(v => v.AlgorithmParameter)
-            //    .WithMany()
-            //    .HasForeignKey(v => v.AlgorithmParameterId)
-            //    .WillCascadeOnDelete(false);
+            modelBuilder.Entity<ClassificationDataSetSmapleDoubleTupleMap>()
+                .HasRequired(m => m.DoubleTuple)
+                .WithRequiredPrincipal()
+                .WillCascadeOnDelete(true);
         }
     }
 }

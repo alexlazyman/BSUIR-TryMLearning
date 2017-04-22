@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using TryMLearning.Model;
 using TryMLearning.Persistence.Interfaces;
+using TryMLearning.Persistence.Models.Map;
 
 namespace TryMLearning.Persistence.Models
 {
@@ -27,9 +29,6 @@ namespace TryMLearning.Persistence.Models
 
         public int Count { get; set; }
 
-        public int DoubleTupleId { get; set; }
-
-        [ForeignKey(nameof(DoubleTupleId))]
-        public virtual DoubleTupleDbEntity DoubleTuple { get; set; }
+        public ICollection<ClassificationDataSetSmapleDoubleTupleMap> DoubleTupleMaps { get; set; }
     }
 }

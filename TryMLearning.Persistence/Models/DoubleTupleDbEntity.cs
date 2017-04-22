@@ -21,10 +21,13 @@ namespace TryMLearning.Persistence.Models
             
         }
 
+        [NotMapped]
+        public static readonly int MaxCount = 64;
+
         public DoubleTupleDbEntity(IEnumerable<double?> values)
         {
-            var takenValues = values.Take(64).ToList();
-            takenValues.AddRange(Enumerable.Repeat<double?>(null, 64 - takenValues.Count));
+            var takenValues = values.Take(MaxCount).ToList();
+            takenValues.AddRange(Enumerable.Repeat<double?>(null, MaxCount - takenValues.Count));
 
             Value0 = takenValues[0];
             Value1 = takenValues[1];
@@ -90,12 +93,6 @@ namespace TryMLearning.Persistence.Models
             Value61 = takenValues[61];
             Value62 = takenValues[62];
             Value63 = takenValues[63];
-
-            var restValues = values.Skip(64).ToArray();
-            if (restValues.Length != 0)
-            {
-                RelatedDoubleTuple = new DoubleTupleDbEntity(restValues);
-            }
         }
 
         int IDbEntity.Id
@@ -106,11 +103,6 @@ namespace TryMLearning.Persistence.Models
 
         [Key]
         public int DoubleTupleId { get; set; }
-
-        public int? RelatedDoubleTupleId { get; set; }
-
-        [ForeignKey(nameof(RelatedDoubleTupleId))]
-        public DoubleTupleDbEntity RelatedDoubleTuple { get; set; }
 
         #region Values: Value0 - Value63
 
@@ -310,16 +302,6 @@ namespace TryMLearning.Persistence.Models
             yield return Value61;
             yield return Value62;
             yield return Value63;
-
-            if (RelatedDoubleTuple == null)
-            {
-                yield break;
-            }
-
-            foreach (var value in RelatedDoubleTuple)
-            {
-                yield return value;
-            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()

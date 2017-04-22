@@ -65,22 +65,13 @@ namespace TryMLearning.Persistence.Daos
         public async Task<List<ClassificationDataSetSmaple>> GetDataSetSamplesAsync(int dataSetId, int start, int count)
         {
             var dbEntities = await _dbContext.ClassificationDataSmaples
+                .AsNoTracking()
+                .Include(s => s.DoubleTupleMaps.Select(m => m.DoubleTuple))
                 .Where(s => s.DataSetId == dataSetId)
                 .OrderBy(s => s.ClassificationDataSetSmapleId)
                 .Skip(start)
                 .Take(count)
                 .ToListAsync();
-
-            foreach (var dbEntity in dbEntities)
-            {
-                var doubleTuple = dbEntity.DoubleTuple;
-                while (doubleTuple?.RelatedDoubleTupleId != null)
-                {
-                    await _dbContext.Entry(doubleTuple).Reference(t => t.RelatedDoubleTuple).LoadAsync();
-
-                    doubleTuple = doubleTuple.RelatedDoubleTuple;
-                }
-            }
 
             var dataSetSamples = dbEntities.Select(Mapper.Map<ClassificationDataSetSmaple>).ToList();
 

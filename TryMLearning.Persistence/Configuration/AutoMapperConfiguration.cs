@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using TryMLearning.Model;
 using TryMLearning.Persistence.Models;
+using TryMLearning.Persistence.Models.Map;
 
 namespace TryMLearning.Persistence.Configuration
 {
@@ -30,9 +33,47 @@ namespace TryMLearning.Persistence.Configuration
 
             cfg.CreateMap<ClassificationDataSetSmaple, ClassificationDataSetSmapleDbEntity>()
                 .ForMember(sdb => sdb.Count, opt => opt.ResolveUsing(s => s.Values?.Length ?? 0))
-                .ForMember(sdb => sdb.DoubleTuple, opt => opt.ResolveUsing(s => s.Values != null ? new DoubleTupleDbEntity(s.Values) : null));
+                .ForMember(sdb => sdb.DoubleTupleMaps, opt => opt.ResolveUsing(s =>
+                {
+                    if (s.Values == null)
+                    {
+                        return null;
+                    }
+
+                    var tupleCount = Math.Ceiling((double) s.Values.Length / DoubleTupleDbEntity.MaxCount);
+
+                    var tupleMaps = new List<ClassificationDataSetSmapleDoubleTupleMap>();
+                    for (int i = 0; i < tupleCount; i++)
+                    {
+                        var selectedValues = s.Values.Skip(i * DoubleTupleDbEntity.MaxCount);
+
+                        tupleMaps.Add(new ClassificationDataSetSmapleDoubleTupleMap
+                        {
+                            DoubleTuple = new DoubleTupleDbEntity(selectedValues),
+                            SequentialNumber = i
+                        });
+                    }
+
+                    return tupleMaps;
+                }));
             cfg.CreateMap<ClassificationDataSetSmapleDbEntity, ClassificationDataSetSmaple>()
-                .ForMember(s => s.Values, opt => opt.ResolveUsing(sdb => sdb.DoubleTuple.Take(sdb.Count).Cast<double>().ToArray()));
+                .ForMember(s => s.Values, opt => opt.ResolveUsing(sdb =>
+                {
+                    if (sdb.DoubleTupleMaps == null)
+                    {
+                        return null;
+                    }
+
+                    var tuples = sdb.DoubleTupleMaps.OrderBy(m => m.SequentialNumber).Select(m => m.DoubleTuple).ToArray();
+                    var result = new List<double?>(tuples.Length * DoubleTupleDbEntity.MaxCount);
+
+                    foreach (var tuple in tuples)
+                    {
+                        result.AddRange(tuple);
+                    }
+
+                    return result.Take(sdb.Count).Cast<double>().ToList();
+                }));
         }
     }
 }
