@@ -7,6 +7,7 @@ using TryMLearning.Application.Interface.Services;
 using TryMLearning.Application.Interface.Validation;
 using TryMLearning.Application.Validation;
 using TryMLearning.Model;
+using TryMLearning.Model.Exceptions;
 using TryMLearning.Model.Validation;
 using TryMLearning.Persistence.Interface;
 using TryMLearning.Persistence.Interface.Daos;
@@ -20,7 +21,7 @@ namespace TryMLearning.Application.Services
         private readonly IAlgorithmSessionService _algorithmSessionService;
         private readonly ITransactionScope _transactionScope;
         private readonly IValidator<Algorithm> _algorithmValidator;
-        private readonly IValidator<AlgorithmForm> _algorithmFormValidator;
+        private readonly IValidator<AlgorithmSession> _algorithmSessionValidator;
 
         public AlgorithmService(
             IAlgorithmDao algorithmDao,
@@ -28,14 +29,14 @@ namespace TryMLearning.Application.Services
             IAlgorithmSessionService algorithmSessionService,
             ITransactionScope transactionScope,
             IValidator<Algorithm> algorithmValidator,
-            IValidator<AlgorithmForm> algorithmFormValidator)
+            IValidator<AlgorithmSession> algorithmSessionValidator)
         {
             _algorithmDao = algorithmDao;
             _algorithmParameterDao = algorithmParameterDao;
             _algorithmSessionService = algorithmSessionService;
             _transactionScope = transactionScope;
             _algorithmValidator = algorithmValidator;
-            _algorithmFormValidator = algorithmFormValidator;
+            _algorithmSessionValidator = algorithmSessionValidator;
         }
 
         public async Task<Algorithm> AddAlgorithmAsync(Algorithm algorithm)
@@ -116,15 +117,19 @@ namespace TryMLearning.Application.Services
             await _algorithmDao.DeleteAlgorithmAsync(algorithm);
         }
 
-        public async Task<AlgorithmSession> RunAlgorithmAsync(AlgorithmForm algorithmForm)
+        public async Task<AlgorithmSession> RunAlgorithmAsync(int algorithmId, List<AlgorithmParameterValue> parameterValues)
         {
-            var validationResult = await _algorithmFormValidator.ValidateAsync(algorithmForm);
+            var algorithSession = new AlgorithmSession()
+            {
+                AlgorithmId = algorithmId,
+                ParameterValues = parameterValues
+            };
+
+            var validationResult = await _algorithmSessionValidator.ValidateAsync(algorithSession);
             if (!validationResult.IsValid)
             {
                 throw new ValidationException("Algorithm form is not valid", validationResult.Errors);
             }
-
-            var algorithSession = Mapper.Map<AlgorithmSession>(algorithmForm);
 
             using (var ts = _transactionScope.Begin())
             {

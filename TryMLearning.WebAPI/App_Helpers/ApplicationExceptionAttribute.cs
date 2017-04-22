@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using TryMLearning.Model.Exceptions;
 using TryMLearning.Model.Validation;
 
 namespace TryMLearning.WebAPI.App_Helpers

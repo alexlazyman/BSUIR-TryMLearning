@@ -11,48 +11,80 @@ using TryMLearning.Model;
 
 namespace TryMLearning.WebAPI.Controllers
 {
+    [RoutePrefix("api/algorithm")]
     public class AlgorithmController : ApiController
     {
         private readonly IAlgorithmService _algorithmService;
+        private readonly IAlgorithmSessionService _algorithmSessionService;
 
-        public AlgorithmController(IAlgorithmService algorithmService)
+        public AlgorithmController(
+            IAlgorithmService algorithmService,
+            IAlgorithmSessionService algorithmSessionService)
         {
             _algorithmService = algorithmService;
+            _algorithmSessionService = algorithmSessionService;
         }
 
         // GET api/algorithm/5
-        [SwaggerOperation("GetById")]
+        [Route("{algorithmId:int}")]
+        [HttpGet]
+        [SwaggerOperation("Get algorithm by id")]
         [SwaggerResponse(HttpStatusCode.OK)]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        public async Task<Algorithm> Get(int id)
+        public async Task<Algorithm> GetAlgorithmAsync(int algorithmId)
         {
-            return await _algorithmService.GetAlgorithmAsync(id);
+            return await _algorithmService.GetAlgorithmAsync(algorithmId);
         }
 
         // POST api/algorithm
-        [SwaggerOperation("Create")]
+        [Route("")]
+        [HttpPost]
+        [SwaggerOperation("Create algorithm")]
         [SwaggerResponse(HttpStatusCode.Created)]
-        public async Task<Algorithm> Post([FromBody] Algorithm algorithm)
+        public async Task<Algorithm> CreateAlgorithmAsync(Algorithm algorithm)
         {
             return await _algorithmService.AddAlgorithmAsync(algorithm);
         }
 
         // PUT api/algorithm
-        [SwaggerOperation("Update")]
+        [Route("")]
+        [HttpPut]
+        [SwaggerOperation("Update algorithm")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public async Task<Algorithm> Put([FromBody] Algorithm algorithm)
+        public async Task<Algorithm> UpdateAlgorithmAsync(Algorithm algorithm)
         {
             return await _algorithmService.UpdateAlgorithmAsync(algorithm);
         }
 
         // DELETE api/algorithm/5
-        [SwaggerOperation("Delete")]
+        [Route("{algorithmId:int}")]
+        [HttpDelete]
+        [SwaggerOperation("Delete algorithm")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public async Task Delete(int id)
+        public async Task DeleteAlgorithmAsync(int algorithmId)
         {
-            await _algorithmService.DeleteAlgorithmAsync(id);
+            await _algorithmService.DeleteAlgorithmAsync(algorithmId);
+        }
+
+        // POST api/algorithm/5/run
+        [Route("{algorithmId:int}/run")]
+        [HttpDelete]
+        [SwaggerOperation("Run algorithm")]
+        [SwaggerResponse(HttpStatusCode.OK)]
+        public async Task<AlgorithmSession> RunAlgorithmAsync(int algorithmId, List<AlgorithmParameterValue> algorithmParameters)
+        {
+            return await _algorithmService.RunAlgorithmAsync(algorithmId, algorithmParameters);
+        }
+
+        // GET api/algorithm/run/5
+        [Route("run/{algorithmSessionId:int}")]
+        [HttpGet]
+        [SwaggerOperation("Get computing status of algorithm")]
+        [SwaggerResponse(HttpStatusCode.OK)]
+        public async Task<AlgorithmSession> GetComputingStatusAsync(int algorithmSessionId)
+        {
+            return await _algorithmSessionService.GetAlgorithmSessionAsync(algorithmSessionId);
         }
     }
 }

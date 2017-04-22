@@ -2,6 +2,7 @@
 using System.Data.Entity.ModelConfiguration.Conventions;
 using TryMLearning.Persistence.Constants;
 using TryMLearning.Persistence.Models;
+using TryMLearning.Persistence.Models.Map;
 
 namespace TryMLearning.Persistence
 {
@@ -10,6 +11,7 @@ namespace TryMLearning.Persistence
         public TryMLearningDbContext()
             : base(DatabaseNames.TryMLearning)
         {
+            var a = this.Configuration;
         }
 
         public DbSet<AlgorithmDbEntity> Algorithms { get; set; }
@@ -22,7 +24,7 @@ namespace TryMLearning.Persistence
 
         public DbSet<DataSetDbEntity> DataSets { get; set; }
 
-        public DbSet<ClassificationDataSmapleDbEntity> ClassificationDataSmaples { get; set; }
+        public DbSet<ClassificationDataSetSmapleDbEntity> ClassificationDataSmaples { get; set; }
 
         public DbSet<DoubleTupleDbEntity> DoubleTuples { get; set; }
 
@@ -39,6 +41,11 @@ namespace TryMLearning.Persistence
                 .WithMany()
                 .HasForeignKey(v => v.AlgorithmParameterId)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ClassificationDataSetSmapleDoubleTupleMap>()
+                .HasRequired(m => m.DoubleTuple)
+                .WithRequiredPrincipal()
+                .WillCascadeOnDelete(true);
         }
     }
 }

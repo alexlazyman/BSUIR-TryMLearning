@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TryMLearning.Model;
 using TryMLearning.Persistence.Interfaces;
 
 namespace TryMLearning.Persistence.Models
@@ -22,5 +23,7 @@ namespace TryMLearning.Persistence.Models
 
         [MaxLength(1024)]
         public string Description { get; set; }
+
+        public DataSetType Type { get; set; }
     }
 }

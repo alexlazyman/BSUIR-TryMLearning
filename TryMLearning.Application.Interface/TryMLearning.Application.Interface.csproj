@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services\IDataSetSampleService.cs" />
+    <Compile Include="Services\IDataSetService.cs" />
     <Compile Include="Services\IAlgorithmSessionService.cs" />
     <Compile Include="Services\IAlgorithmService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

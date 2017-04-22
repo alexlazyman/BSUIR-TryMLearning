@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TryMLearning.Model.Validation;
 
-namespace TryMLearning.Model.Validation
+namespace TryMLearning.Model.Exceptions
 {
     public class ValidationException : Exception
     {
