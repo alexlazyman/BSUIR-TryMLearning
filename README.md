@@ -1,1 +1,1 @@
-# BSUIR-TryMLearning
+# TryMLearning
