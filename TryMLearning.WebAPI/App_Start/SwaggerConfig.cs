@@ -3,8 +3,6 @@ using WebActivatorEx;
 using TryMLearning.WebAPI;
 using Swashbuckle.Application;
 
-[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
-
 namespace TryMLearning.WebAPI
 {
     public class SwaggerConfig

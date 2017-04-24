@@ -11,7 +11,7 @@ namespace TryMLearning.Persistence
         public TryMLearningDbContext()
             : base(DatabaseNames.TryMLearning)
         {
-            var a = this.Configuration;
+            Database.SetInitializer(new TryMLearningDbContextInitializer());
         }
 
         public DbSet<AlgorithmDbEntity> Algorithms { get; set; }

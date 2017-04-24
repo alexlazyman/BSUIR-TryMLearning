@@ -11,7 +11,7 @@ namespace TryMLearning.Model
         public int DataSetId { get; set; }
 
         [JsonProperty("class")]
-        public string ClassName { get; set; }
+        public int ClassId { get; set; }
 
         [JsonProperty("vals")]
         public double[] Values { get; set; }

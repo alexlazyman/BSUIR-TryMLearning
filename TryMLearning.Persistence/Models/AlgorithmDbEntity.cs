@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using TryMLearning.Persistence.Interfaces;
 
 namespace TryMLearning.Persistence.Models
@@ -27,6 +28,10 @@ namespace TryMLearning.Persistence.Models
 
         [MaxLength(1024)]
         public string Description { get; set; }
+
+        [MaxLength(128)]
+        [Index(IsUnique = true)]
+        public string Alias { get; set; }
 
         public ICollection<AlgorithmParameterDbEntity> AlgorithmParameters { get; set; }
     }

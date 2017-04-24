@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using TryMLearning.Model.Constants;
 
 namespace TryMLearning.Model
 {
@@ -13,6 +14,11 @@ namespace TryMLearning.Model
 
         public string Description { get; set; }
 
+        public string Alias { get; set; }
+
         public List<AlgorithmParameter> Parameters { get; set; }
+
+        [JsonIgnore]
+        public bool IsClassificationAlgorithm => Alias != null && Alias.StartsWith(AlgorithmAliases.ClassificationPrefix);
     }
 }

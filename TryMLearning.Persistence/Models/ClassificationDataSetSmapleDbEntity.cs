@@ -23,9 +23,8 @@ namespace TryMLearning.Persistence.Models
         
         [ForeignKey(nameof(DataSetId))]
         public virtual DataSetDbEntity DataSet { get; set; }
-
-        [MaxLength(256)]
-        public string ClassName { get; set; }
+        
+        public int ClassId { get; set; }
 
         public int Count { get; set; }
 

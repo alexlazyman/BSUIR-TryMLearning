@@ -78,13 +78,13 @@ namespace TryMLearning.WebAPI.Controllers
         }
 
         // POST api/algorithm/5/run
-        [Route("{algorithmId:int}/run")]
+        [Route("{algorithmId:int}/run/dataset/{dataSetId:int}")]
         [HttpDelete]
         [SwaggerOperation("Run algorithm")]
         [SwaggerResponse(HttpStatusCode.OK)]
-        public async Task<AlgorithmSession> RunAlgorithmAsync(int algorithmId, List<AlgorithmParameterValue> algorithmParameters)
+        public async Task<AlgorithmSession> RunAlgorithmAsync(int algorithmId, int dataSetId, List<AlgorithmParameterValue> algorithmParameters)
         {
-            return await _algorithmService.RunAlgorithmAsync(algorithmId, algorithmParameters);
+            return await _algorithmService.RunAlgorithmAsync(algorithmId, dataSetId, algorithmParameters);
         }
 
         // GET api/algorithm/run/5

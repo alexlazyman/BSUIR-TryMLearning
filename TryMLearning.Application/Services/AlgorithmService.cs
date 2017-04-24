@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using TryMLearning.Application.Interface.MachineLearning;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Application.Interface.Validation;
 using TryMLearning.Application.Validation;
@@ -16,25 +17,38 @@ namespace TryMLearning.Application.Services
 {
     public class AlgorithmService : IAlgorithmService
     {
+        private readonly ITransactionScope _transactionScope;
+
         private readonly IAlgorithmDao _algorithmDao;
         private readonly IAlgorithmParameterDao _algorithmParameterDao;
+
         private readonly IAlgorithmSessionService _algorithmSessionService;
-        private readonly ITransactionScope _transactionScope;
+        private readonly IDataSetService _dataSetService;
+
+        private readonly IClassifierFactory _classifierFactory;
+        private readonly IDataSetSampleStreamFactory _dataSetSampleStreamFactory;
+
         private readonly IValidator<Algorithm> _algorithmValidator;
         private readonly IValidator<AlgorithmSession> _algorithmSessionValidator;
 
         public AlgorithmService(
+            ITransactionScope transactionScope,
             IAlgorithmDao algorithmDao,
             IAlgorithmParameterDao algorithmParameterDao,
             IAlgorithmSessionService algorithmSessionService,
-            ITransactionScope transactionScope,
+            IDataSetService dataSetService,
+            IClassifierFactory classifierFactory,
+            IDataSetSampleStreamFactory dataSetSampleStreamFactory,
             IValidator<Algorithm> algorithmValidator,
             IValidator<AlgorithmSession> algorithmSessionValidator)
         {
+            _transactionScope = transactionScope;
             _algorithmDao = algorithmDao;
             _algorithmParameterDao = algorithmParameterDao;
             _algorithmSessionService = algorithmSessionService;
-            _transactionScope = transactionScope;
+            _dataSetService = dataSetService;
+            _classifierFactory = classifierFactory;
+            _dataSetSampleStreamFactory = dataSetSampleStreamFactory;
             _algorithmValidator = algorithmValidator;
             _algorithmSessionValidator = algorithmSessionValidator;
         }
@@ -143,11 +157,12 @@ namespace TryMLearning.Application.Services
             await _algorithmDao.DeleteAlgorithmAsync(algorithm);
         }
 
-        public async Task<AlgorithmSession> RunAlgorithmAsync(int algorithmId, List<AlgorithmParameterValue> parameterValues)
+        public async Task<AlgorithmSession> RunAlgorithmAsync(int algorithmId, int dataSetId, List<AlgorithmParameterValue> parameterValues)
         {
             var algorithSession = new AlgorithmSession()
             {
                 AlgorithmId = algorithmId,
+                DataSetId = dataSetId,
                 ParameterValues = parameterValues
             };
 
@@ -174,6 +189,28 @@ namespace TryMLearning.Application.Services
             }
 
             return algorithSession;
+        }
+
+        public async Task ComputeClassificationAlgorithmAsync(int algorithmSessionId)
+        {
+            var algorithmSession = await _algorithmSessionService.GetAlgorithmSessionAsync(algorithmSessionId);
+
+            var algorithm = await GetAlgorithmAsync(algorithmSession.AlgorithmId);
+            if (!algorithm.IsClassificationAlgorithm)
+            {
+                return;
+            }
+
+            var dataSet = await _dataSetService.GetDataSetAsync(algorithmSession.DataSetId);
+            if (dataSet.Type != DataSetType.Classification)
+            {
+                return;
+            }
+
+            var classifier = _classifierFactory.GetClassifier(algorithm.Alias);
+            var dataSetSampleStream = _dataSetSampleStreamFactory.GetDataSetSampleStream<ClassificationDataSetSmaple>(algorithmSession.DataSetId);
+
+            await classifier.ComputeAsync(dataSetSampleStream);
         }
 
         private async Task UpdateAlgorithmParametersAsync(List<AlgorithmParameter> existingAlgParams, List<AlgorithmParameter> updatedAlgParams)

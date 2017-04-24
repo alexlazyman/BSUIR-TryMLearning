@@ -99,6 +99,7 @@
     <Compile Include="Transaction.cs" />
     <Compile Include="TransactionScope.cs" />
     <Compile Include="TryMLearningDbContext.cs" />
+    <Compile Include="TryMLearningDbContextInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -108,6 +109,10 @@
     <Folder Include="StoredProcedures\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TryMLearning.Data\TryMLearning.Data.csproj">
+      <Project>{06878df0-fa5f-4796-8107-7a2d12fcb5ad}</Project>
+      <Name>TryMLearning.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TryMLearning.Model\TryMLearning.Model.csproj">
       <Project>{7e9ba1af-aac3-4f49-ab1a-acf5811a816b}</Project>
       <Name>TryMLearning.Model</Name>
