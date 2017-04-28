@@ -15,14 +15,14 @@ namespace TryMLearning.WebAPI.Controllers
     public class AlgorithmController : ApiController
     {
         private readonly IAlgorithmService _algorithmService;
-        private readonly IAlgorithmSessionService _algorithmSessionService;
+        private readonly IAlgorithmEstimateService _algorithmEstimateService;
 
         public AlgorithmController(
             IAlgorithmService algorithmService,
-            IAlgorithmSessionService algorithmSessionService)
+            IAlgorithmEstimateService algorithmEstimateService)
         {
             _algorithmService = algorithmService;
-            _algorithmSessionService = algorithmSessionService;
+            _algorithmEstimateService = algorithmEstimateService;
         }
 
         // GET api/algorithm/5
@@ -82,19 +82,19 @@ namespace TryMLearning.WebAPI.Controllers
         [HttpDelete]
         [SwaggerOperation("Run algorithm")]
         [SwaggerResponse(HttpStatusCode.OK)]
-        public async Task<AlgorithmSession> RunAlgorithmAsync(int algorithmId, int dataSetId, List<AlgorithmParameterValue> algorithmParameters)
+        public async Task<AlgorithmEstimate> RunAlgorithmAsync(int algorithmId, int dataSetId, List<AlgorithmParameterValue> algorithmParameters)
         {
             return await _algorithmService.RunAlgorithmAsync(algorithmId, dataSetId, algorithmParameters);
         }
 
         // GET api/algorithm/run/5
-        [Route("run/{algorithmSessionId:int}")]
+        [Route("run/{algorithmEstimateId:int}")]
         [HttpGet]
         [SwaggerOperation("Get computing status of algorithm")]
         [SwaggerResponse(HttpStatusCode.OK)]
-        public async Task<AlgorithmSession> GetComputingStatusAsync(int algorithmSessionId)
+        public async Task<AlgorithmEstimate> GetComputingStatusAsync(int algorithmEstimateId)
         {
-            return await _algorithmSessionService.GetAlgorithmSessionAsync(algorithmSessionId);
+            return await _algorithmEstimateService.GetAlgorithmEstimateAsync(algorithmEstimateId);
         }
     }
 }

@@ -5,16 +5,18 @@ using Newtonsoft.Json.Serialization;
 namespace TryMLearning.Model
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public class AlgorithmSession
+    public class AlgorithmEstimate
     {
-        public int AlgorithmSessionId { get; set; }
+        public int AlgorithmEstimateId { get; set; }
 
         public int AlgorithmId { get; set; }
 
         public int DataSetId { get; set; }
 
-        public AlgorithmSessionStatus Status { get; set; }
+        public AlgorithmEstimateStatus Status { get; set; }
 
         public List<AlgorithmParameterValue> ParameterValues { get; set; }
+
+        public List<string> Estimates { get; set; }
     }
 }

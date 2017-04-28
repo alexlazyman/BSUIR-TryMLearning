@@ -10,7 +10,7 @@ namespace TryMLearning.Model
 
         public int AlgorithmParameterId { get; set; }
 
-        public int AlgorithmSessionId { get; set; }
+        public int AlgorithmEstimateId { get; set; }
 
         public int? IntValue { get; set; }
 

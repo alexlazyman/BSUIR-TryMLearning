@@ -1,11 +1,14 @@
-﻿using System.Threading.Tasks;
-using TryMLearning.Application.Interface.MachineLearning.DataSetSampleStreams;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using TryMLearning.Application.Interface.MachineLearning.SampleStreams;
 using TryMLearning.Model;
 
 namespace TryMLearning.Application.Interface.MachineLearning.Classifiers
 {
     public interface IClassifier
     {
-        Task ComputeAsync(IDataSetSampleStream<ClassificationDataSetSmaple> stream);
+        void Train(IEnumerable<ClassificationSample> samples);
+
+        IEnumerable<bool> Check(IEnumerable<ClassificationSample> samples);
     }
 }

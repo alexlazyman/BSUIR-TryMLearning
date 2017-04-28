@@ -6,17 +6,17 @@ using TryMLearning.Persistence.Interfaces;
 
 namespace TryMLearning.Persistence.Models
 {
-    [Table("AlgorithmSession")]
-    public class AlgorithmSessionDbEntity : IDbEntity
+    [Table("AlgorithmEstimate")]
+    public class AlgorithmEstimateDbEntity : IDbEntity
     {
         int IDbEntity.Id
         {
-            get => AlgorithmSessionId;
-            set => AlgorithmSessionId = value;
+            get => AlgorithmEstimateId;
+            set => AlgorithmEstimateId = value;
         }
 
         [Key]
-        public int AlgorithmSessionId { get; set; }
+        public int AlgorithmEstimateId { get; set; }
 
         public int AlgorithmId { get; set; }
 
@@ -28,7 +28,7 @@ namespace TryMLearning.Persistence.Models
         [ForeignKey(nameof(DataSetId))]
         public virtual DataSetDbEntity DataSet { get; set; }
 
-        public AlgorithmSessionStatus Status { get; set; }
+        public AlgorithmEstimateStatus Status { get; set; }
 
         public ICollection<AlgorithmParameterValueDbEntity> AlgorithmParameterValues { get; set; }
     }

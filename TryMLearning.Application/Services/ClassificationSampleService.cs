@@ -10,25 +10,25 @@ using TryMLearning.Persistence.Interface.Daos;
 
 namespace TryMLearning.Application.Services
 {
-    public class ClassificationDataSetSampleService : IDataSetSampleService<ClassificationDataSetSmaple>
+    public class ClassificationSampleService : ISampleService<ClassificationSample>
     {
         private string DataSetNotFoundErrorMessage(int dataSetId) => $"Data set with id {dataSetId} does not exist";
-        private string DataSetSampleNotFoundErrorMessage(int dataSetSampleId) => $"Classification data set sample with id {dataSetSampleId} does not exist";
+        private string SampleNotFoundErrorMessage(int sampleId) => $"Classification data set sample with id {sampleId} does not exist";
         private string NotClassificationDataSetErrorMessage(DataSet dataSet) => $"Data set with id {dataSet.DataSetId} does not belong to classification data sets";
-        private string NotAcceptableDataSetSampleErrorMessage(int dataSetId, int dataSetSampleId) => $"Data set sample with id {dataSetSampleId} does not belong to data set with id {dataSetId}";
+        private string NotAcceptableSampleErrorMessage(int dataSetId, int sampleId) => $"Data set sample with id {sampleId} does not belong to data set with id {dataSetId}";
 
-        private readonly IDataSetSampleDao<ClassificationDataSetSmaple> _classificationDataSetSmapleDao;
+        private readonly ISampleDao<ClassificationSample> _classificationDataSetSampleDao;
         private readonly IDataSetDao _dataSetDao;
 
-        public ClassificationDataSetSampleService(
-            IDataSetSampleDao<ClassificationDataSetSmaple> classificationDataSetSmapleDao,
+        public ClassificationSampleService(
+            ISampleDao<ClassificationSample> classificationDataSetSampleDao,
             IDataSetDao dataSetDao)
         {
-            _classificationDataSetSmapleDao = classificationDataSetSmapleDao;
+            _classificationDataSetSampleDao = classificationDataSetSampleDao;
             _dataSetDao = dataSetDao;
         }
 
-        public async Task<List<ClassificationDataSetSmaple>> AddDataSetSamplesAsync(int dataSetId, List<ClassificationDataSetSmaple> dataSetSamples)
+        public async Task<List<ClassificationSample>> AddSamplesAsync(int dataSetId, List<ClassificationSample> samples)
         {
             var dataSet = await _dataSetDao.GetDataSetAsync(dataSetId);
             if (dataSet == null)
@@ -41,14 +41,14 @@ namespace TryMLearning.Application.Services
                 throw new UnauthorizedAccessException(NotClassificationDataSetErrorMessage(dataSet));
             }
 
-            dataSetSamples.ForEach(s => s.DataSetId = dataSetId);
+            samples.ForEach(s => s.DataSetId = dataSetId);
 
-            var samples = await _classificationDataSetSmapleDao.AddDataSetSamplesAsync(dataSetSamples);
+            var addedSamples = await _classificationDataSetSampleDao.AddSamplesAsync(samples);
 
-            return samples;
+            return addedSamples;
         }
 
-        public async Task<int> GetDataSetSampleCountAsync(int dataSetId)
+        public async Task<int> GetSampleCountAsync(int dataSetId)
         {
             var dataSet = await _dataSetDao.GetDataSetAsync(dataSetId);
             if (dataSet == null)
@@ -61,12 +61,12 @@ namespace TryMLearning.Application.Services
                 throw new UnauthorizedAccessException(NotClassificationDataSetErrorMessage(dataSet));
             }
 
-            var count = await _classificationDataSetSmapleDao.GetDataSetSampleCountAsync(dataSetId);
+            var count = await _classificationDataSetSampleDao.GetSampleCountAsync(dataSetId);
 
             return count;
         }
 
-        public async Task<List<ClassificationDataSetSmaple>> GetDataSetSamplesAsync(int dataSetId, int start, int count)
+        public async Task<List<ClassificationSample>> GetSamplesAsync(int dataSetId, int start, int count)
         {
             var dataSet = await _dataSetDao.GetDataSetAsync(dataSetId);
             if (dataSet == null)
@@ -79,12 +79,12 @@ namespace TryMLearning.Application.Services
                 throw new UnauthorizedAccessException(NotClassificationDataSetErrorMessage(dataSet));
             }
 
-            var samples = await _classificationDataSetSmapleDao.GetDataSetSamplesAsync(dataSetId, start, count);
+            var samples = await _classificationDataSetSampleDao.GetSamplesAsync(dataSetId, start, count);
 
             return samples;
         }
 
-        public async Task DeleteDataSetSamplesAsync(int dataSetId, List<int> dataSetSampleIds)
+        public async Task DeleteSamplesAsync(int dataSetId, List<int> sampleIds)
         {
             var dataSet = await _dataSetDao.GetDataSetAsync(dataSetId);
             if (dataSet == null)
@@ -97,26 +97,26 @@ namespace TryMLearning.Application.Services
                 throw new UnauthorizedAccessException(NotClassificationDataSetErrorMessage(dataSet));
             }
 
-            foreach (var dataSetSampleId in dataSetSampleIds)
+            foreach (var sampleId in sampleIds)
             {
-                var dataSetSample = await _classificationDataSetSmapleDao.GetDataSetSampleAsync(dataSetSampleId);
-                if (dataSetSample == null)
+                var sample = await _classificationDataSetSampleDao.GetSampleAsync(sampleId);
+                if (sample == null)
                 {
-                    throw new NotFoundException(DataSetSampleNotFoundErrorMessage(dataSetSampleId));
+                    throw new NotFoundException(SampleNotFoundErrorMessage(sampleId));
                 }
 
-                if (dataSetSample.DataSetId != dataSetId)
+                if (sample.DataSetId != dataSetId)
                 {
-                    throw new UnauthorizedAccessException(NotAcceptableDataSetSampleErrorMessage(dataSetId, dataSetSampleId));
+                    throw new UnauthorizedAccessException(NotAcceptableSampleErrorMessage(dataSetId, sampleId));
                 }
             }
 
-            var samples = dataSetSampleIds.Select(id => new ClassificationDataSetSmaple
+            var samples = sampleIds.Select(id => new ClassificationSample
             {
-                ClassificationDataSetSmapleId = id
+                ClassificationDataSetSampleId = id
             }).ToList();
 
-            await _classificationDataSetSmapleDao.DeleteDataSetSamplesAsync(samples);
+            await _classificationDataSetSampleDao.DeleteSamplesAsync(samples);
         }
     }
 }

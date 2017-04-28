@@ -51,10 +51,11 @@
     <Compile Include="AlgorithmParameterType.cs" />
     <Compile Include="AlgorithmParameterValue.cs" />
     <Compile Include="AlgorithmSessionStatus.cs" />
-    <Compile Include="ClassificationDataSetSmaple.cs" />
+    <Compile Include="ClassificationSample.cs" />
     <Compile Include="Constants\StorageNames.cs" />
     <Compile Include="Constants\StorageQueueNames.cs" />
     <Compile Include="DataSet.cs" />
+    <Compile Include="EstimateAlias.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\ValidationError.cs" />

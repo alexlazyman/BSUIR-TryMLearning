@@ -18,9 +18,9 @@ namespace TryMLearning.AlgorithmWebJob.Functions
             _algorithmService = algorithmService;
         }
 
-        public async void RunClassificationAlgorithm([QueueTrigger(StorageQueueNames.ClassificationAlgorithm)] int algorithmSessionId)
+        public async void RunClassificationAlgorithm([QueueTrigger(StorageQueueNames.ClassificationAlgorithm)] int algorithmEstimateId)
         {
-            await _algorithmService.ComputeClassificationAlgorithmAsync(algorithmSessionId);
+            await _algorithmService.EstimateClassificationAlgorithmAsync(algorithmEstimateId);
         }
     }
 }

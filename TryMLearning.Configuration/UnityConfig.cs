@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using TryMLearning.Application.Interface.MachineLearning;
 using TryMLearning.Application.Interface.MachineLearning.Classifiers;
-using TryMLearning.Application.Interface.MachineLearning.DataSetSampleStreams;
+using TryMLearning.Application.Interface.MachineLearning.SampleStreams;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Application.Interface.Validation;
 using TryMLearning.Application.MachineLearning;
 using TryMLearning.Application.MachineLearning.Classifiers;
-using TryMLearning.Application.MachineLearning.DataSetSampleStreams;
+using TryMLearning.Application.MachineLearning.SampleStreams;
 using TryMLearning.Application.Services;
 using TryMLearning.Application.Validation;
 using TryMLearning.Model;
@@ -38,29 +38,29 @@ namespace TryMLearning.Configuration
                 // Daos
                 .RegisterType<IAlgorithmDao, AlgorithmDao>(new HierarchicalLifetimeManager())
                 .RegisterType<IAlgorithmParameterDao, AlgorithmParameterDao>(new HierarchicalLifetimeManager())
-                .RegisterType<IAlgorithmSessionDao, AlgorithmSessionDao>(new HierarchicalLifetimeManager())
+                .RegisterType<IAlgorithmEstimateDao, AlgorithmEstimateDao>(new HierarchicalLifetimeManager())
                 
                 .RegisterType<IDataSetDao, DataSetDao>(new HierarchicalLifetimeManager())
-                .RegisterType<IDataSetSampleDao<ClassificationDataSetSmaple>, ClassificationDataSetSmapleDao>(new HierarchicalLifetimeManager())
+                .RegisterType<ISampleDao<ClassificationSample>, ClassificationSampleDao>(new HierarchicalLifetimeManager())
 
                 // Business Layer
 
                 // Services
                 .RegisterType<IAlgorithmService, AlgorithmService>(new HierarchicalLifetimeManager())
-                .RegisterType<IAlgorithmSessionService, AlgorithmSessionService>(new HierarchicalLifetimeManager())
+                .RegisterType<IAlgorithmEstimateService, AlgorithmEstimateService>(new HierarchicalLifetimeManager())
                 
                 .RegisterType<IDataSetService, DataSetService>(new HierarchicalLifetimeManager())
-                .RegisterType<IDataSetSampleService<ClassificationDataSetSmaple>, ClassificationDataSetSampleService>(new HierarchicalLifetimeManager())
+                .RegisterType<ISampleService<ClassificationSample>, ClassificationSampleService>(new HierarchicalLifetimeManager())
 
                 // Valiation
                 .RegisterType<IValidator<Algorithm>, AlgorithmValidator>(new HierarchicalLifetimeManager())
                 .RegisterType<IValidator<AlgorithmParameter>, AlgorithmParameterValidator>(new HierarchicalLifetimeManager())
-                .RegisterType<IValidator<AlgorithmSession>, AlgorithmSessionValidator>(new HierarchicalLifetimeManager())
+                .RegisterType<IValidator<AlgorithmEstimate>, AlgorithmEstimateValidator>(new HierarchicalLifetimeManager())
 
                 // Data set sample streams
-                .RegisterType<IDataSetSampleStream<ClassificationDataSetSmaple>, ClassificationDataSetSampleStream>(new HierarchicalLifetimeManager())
+                .RegisterType<ISampleStream<ClassificationSample>, ClassificationSampleStream>(new HierarchicalLifetimeManager())
 
-                .RegisterType<IDataSetSampleStreamFactory, DataSetSampleStreamFactory>(new HierarchicalLifetimeManager())
+                .RegisterType<IEstimateFactory, EstimateFactory>(new HierarchicalLifetimeManager())
 
                 // Machine learning classifiers
                 .RegisterType<IClassifier, NaiveBayesClassifier>(AlgorithmAliases.NaiveBayes, new HierarchicalLifetimeManager())

@@ -16,14 +16,14 @@ namespace TryMLearning.WebAPI.Controllers
     public class DataSetController : ApiController
     {
         private readonly IDataSetService _dataSetService;
-        private readonly IDataSetSampleService<ClassificationDataSetSmaple> _classificationDataSetSampleService;
+        private readonly ISampleService<ClassificationSample> _classificationSampleService;
 
         public DataSetController(
             IDataSetService dataSetService,
-            IDataSetSampleService<ClassificationDataSetSmaple> classificationDataSetSampleService)
+            ISampleService<ClassificationSample> classificationSampleService)
         {
             _dataSetService = dataSetService;
-            _classificationDataSetSampleService = classificationDataSetSampleService;
+            _classificationSampleService = classificationSampleService;
         }
 
         // GET api/dataset/5
@@ -82,10 +82,10 @@ namespace TryMLearning.WebAPI.Controllers
         [Route("{dataSetId:int}/sample/classification/{start:int}/{count:int}")]
         [HttpGet]
         [SwaggerOperation("Get classification data set samples")]
-        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(List<ClassificationDataSetSmaple>))]
-        public async Task<List<ClassificationDataSetSmaple>> GetClassificationDataSetSamplesAsync(int dataSetId, int start, int count)
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(List<ClassificationSample>))]
+        public async Task<List<ClassificationSample>> GetClassificationSamplesAsync(int dataSetId, int start, int count)
         {
-            var samples = await _classificationDataSetSampleService.GetDataSetSamplesAsync(dataSetId, start, count);
+            var samples = await _classificationSampleService.GetSamplesAsync(dataSetId, start, count);
 
             return samples;
         }
@@ -94,10 +94,10 @@ namespace TryMLearning.WebAPI.Controllers
         [Route("{dataSetId:int}/sample/classification")]
         [HttpPost]
         [SwaggerOperation("Create classification data set samples")]
-        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(List<ClassificationDataSetSmaple>))]
-        public async Task<List<ClassificationDataSetSmaple>> AddClassificationDataSetSamplesAsync(int dataSetId, List<ClassificationDataSetSmaple> samples)
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(List<ClassificationSample>))]
+        public async Task<List<ClassificationSample>> AddClassificationSamplesAsync(int dataSetId, List<ClassificationSample> samples)
         {
-            samples = await _classificationDataSetSampleService.AddDataSetSamplesAsync(dataSetId, samples);
+            samples = await _classificationSampleService.AddSamplesAsync(dataSetId, samples);
 
             return samples;
         }
@@ -107,9 +107,9 @@ namespace TryMLearning.WebAPI.Controllers
         [HttpDelete]
         [SwaggerOperation("Delete data set samples")]
         [SwaggerResponse(HttpStatusCode.OK)]
-        public async Task DeleteClassificationDataSetSamplesAsync(int dataSetId, List<int> dataSetSampleIds)
+        public async Task DeleteClassificationSamplesAsync(int dataSetId, List<int> sampleIds)
         {
-            await _classificationDataSetSampleService.DeleteDataSetSamplesAsync(dataSetId, dataSetSampleIds);
+            await _classificationSampleService.DeleteSamplesAsync(dataSetId, sampleIds);
         }
 
         #endregion

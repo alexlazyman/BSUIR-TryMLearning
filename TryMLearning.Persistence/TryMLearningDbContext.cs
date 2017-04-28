@@ -2,7 +2,6 @@
 using System.Data.Entity.ModelConfiguration.Conventions;
 using TryMLearning.Persistence.Constants;
 using TryMLearning.Persistence.Models;
-using TryMLearning.Persistence.Models.Map;
 
 namespace TryMLearning.Persistence
 {
@@ -11,6 +10,11 @@ namespace TryMLearning.Persistence
         public TryMLearningDbContext()
             : base(DatabaseNames.TryMLearning)
         {
+            Configuration.AutoDetectChangesEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.ValidateOnSaveEnabled = false;
+
             Database.SetInitializer(new TryMLearningDbContextInitializer());
         }
 
@@ -20,20 +24,23 @@ namespace TryMLearning.Persistence
 
         public DbSet<AlgorithmParameterValueDbEntity> AlgorithmParameterValues { get; set; }
 
-        public DbSet<AlgorithmSessionDbEntity> AlgorithmSessions { get; set; }
+        public DbSet<AlgorithmEstimateDbEntity> AlgorithmEstimates { get; set; }
 
         public DbSet<DataSetDbEntity> DataSets { get; set; }
 
-        public DbSet<ClassificationDataSetSmapleDbEntity> ClassificationDataSmaples { get; set; }
+        public DbSet<ClassificationSampleDbEntity> ClassificationDataSamples { get; set; }
 
         public DbSet<DoubleTupleDbEntity> DoubleTuples { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Conventions
+                .Remove<PluralizingTableNameConvention>();
+
             modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
-                .HasRequired(v => v.AlgorithmSession)
+                .HasRequired(v => v.AlgorithmEstimate)
                 .WithMany(s => s.AlgorithmParameterValues)
-                .HasForeignKey(v => v.AlgorithmSessionId)
+                .HasForeignKey(v => v.AlgorithmEstimateId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
@@ -42,10 +49,15 @@ namespace TryMLearning.Persistence
                 .HasForeignKey(v => v.AlgorithmParameterId)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<ClassificationDataSetSmapleDoubleTupleMap>()
-                .HasRequired(m => m.DoubleTuple)
-                .WithRequiredPrincipal()
-                .WillCascadeOnDelete(true);
+            modelBuilder.Entity<ClassificationSampleDbEntity>()
+                .HasMany(m => m.FeatureTuples)
+                .WithMany()
+                .Map(c =>
+                {
+                    c.ToTable("ClassificationSampleDoubleTuple");
+                    c.MapLeftKey("SampleId");
+                    c.MapRightKey("TupleId");
+                });
         }
     }
 }

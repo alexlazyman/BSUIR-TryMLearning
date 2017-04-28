@@ -4,7 +4,6 @@ using System.Linq;
 using AutoMapper;
 using TryMLearning.Model;
 using TryMLearning.Persistence.Models;
-using TryMLearning.Persistence.Models.Map;
 
 namespace TryMLearning.Persistence.Configuration
 {
@@ -23,57 +22,65 @@ namespace TryMLearning.Persistence.Configuration
             cfg.CreateMap<AlgorithmParameterValue, AlgorithmParameterValueDbEntity>();
             cfg.CreateMap<AlgorithmParameterValueDbEntity, AlgorithmParameterValue>();
 
-            cfg.CreateMap<AlgorithmSession, AlgorithmSessionDbEntity>()
+            cfg.CreateMap<AlgorithmEstimate, AlgorithmEstimateDbEntity>()
                 .ForMember(sdb => sdb.AlgorithmParameterValues, opt => opt.Ignore());
-            cfg.CreateMap<AlgorithmSessionDbEntity, AlgorithmSession>()
+            cfg.CreateMap<AlgorithmEstimateDbEntity, AlgorithmEstimate>()
                 .ForMember(s => s.ParameterValues, opt => opt.MapFrom(sdb => sdb.AlgorithmParameterValues));
 
             cfg.CreateMap<DataSet, DataSetDbEntity>();
             cfg.CreateMap<DataSetDbEntity, DataSet>();
 
-            cfg.CreateMap<ClassificationDataSetSmaple, ClassificationDataSetSmapleDbEntity>()
-                .ForMember(sdb => sdb.Count, opt => opt.ResolveUsing(s => s.Values?.Length ?? 0))
-                .ForMember(sdb => sdb.DoubleTupleMaps, opt => opt.ResolveUsing(s =>
+            cfg.CreateMap<ClassificationSample, ClassificationSampleDbEntity>()
+                .ForMember(sdb => sdb.Count, opt => opt.ResolveUsing(s => s.Features?.Length ?? 0))
+                .ForMember(sdb => sdb.FeatureTuples, opt => opt.ResolveUsing(ToFeatureTuples));
+            cfg.CreateMap<ClassificationSampleDbEntity, ClassificationSample>()
+                .ForMember(s => s.Features, opt => opt.ResolveUsing(ToFeatures));
+        }
+
+        private static List<DoubleTupleDbEntity> ToFeatureTuples(ClassificationSample classificationSample)
+        {
+            if (classificationSample.Features == null)
+            {
+                return null;
+            }
+
+            var tupleCount = Math.Ceiling((double)classificationSample.Features.Length / DoubleTupleDbEntity.MaxCount);
+            IEnumerable<double> features = classificationSample.Features;
+
+            var tuples = new List<DoubleTupleDbEntity>();
+            for (int i = 0; i < tupleCount; i++)
+            {
+                tuples.Add(new DoubleTupleDbEntity(features, i));
+                features = features.Skip(DoubleTupleDbEntity.MaxCount);
+            }
+
+            return tuples;
+        }
+
+        private static double[] ToFeatures(ClassificationSampleDbEntity classificationSampleDbEntity)
+        {
+            if (classificationSampleDbEntity.FeatureTuples == null)
+            {
+                return null;
+            }
+
+            var result = new double[classificationSampleDbEntity.Count];
+
+            var i = 0;
+            foreach (var doubleTuple in classificationSampleDbEntity.FeatureTuples.OrderBy(m => m.Order))
+            {
+                foreach (var doubleValue in doubleTuple)
                 {
-                    if (s.Values == null)
+                    if (i >= classificationSampleDbEntity.Count)
                     {
-                        return null;
+                        break;
                     }
 
-                    var tupleCount = Math.Ceiling((double) s.Values.Length / DoubleTupleDbEntity.MaxCount);
+                    result[i] = doubleValue.Value;
+                }
+            }
 
-                    var tupleMaps = new List<ClassificationDataSetSmapleDoubleTupleMap>();
-                    for (int i = 0; i < tupleCount; i++)
-                    {
-                        var selectedValues = s.Values.Skip(i * DoubleTupleDbEntity.MaxCount);
-
-                        tupleMaps.Add(new ClassificationDataSetSmapleDoubleTupleMap
-                        {
-                            DoubleTuple = new DoubleTupleDbEntity(selectedValues),
-                            Order = i
-                        });
-                    }
-
-                    return tupleMaps;
-                }));
-            cfg.CreateMap<ClassificationDataSetSmapleDbEntity, ClassificationDataSetSmaple>()
-                .ForMember(s => s.Values, opt => opt.ResolveUsing(sdb =>
-                {
-                    if (sdb.DoubleTupleMaps == null)
-                    {
-                        return null;
-                    }
-
-                    var tuples = sdb.DoubleTupleMaps.OrderBy(m => m.Order).Select(m => m.DoubleTuple).ToArray();
-                    var result = new List<double?>(tuples.Length * DoubleTupleDbEntity.MaxCount);
-
-                    foreach (var tuple in tuples)
-                    {
-                        result.AddRange(tuple);
-                    }
-
-                    return result.Take(sdb.Count).Cast<double>().ToList();
-                }));
+            return result;
         }
     }
 }

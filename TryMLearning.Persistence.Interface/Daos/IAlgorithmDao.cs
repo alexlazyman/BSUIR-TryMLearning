@@ -16,6 +16,6 @@ namespace TryMLearning.Persistence.Interface.Daos
 
         Task DeleteAlgorithmAsync(Algorithm algorithm);
 
-        Task AddAlgorithmToRunQueue(AlgorithmSession algorithmSession);
+        Task AddAlgorithmToRunQueue(AlgorithmEstimate algorithmEstimate);
     }
 }

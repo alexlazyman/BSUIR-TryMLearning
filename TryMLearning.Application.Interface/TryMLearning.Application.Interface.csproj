@@ -41,8 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MachineLearning\Classifiers\IClassifier.cs" />
-    <Compile Include="MachineLearning\IDataSetSampleStreamFactory.cs" />
-    <Compile Include="MachineLearning\DataSetSampleStreams\IDataSetSampleStream.cs" />
+    <Compile Include="MachineLearning\EstimateResults\IEstimateResult.cs" />
+    <Compile Include="MachineLearning\Estimates\IEstimate.cs" />
+    <Compile Include="MachineLearning\Estimators\IClassifierEstimator.cs" />
+    <Compile Include="MachineLearning\IEstimateFactory.cs" />
+    <Compile Include="MachineLearning\DataSetSampleStreams\ISampleStream.cs" />
     <Compile Include="MachineLearning\IClassifierFactory.cs" />
     <Compile Include="Services\IDataSetSampleService.cs" />
     <Compile Include="Services\IDataSetService.cs" />

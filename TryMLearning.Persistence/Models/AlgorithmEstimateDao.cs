@@ -3,21 +3,20 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using TryMLearning.Model;
 using TryMLearning.Persistence.Interfaces;
-using TryMLearning.Persistence.Models.Map;
 
 namespace TryMLearning.Persistence.Models
 {
-    [Table("ClassificationDataSetSmaple")]
-    public class ClassificationDataSetSmapleDbEntity : IDbEntity
+    [Table("ClassificationSample")]
+    public class ClassificationSampleDbEntity : IDbEntity
     {
         int IDbEntity.Id
         {
-            get => ClassificationDataSetSmapleId;
-            set => ClassificationDataSetSmapleId = value;
+            get => ClassificationDataSetSampleId;
+            set => ClassificationDataSetSampleId = value;
         }
 
         [Key]
-        public int ClassificationDataSetSmapleId { get; set; }
+        public int ClassificationDataSetSampleId { get; set; }
 
         public int DataSetId { get; set; }
         
@@ -28,6 +27,6 @@ namespace TryMLearning.Persistence.Models
 
         public int Count { get; set; }
 
-        public ICollection<ClassificationDataSetSmapleDoubleTupleMap> DoubleTupleMaps { get; set; }
+        public ICollection<DoubleTupleDbEntity> FeatureTuples { get; set; }
     }
 }

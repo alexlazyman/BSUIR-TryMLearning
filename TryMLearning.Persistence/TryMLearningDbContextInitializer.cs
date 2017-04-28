@@ -16,19 +16,19 @@ namespace TryMLearning.Persistence
         {
             context.Algorithms.AddRange(
                 DefaultData.GetAlgorithms()
-                .Select(Mapper.Map<AlgorithmDbEntity>));
+                    .Select(Mapper.Map<AlgorithmDbEntity>));
 
             context.SaveChanges();
 
             context.DataSets.AddRange(
                 DefaultData.GetDataSets()
-                .Select(Mapper.Map<DataSetDbEntity>));
+                    .Select(Mapper.Map<DataSetDbEntity>));
 
             context.SaveChanges();
 
-            context.ClassificationDataSmaples.AddRange(
-                DefaultData.GetClassificationDataSetSmaples()
-                .Select(Mapper.Map<ClassificationDataSetSmapleDbEntity>));
+            context.ClassificationDataSamples.AddRange(
+                DefaultData.GetClassificationDataSetSamples()
+                    .Select(Mapper.Map<ClassificationSampleDbEntity>));
 
             context.SaveChanges();
         }

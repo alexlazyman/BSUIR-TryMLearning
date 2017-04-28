@@ -1,6 +1,6 @@
 ﻿namespace TryMLearning.Model
 {
-    public enum AlgorithmSessionStatus
+    public enum AlgorithmEstimateStatus
     {
         Wait = 0,
         Computing = 1,

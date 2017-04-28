@@ -1,29 +1,34 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Accord.MachineLearning;
 using Accord.MachineLearning.Bayes;
 using Accord.Statistics.Distributions.Univariate;
 using TryMLearning.Application.Interface.MachineLearning.Classifiers;
-using TryMLearning.Application.Interface.MachineLearning.DataSetSampleStreams;
 using TryMLearning.Model;
 
 namespace TryMLearning.Application.MachineLearning.Classifiers
 {
     public class NaiveBayesClassifier : IClassifier
     {
-        public async Task ComputeAsync(IDataSetSampleStream<ClassificationDataSetSmaple> stream)
-        {
-            var samples = await stream.ReadAllAsync();
+        private NaiveBayes<NormalDistribution> _bayes = null;
 
-            double[][] inputs = samples.Select(s => s.Values).ToArray();
+        public void Train(IEnumerable<ClassificationSample> samples)
+        {
+            double[][] inputs = samples.Select(s => s.Features).ToArray();
             int[] outputs = samples.Select(s => s.ClassId).ToArray();
 
             var teacher = new NaiveBayesLearning<NormalDistribution>();
 
-            // Estimate the model using the data
-            NaiveBayes<NormalDistribution> bayes = teacher.Learn(inputs, outputs);
+            _bayes = teacher.Learn(inputs, outputs);
+        }
 
-            var testResult = bayes.Decide(inputs);
+        public IEnumerable<bool> Check(IEnumerable<ClassificationSample> samples)
+        {
+            foreach (var sample in samples)
+            {
+                yield return _bayes.Decide(sample.Features) == sample.ClassId;
+            }
         }
     }
 }

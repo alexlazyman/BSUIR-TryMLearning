@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace TryMLearning.Persistence.Models
         {
         }
 
-        public DoubleTupleDbEntity(IEnumerable<double> values)
+        public DoubleTupleDbEntity(IEnumerable<double> values, int order = 0)
             : this(values.Cast<double?>())
         {
             
@@ -24,8 +25,10 @@ namespace TryMLearning.Persistence.Models
         [NotMapped]
         public static readonly int MaxCount = 64;
 
-        public DoubleTupleDbEntity(IEnumerable<double?> values)
+        public DoubleTupleDbEntity(IEnumerable<double?> values, int order = 0)
         {
+            Order = order;
+
             var takenValues = values.Take(MaxCount).ToList();
             takenValues.AddRange(Enumerable.Repeat<double?>(null, MaxCount - takenValues.Count));
 
@@ -103,6 +106,8 @@ namespace TryMLearning.Persistence.Models
 
         [Key]
         public int DoubleTupleId { get; set; }
+
+        public int Order { get; set; }
 
         #region Values: Value0 - Value63
 
