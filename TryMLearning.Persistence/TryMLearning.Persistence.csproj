@@ -79,10 +79,10 @@
   <ItemGroup>
     <Compile Include="Configuration\AutoMapperConfiguration.cs" />
     <Compile Include="Constants\DatabaseNames.cs" />
-    <Compile Include="Daos\ClassificationDataSetSmapleDao.cs" />
+    <Compile Include="Daos\ClassificationSampleDao.cs" />
     <Compile Include="Daos\DataSetDao.cs" />
     <Compile Include="Daos\AlgorithmParameterDao.cs" />
-    <Compile Include="Daos\AlgorithmSessionDao.cs" />
+    <Compile Include="Daos\AlgorithmEstimateDao.cs" />
     <Compile Include="Helpers\DbContextExtensions.cs" />
     <Compile Include="Interfaces\IDbEntity.cs" />
     <Compile Include="Migrations\201704252120495_Initial.cs" />
@@ -93,8 +93,8 @@
     <Compile Include="Models\AlgorithmDbEntity.cs" />
     <Compile Include="Models\AlgorithmParameterDbEntity.cs" />
     <Compile Include="Models\AlgorithmParameterValueDbEntity.cs" />
-    <Compile Include="Models\AlgorithmSessionDbEntity.cs" />
-    <Compile Include="Models\ClassificationDataSetSmapleDbEntity.cs" />
+    <Compile Include="Models\AlgorithmEstimateDbEntity.cs" />
+    <Compile Include="Models\AlgorithmEstimateDao.cs" />
     <Compile Include="Models\DataSetDbEntity.cs" />
     <Compile Include="Models\DoubleTupleDbEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TryMLearning.Application.Interface.MachineLearning.SampleStreams;
 using TryMLearning.Model;
 
 namespace TryMLearning.Application.Interface.MachineLearning.Classifiers

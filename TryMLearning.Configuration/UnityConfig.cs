@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using TryMLearning.Application.Interface.MachineLearning;
 using TryMLearning.Application.Interface.MachineLearning.Classifiers;
-using TryMLearning.Application.Interface.MachineLearning.SampleStreams;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Application.Interface.Validation;
 using TryMLearning.Application.MachineLearning;
 using TryMLearning.Application.MachineLearning.Classifiers;
-using TryMLearning.Application.MachineLearning.SampleStreams;
 using TryMLearning.Application.Services;
 using TryMLearning.Application.Validation;
 using TryMLearning.Model;
@@ -56,9 +54,6 @@ namespace TryMLearning.Configuration
                 .RegisterType<IValidator<Algorithm>, AlgorithmValidator>(new HierarchicalLifetimeManager())
                 .RegisterType<IValidator<AlgorithmParameter>, AlgorithmParameterValidator>(new HierarchicalLifetimeManager())
                 .RegisterType<IValidator<AlgorithmEstimate>, AlgorithmEstimateValidator>(new HierarchicalLifetimeManager())
-
-                // Data set sample streams
-                .RegisterType<ISampleStream<ClassificationSample>, ClassificationSampleStream>(new HierarchicalLifetimeManager())
 
                 .RegisterType<IEstimateFactory, EstimateFactory>(new HierarchicalLifetimeManager())
 
