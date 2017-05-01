@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using TryMLearning.Application.Interface.MachineLearning;
 using TryMLearning.Application.Interface.MachineLearning.Classifiers;
+using TryMLearning.Application.Interface.MachineLearning.Estimators;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Application.Interface.Validation;
 using TryMLearning.Application.MachineLearning;
 using TryMLearning.Application.MachineLearning.Classifiers;
+using TryMLearning.Application.MachineLearning.Estimators;
 using TryMLearning.Application.Services;
 using TryMLearning.Application.Validation;
 using TryMLearning.Model;
@@ -38,6 +40,8 @@ namespace TryMLearning.Configuration
                 .RegisterType<IAlgorithmParameterDao, AlgorithmParameterDao>(new HierarchicalLifetimeManager())
                 .RegisterType<IAlgorithmEstimateDao, AlgorithmEstimateDao>(new HierarchicalLifetimeManager())
                 
+                .RegisterType<IClassificationResultDao, ClassificationResultDao>(new HierarchicalLifetimeManager())
+                
                 .RegisterType<IDataSetDao, DataSetDao>(new HierarchicalLifetimeManager())
                 .RegisterType<ISampleDao<ClassificationSample>, ClassificationSampleDao>(new HierarchicalLifetimeManager())
 
@@ -46,9 +50,11 @@ namespace TryMLearning.Configuration
                 // Services
                 .RegisterType<IAlgorithmService, AlgorithmService>(new HierarchicalLifetimeManager())
                 .RegisterType<IAlgorithmEstimateService, AlgorithmEstimateService>(new HierarchicalLifetimeManager())
-                
+
                 .RegisterType<IDataSetService, DataSetService>(new HierarchicalLifetimeManager())
                 .RegisterType<ISampleService<ClassificationSample>, ClassificationSampleService>(new HierarchicalLifetimeManager())
+
+                .RegisterType<IClassificationResultService, ClassificationResultService>(new HierarchicalLifetimeManager())
 
                 // Valiation
                 .RegisterType<IValidator<Algorithm>, AlgorithmValidator>(new HierarchicalLifetimeManager())
@@ -57,10 +63,14 @@ namespace TryMLearning.Configuration
 
                 .RegisterType<IEstimateFactory, EstimateFactory>(new HierarchicalLifetimeManager())
 
-                // Machine learning classifiers
+                // Machine learning
                 .RegisterType<IClassifier, NaiveBayesClassifier>(AlgorithmAliases.NaiveBayes, new HierarchicalLifetimeManager())
-                
-                .RegisterType<IClassifierFactory, ClassifierFactory>(new HierarchicalLifetimeManager());
+
+                .RegisterType<IClassifierService, QFoldCrossValidation>(ClassifierTestAliases.QFoldCrossValidation, new HierarchicalLifetimeManager())
+
+                .RegisterType<IClassifierFactory, ClassifierFactory>(new HierarchicalLifetimeManager())
+                .RegisterType<IClassifierServiceFactory, ClassifierServiceFactory>(new HierarchicalLifetimeManager())
+                .RegisterType<IEstimateFactory, EstimateFactory>(new HierarchicalLifetimeManager());
         }
     }
 }

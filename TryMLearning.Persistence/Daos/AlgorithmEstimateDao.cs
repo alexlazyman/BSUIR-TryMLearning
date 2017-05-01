@@ -25,6 +25,10 @@ namespace TryMLearning.Persistence.Daos
         public async Task<AlgorithmEstimate> GetAlgorithmEstimateAsync(int algorithmEstimateId)
         {
             var algorithmEstimateDbEntity = await _dbContext.AlgorithmEstimates
+                .Include(a => a.Algorithm)
+                .Include(a => a.Algorithm.AlgorithmParameters)
+                .Include(a => a.DataSet)
+                .Include(a => a.Test)
                 .Include(a => a.AlgorithmParameterValues)
                 .FirstOrDefaultAsync(a => a.AlgorithmEstimateId == algorithmEstimateId);
 

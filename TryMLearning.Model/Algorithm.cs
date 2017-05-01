@@ -8,13 +8,22 @@ namespace TryMLearning.Model
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public class Algorithm
     {
+        public Algorithm()
+        {
+        }
+
+        public Algorithm(int algorithmId)
+        {
+            AlgorithmId = algorithmId;
+        }
+
         public int AlgorithmId { get; set; }
+
+        public string Alias { get; set; }
 
         public string Name { get; set; }
 
         public string Description { get; set; }
-
-        public string Alias { get; set; }
 
         public List<AlgorithmParameter> Parameters { get; set; }
 

@@ -5,11 +5,11 @@
         public QFoldCrossValidationConfiguration()
         {
             QFold = 10;
-            PrimaryFeature = 0;
+            PrimaryFeatureIndex = 0;
         }
 
         public int QFold { get; set; }
 
-        public int PrimaryFeature { get; set; }
+        public int PrimaryFeatureIndex { get; set; }
     }
 }

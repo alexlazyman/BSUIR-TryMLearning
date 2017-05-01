@@ -16,7 +16,7 @@ namespace TryMLearning.Application.Interface.Services
 
         Task DeleteAlgorithmAsync(int algorithmId);
 
-        Task<AlgorithmEstimate> RunAlgorithmAsync(int algorithmId, int dataSetId, List<AlgorithmParameterValue> parameterValues);
+        Task<AlgorithmEstimate> RunAlgorithmAsync(AlgorithmEstimate algorithmEstimate);
 
         Task EstimateClassificationAlgorithmAsync(int algorithmEstimateId);
     }

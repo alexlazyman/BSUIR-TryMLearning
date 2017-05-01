@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TryMLearning.Application.Interface.MachineLearning.Classifiers;
 using TryMLearning.Application.Interface.MachineLearning.EstimateResults;
 using TryMLearning.Application.Interface.MachineLearning.Estimates;
@@ -7,8 +8,8 @@ using TryMLearning.Model.MachineLearning.Reports;
 
 namespace TryMLearning.Application.Interface.MachineLearning.Estimators
 {
-    public interface IClassifierEstimator
+    public interface IClassifierService
     {
-        ClassificationReport Estimate(IClassifier classifier, ClassificationSample[] samples, string[] estimateAliases);
+        IEnumerable<ClassificationResult> Classify(IEnumerable<ClassificationSample> samples, IClassifier classifier);
     }
 }

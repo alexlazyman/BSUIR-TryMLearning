@@ -44,6 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm.cs" />
+    <Compile Include="ClassificationResult.cs" />
+    <Compile Include="Constants\ClassifierTestAliases.cs" />
+    <Compile Include="Test.cs" />
     <Compile Include="MachineLearning\Estimators\Configurations\QFoldCrossValidationConfiguration.cs" />
     <Compile Include="MachineLearning\Reports\ClassificationReport.cs" />
     <Compile Include="Constants\AlgorithmAliases.cs" />

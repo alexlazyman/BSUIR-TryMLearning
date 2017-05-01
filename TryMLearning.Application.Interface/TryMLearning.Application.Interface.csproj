@@ -43,9 +43,11 @@
     <Compile Include="MachineLearning\Classifiers\IClassifier.cs" />
     <Compile Include="MachineLearning\EstimateResults\IEstimateResult.cs" />
     <Compile Include="MachineLearning\Estimates\IEstimate.cs" />
-    <Compile Include="MachineLearning\Estimators\IClassifierEstimator.cs" />
+    <Compile Include="MachineLearning\Estimators\IClassifierService.cs" />
+    <Compile Include="MachineLearning\IClassifierServiceFactory.cs" />
     <Compile Include="MachineLearning\IEstimateFactory.cs" />
     <Compile Include="MachineLearning\IClassifierFactory.cs" />
+    <Compile Include="Services\IClassificationResultService.cs" />
     <Compile Include="Services\ISampleService.cs" />
     <Compile Include="Services\IDataSetService.cs" />
     <Compile Include="Services\IAlgorithmEstimateService.cs" />

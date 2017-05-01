@@ -2,8 +2,8 @@
 {
     public enum AlgorithmEstimateStatus
     {
-        Wait = 0,
-        Computing = 1,
-        Done = 2
+        Waiting = 0,
+        InProgress = 1,
+        Completed = 2
     }
 }

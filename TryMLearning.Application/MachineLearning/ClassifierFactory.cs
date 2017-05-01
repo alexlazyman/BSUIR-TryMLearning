@@ -21,7 +21,7 @@ namespace TryMLearning.Application.MachineLearning
             switch (alias)
             {
                 case AlgorithmAliases.NaiveBayes:
-                    return _container.Resolve<IClassifier>(algorithmAlias);
+                    return _container.Resolve<IClassifier>(alias);
                 default:
                     throw new ArgumentException($"There is no classifier with alias: {algorithmAlias}");
             }

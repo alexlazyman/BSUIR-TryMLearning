@@ -14,8 +14,6 @@ namespace TryMLearning.Persistence
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
             Configuration.ValidateOnSaveEnabled = false;
-
-            Database.SetInitializer(new TryMLearningDbContextInitializer());
         }
 
         public DbSet<AlgorithmDbEntity> Algorithms { get; set; }
@@ -30,7 +28,13 @@ namespace TryMLearning.Persistence
 
         public DbSet<ClassificationSampleDbEntity> ClassificationDataSamples { get; set; }
 
+        public DbSet<ClassificationResultDbEntity> ClassificationResults { get; set; }
+
+        public DbSet<TestDbEntity> Tests { get; set; }
+
         public DbSet<DoubleTupleDbEntity> DoubleTuples { get; set; }
+
+        public DbSet<BoolTupleDbEntity> BoolTuples { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -54,8 +58,18 @@ namespace TryMLearning.Persistence
                 .WithMany()
                 .Map(c =>
                 {
-                    c.ToTable("ClassificationSampleDoubleTuple");
+                    c.ToTable("ClassificationSampleDoubleTuple", "rel");
                     c.MapLeftKey("SampleId");
+                    c.MapRightKey("TupleId");
+                });
+
+            modelBuilder.Entity<ClassificationResultDbEntity>()
+                .HasMany(m => m.AnswerTuples)
+                .WithMany()
+                .Map(c =>
+                {
+                    c.ToTable("ClassificationResultBoolTuple", "rel");
+                    c.MapLeftKey("ResultId");
                     c.MapRightKey("TupleId");
                 });
         }

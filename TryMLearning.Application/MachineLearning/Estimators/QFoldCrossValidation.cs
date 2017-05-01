@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Accord.Math;
 using TryMLearning.Application.Interface.MachineLearning;
 using TryMLearning.Application.Interface.MachineLearning.Classifiers;
@@ -13,28 +14,22 @@ using TryMLearning.Model.MachineLearning.Reports;
 
 namespace TryMLearning.Application.MachineLearning.Estimators
 {
-    public class QFoldCrossValidation : IClassifierEstimator
+    public class QFoldCrossValidation : IClassifierService
     {
         private readonly QFoldCrossValidationConfiguration _configuration;
-        private readonly IEstimateFactory _estimateFactory;
 
-        public QFoldCrossValidation(
-            QFoldCrossValidationConfiguration configuration,
-            IEstimateFactory estimateFactory)
+        public QFoldCrossValidation(QFoldCrossValidationConfiguration configuration)
         {
-            _configuration = configuration;
-            _estimateFactory = estimateFactory;
+            _configuration = configuration ?? new QFoldCrossValidationConfiguration();
         }
 
-        public ClassificationReport Estimate(IClassifier classifier, ClassificationSample[] samples, string[] estimateAliases)
+        public IEnumerable<ClassificationResult> Classify(IEnumerable<ClassificationSample> samples, IClassifier classifier)
         {
-            var estimates = estimateAliases.Select(_estimateFactory.GetEstimate).ToArray();
-
             var classGroups = samples
                 // Group by class
                 .GroupBy(
                     s => s.ClassId,
-                    (classId, sampleGroup) => sampleGroup.OrderBy(s => s.Features[_configuration.PrimaryFeature]).ToArray())
+                    (classId, sampleGroup) => sampleGroup.OrderBy(s => s.Features[_configuration.PrimaryFeatureIndex]).ToArray())
                 // Divede group on folds
                 .Select(
                     g => g.Split((int)Math.Ceiling((double)g.Length / _configuration.QFold)))
@@ -57,24 +52,14 @@ namespace TryMLearning.Application.MachineLearning.Estimators
 
                 classifier.Train(trainSamples);
 
-                var results = classifier.Check(controlSamples).ToArray();
+                var answers = classifier.Check(controlSamples).ToArray();
 
-                for (int i = 0; i < estimates.Length; i++)
+                yield return new ClassificationResult
                 {
-                    estimates[i].Estimate(results, true);
-                }
+                    Index = q,
+                    Answers = answers
+                };
             }
-
-            var classificationReport = new ClassificationReport();
-
-            for (int i = 0; i < estimates.Length; i++)
-            {
-                var estimateResult = estimates[i].Average;
-
-                estimateResult.Render(classificationReport);
-            }
-
-            return classificationReport;
         }
     }
 }

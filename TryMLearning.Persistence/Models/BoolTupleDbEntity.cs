@@ -9,15 +9,15 @@ using TryMLearning.Persistence.Interfaces;
 
 namespace TryMLearning.Persistence.Models
 {
-    [Table("DoubleTuple")]
-    public class DoubleTupleDbEntity : IDbEntity, IEnumerable<double?>
+    [Table("BoolTuple")]
+    public class BoolTupleDbEntity : IDbEntity, IEnumerable<bool?>
     {
-        public DoubleTupleDbEntity()
+        public BoolTupleDbEntity()
         {
         }
 
-        public DoubleTupleDbEntity(IEnumerable<double> values, int order = 0)
-            : this(values.Cast<double?>())
+        public BoolTupleDbEntity(IEnumerable<bool> values, int order = 0)
+            : this(values.Cast<bool?>())
         {
             
         }
@@ -25,12 +25,12 @@ namespace TryMLearning.Persistence.Models
         [NotMapped]
         public const int Capacity = 64;
 
-        public DoubleTupleDbEntity(IEnumerable<double?> values, int order = 0)
+        public BoolTupleDbEntity(IEnumerable<bool?> values, int order = 0)
         {
             Order = order;
 
             var takenValues = values.Take(Capacity).ToList();
-            takenValues.AddRange(Enumerable.Repeat<double?>(null, Capacity - takenValues.Count));
+            takenValues.AddRange(Enumerable.Repeat<bool?>(null, Capacity - takenValues.Count));
 
             Value0 = takenValues[0];
             Value1 = takenValues[1];
@@ -111,137 +111,137 @@ namespace TryMLearning.Persistence.Models
 
         #region Values: Value0 - Value63
 
-        public double? Value0 { get; set; }
+        public bool? Value0 { get; set; }
 
-        public double? Value1 { get; set; }
+        public bool? Value1 { get; set; }
 
-        public double? Value2 { get; set; }
+        public bool? Value2 { get; set; }
 
-        public double? Value3 { get; set; }
+        public bool? Value3 { get; set; }
 
-        public double? Value4 { get; set; }
+        public bool? Value4 { get; set; }
 
-        public double? Value5 { get; set; }
+        public bool? Value5 { get; set; }
 
-        public double? Value6 { get; set; }
+        public bool? Value6 { get; set; }
 
-        public double? Value7 { get; set; }
+        public bool? Value7 { get; set; }
 
-        public double? Value8 { get; set; }
+        public bool? Value8 { get; set; }
 
-        public double? Value9 { get; set; }
+        public bool? Value9 { get; set; }
 
-        public double? Value10 { get; set; }
+        public bool? Value10 { get; set; }
 
-        public double? Value11 { get; set; }
+        public bool? Value11 { get; set; }
 
-        public double? Value12 { get; set; }
+        public bool? Value12 { get; set; }
 
-        public double? Value13 { get; set; }
+        public bool? Value13 { get; set; }
 
-        public double? Value14 { get; set; }
+        public bool? Value14 { get; set; }
 
-        public double? Value15 { get; set; }
+        public bool? Value15 { get; set; }
 
-        public double? Value16 { get; set; }
+        public bool? Value16 { get; set; }
 
-        public double? Value17 { get; set; }
+        public bool? Value17 { get; set; }
 
-        public double? Value18 { get; set; }
+        public bool? Value18 { get; set; }
 
-        public double? Value19 { get; set; }
+        public bool? Value19 { get; set; }
 
-        public double? Value20 { get; set; }
+        public bool? Value20 { get; set; }
 
-        public double? Value21 { get; set; }
+        public bool? Value21 { get; set; }
 
-        public double? Value22 { get; set; }
+        public bool? Value22 { get; set; }
 
-        public double? Value23 { get; set; }
+        public bool? Value23 { get; set; }
 
-        public double? Value24 { get; set; }
+        public bool? Value24 { get; set; }
 
-        public double? Value25 { get; set; }
+        public bool? Value25 { get; set; }
 
-        public double? Value26 { get; set; }
+        public bool? Value26 { get; set; }
 
-        public double? Value27 { get; set; }
+        public bool? Value27 { get; set; }
 
-        public double? Value28 { get; set; }
+        public bool? Value28 { get; set; }
 
-        public double? Value29 { get; set; }
+        public bool? Value29 { get; set; }
 
-        public double? Value30 { get; set; }
+        public bool? Value30 { get; set; }
 
-        public double? Value31 { get; set; }
+        public bool? Value31 { get; set; }
 
-        public double? Value32 { get; set; }
+        public bool? Value32 { get; set; }
 
-        public double? Value33 { get; set; }
+        public bool? Value33 { get; set; }
 
-        public double? Value34 { get; set; }
+        public bool? Value34 { get; set; }
 
-        public double? Value35 { get; set; }
+        public bool? Value35 { get; set; }
 
-        public double? Value36 { get; set; }
+        public bool? Value36 { get; set; }
 
-        public double? Value37 { get; set; }
+        public bool? Value37 { get; set; }
 
-        public double? Value38 { get; set; }
+        public bool? Value38 { get; set; }
 
-        public double? Value39 { get; set; }
+        public bool? Value39 { get; set; }
 
-        public double? Value40 { get; set; }
+        public bool? Value40 { get; set; }
 
-        public double? Value41 { get; set; }
+        public bool? Value41 { get; set; }
 
-        public double? Value42 { get; set; }
+        public bool? Value42 { get; set; }
 
-        public double? Value43 { get; set; }
+        public bool? Value43 { get; set; }
 
-        public double? Value44 { get; set; }
+        public bool? Value44 { get; set; }
 
-        public double? Value45 { get; set; }
+        public bool? Value45 { get; set; }
 
-        public double? Value46 { get; set; }
+        public bool? Value46 { get; set; }
 
-        public double? Value47 { get; set; }
+        public bool? Value47 { get; set; }
 
-        public double? Value48 { get; set; }
+        public bool? Value48 { get; set; }
 
-        public double? Value49 { get; set; }
+        public bool? Value49 { get; set; }
 
-        public double? Value50 { get; set; }
+        public bool? Value50 { get; set; }
 
-        public double? Value51 { get; set; }
+        public bool? Value51 { get; set; }
 
-        public double? Value52 { get; set; }
+        public bool? Value52 { get; set; }
 
-        public double? Value53 { get; set; }
+        public bool? Value53 { get; set; }
 
-        public double? Value54 { get; set; }
+        public bool? Value54 { get; set; }
 
-        public double? Value55 { get; set; }
+        public bool? Value55 { get; set; }
 
-        public double? Value56 { get; set; }
+        public bool? Value56 { get; set; }
 
-        public double? Value57 { get; set; }
+        public bool? Value57 { get; set; }
 
-        public double? Value58 { get; set; }
+        public bool? Value58 { get; set; }
 
-        public double? Value59 { get; set; }
+        public bool? Value59 { get; set; }
 
-        public double? Value60 { get; set; }
+        public bool? Value60 { get; set; }
 
-        public double? Value61 { get; set; }
+        public bool? Value61 { get; set; }
 
-        public double? Value62 { get; set; }
+        public bool? Value62 { get; set; }
 
-        public double? Value63 { get; set; }
+        public bool? Value63 { get; set; }
 
         #endregion
 
-        public IEnumerator<double?> GetEnumerator()
+        public IEnumerator<bool?> GetEnumerator()
         {
             yield return Value0;
             yield return Value1;

@@ -4,23 +4,23 @@ using Newtonsoft.Json.Serialization;
 namespace TryMLearning.Model
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public class DataSet
+    public class Test
     {
-        public DataSet()
+        public Test()
         {
         }
 
-        public DataSet(int dataSetId)
+        public Test(int testId)
         {
-            DataSetId = dataSetId;
+            TestId = testId;
         }
 
-        public int DataSetId { get; set; }
+        public int TestId { get; set; }
+
+        public string Alias { get; set; }
 
         public string Name { get; set; }
 
         public string Description { get; set; }
-
-        public DataSetType Type { get; set; }
     }
 }

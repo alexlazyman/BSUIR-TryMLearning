@@ -32,6 +32,17 @@ namespace TryMLearning.Data
             };
         }
 
+        public static IEnumerable<Test> GetTests()
+        {
+            yield return new Test
+            {
+                TestId = 1,
+                Alias = ClassifierTestAliases.QFoldCrossValidation,
+                Name = "Q-fold cross validation",
+                Description = "There is no description",
+            };
+        }
+
         public static IEnumerable<ClassificationSample> GetClassificationDataSetSamples()
         {
             #region Iris

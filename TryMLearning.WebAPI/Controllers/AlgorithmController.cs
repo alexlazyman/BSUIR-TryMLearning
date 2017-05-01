@@ -77,20 +77,20 @@ namespace TryMLearning.WebAPI.Controllers
             await _algorithmService.DeleteAlgorithmAsync(algorithmId);
         }
 
-        // POST api/algorithm/5/run
-        [Route("{algorithmId:int}/run/dataset/{dataSetId:int}")]
-        [HttpDelete]
+        // POST api/algorithm/estimate
+        [Route("estimate")]
+        [HttpPost]
         [SwaggerOperation("Run algorithm")]
         [SwaggerResponse(HttpStatusCode.OK)]
-        public async Task<AlgorithmEstimate> RunAlgorithmAsync(int algorithmId, int dataSetId, List<AlgorithmParameterValue> algorithmParameters)
+        public async Task<AlgorithmEstimate> EstimateAlgorithmAsync(AlgorithmEstimate algorithmEstimate)
         {
-            return await _algorithmService.RunAlgorithmAsync(algorithmId, dataSetId, algorithmParameters);
+            return await _algorithmService.RunAlgorithmAsync(algorithmEstimate);
         }
 
-        // GET api/algorithm/run/5
-        [Route("run/{algorithmEstimateId:int}")]
+        // GET api/algorithm/estimate/5
+        [Route("estimate/{algorithmEstimateId:int}")]
         [HttpGet]
-        [SwaggerOperation("Get computing status of algorithm")]
+        [SwaggerOperation("Get status of algorithm estimating")]
         [SwaggerResponse(HttpStatusCode.OK)]
         public async Task<AlgorithmEstimate> GetComputingStatusAsync(int algorithmEstimateId)
         {
