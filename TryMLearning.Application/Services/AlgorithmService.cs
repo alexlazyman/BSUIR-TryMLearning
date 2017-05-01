@@ -188,6 +188,7 @@ namespace TryMLearning.Application.Services
             return algorithmEstimate;
         }
 
+        // TODO: Add update of status.
         public async Task EstimateClassificationAlgorithmAsync(int algorithmEstimateId)
         {
             var algorithmEstimate = await _algorithmEstimateService.GetAlgorithmEstimateAsync(algorithmEstimateId);
@@ -204,17 +205,15 @@ namespace TryMLearning.Application.Services
                 return;
             }
 
-            var sampleCount = await _classificationSampleService.GetSampleCountAsync(algorithmEstimate.DataSet.DataSetId);
-            var samples = await _classificationSampleService.GetSamplesAsync(algorithmEstimate.DataSet.DataSetId, 0, sampleCount);
-
             var classifier = _classifierFactory.GetClassifier(algorithmEstimate.Algorithm.Alias);
             var classifierService = _classifierServiceFactory.GetClassifierService(algorithmEstimate);
+
+            var sampleCount = await _classificationSampleService.GetSampleCountAsync(algorithmEstimate.DataSet.DataSetId);
+            var samples = await _classificationSampleService.GetSamplesAsync(algorithmEstimate.DataSet.DataSetId, 0, sampleCount);
 
             var classificationResults = classifierService.Classify(samples, classifier).ToList();
 
             await _classificationResultService.AddClassificationResultsAsync(algorithmEstimateId, classificationResults);
-
-            // TODO: Estimate by results.
         }
 
         private async Task UpdateAlgorithmParametersAsync(List<AlgorithmParameter> existingAlgParams, List<AlgorithmParameter> updatedAlgParams)

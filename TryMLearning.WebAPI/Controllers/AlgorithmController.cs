@@ -80,7 +80,7 @@ namespace TryMLearning.WebAPI.Controllers
         // POST api/algorithm/estimate
         [Route("estimate")]
         [HttpPost]
-        [SwaggerOperation("Run algorithm")]
+        [SwaggerOperation("Estimate algorithm")]
         [SwaggerResponse(HttpStatusCode.OK)]
         public async Task<AlgorithmEstimate> EstimateAlgorithmAsync(AlgorithmEstimate algorithmEstimate)
         {
