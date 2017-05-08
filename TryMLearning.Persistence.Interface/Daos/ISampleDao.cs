@@ -5,7 +5,7 @@ namespace TryMLearning.Persistence.Interface.Daos
 {
     public interface ISampleDao<T>
     {
-        Task<List<T>> AddSamplesAsync(List<T> samples);
+        Task<List<T>> InsertSamplesAsync(List<T> samples);
 
         Task<int> GetSampleCountAsync(int dataSetId);
 

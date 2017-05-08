@@ -49,7 +49,7 @@ namespace TryMLearning.Persistence.Daos
             return algorithm;
         }
 
-        public async Task<Algorithm> AddAlgorithmAsync(Algorithm algorithm)
+        public async Task<Algorithm> InsertAlgorithmAsync(Algorithm algorithm)
         {
             var algorithmDbEntity = Mapper.Map<AlgorithmDbEntity>(algorithm);
 

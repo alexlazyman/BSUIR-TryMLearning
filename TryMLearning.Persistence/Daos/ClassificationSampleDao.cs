@@ -27,7 +27,7 @@ namespace TryMLearning.Persistence.Daos
             _dbContext = dbContext;
         }
 
-        public async Task<List<ClassificationSample>> AddSamplesAsync(List<ClassificationSample> samples)
+        public async Task<List<ClassificationSample>> InsertSamplesAsync(List<ClassificationSample> samples)
         {
             var dbEntities = samples.Select(Mapper.Map<ClassificationSampleDbEntity>).ToList();
 

@@ -27,7 +27,7 @@ namespace TryMLearning.Persistence.Daos
             _dbContext = dbContext;
         }
 
-        public async Task<DataSet> AddDataSetAsync(DataSet dataSet)
+        public async Task<DataSet> InsertDataSetAsync(DataSet dataSet)
         {
             var dbEntity = Mapper.Map<DataSetDbEntity>(dataSet);
 

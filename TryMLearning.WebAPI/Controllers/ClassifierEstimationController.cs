@@ -48,7 +48,7 @@ namespace TryMLearning.WebAPI.Controllers
         [HttpGet]
         [SwaggerOperation("Get classifier estimation result")]
         [SwaggerResponse(HttpStatusCode.OK)]
-        public async Task<ClassifierEstimationResult> GetClassifierEstimationResultAsync(ClassifierEstimationResultRequest request)
+        public async Task<ClassifierEstimationResult> GetClassifierEstimationResultAsync([FromUri] ClassifierEstimationResultRequest request)
         {
             return await _algorithmEstimationService.GetClassifierEstimationResultAsync(request);
         }

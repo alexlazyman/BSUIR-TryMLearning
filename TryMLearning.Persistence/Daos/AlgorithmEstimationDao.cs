@@ -38,6 +38,18 @@ namespace TryMLearning.Persistence.Daos
             return algorithmEstimation;
         }
 
+        public async Task<AlgorithmEstimation> UpdateAlgorithmEstimationAsync(AlgorithmEstimation algorithmEstimation)
+        {
+            var algorithmEstimationDbEntity = Mapper.Map<AlgorithmEstimationDbEntity>(algorithmEstimation);
+
+            _dbContext.SafeUpdate(algorithmEstimationDbEntity);
+            await _dbContext.SaveChangesAsync();
+
+            algorithmEstimation = Mapper.Map<AlgorithmEstimation>(algorithmEstimationDbEntity);
+
+            return algorithmEstimation;
+        }
+
         public async Task<AlgorithmEstimation> InsertAlgorithmEstimationAsync(AlgorithmEstimation algorithmEstimation)
         {
             var algorithmEstimationDbEntity = Mapper.Map<AlgorithmEstimationDbEntity>(algorithmEstimation);

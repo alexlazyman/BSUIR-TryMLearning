@@ -6,7 +6,7 @@ namespace TryMLearning.Persistence.Interface.Daos
 {
     public interface IDataSetDao
     {
-        Task<DataSet> AddDataSetAsync(DataSet dataSet);
+        Task<DataSet> InsertDataSetAsync(DataSet dataSet);
 
         Task<List<DataSet>> GetAllDataSetsAsync();
 

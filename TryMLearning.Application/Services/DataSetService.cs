@@ -18,7 +18,7 @@ namespace TryMLearning.Application.Services
 
         public async Task<DataSet> AddDataSetAsync(DataSet dataSet)
         {
-            return await _dataSetDao.AddDataSetAsync(dataSet);
+            return await _dataSetDao.InsertDataSetAsync(dataSet);
         }
 
         public async Task<List<DataSet>> GetAllDataSetsAsync()

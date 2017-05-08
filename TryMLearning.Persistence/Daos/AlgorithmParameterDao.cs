@@ -25,7 +25,7 @@ namespace TryMLearning.Persistence.Daos
             _dbContext = dbContext;
         }
 
-        public async Task<AlgorithmParameter> AddAlgorithmParameterAsync(AlgorithmParameter algorithmParameter)
+        public async Task<AlgorithmParameter> InsertAlgorithmParameterAsync(AlgorithmParameter algorithmParameter)
         {
             var algorithmParameterDbEntity = Mapper.Map<AlgorithmParameterDbEntity>(algorithmParameter);
 

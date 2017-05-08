@@ -43,7 +43,7 @@ namespace TryMLearning.Application.Services
 
             samples.ForEach(s => s.DataSetId = dataSetId);
 
-            var addedSamples = await _classificationDataSetSampleDao.AddSamplesAsync(samples);
+            var addedSamples = await _classificationDataSetSampleDao.InsertSamplesAsync(samples);
 
             return addedSamples;
         }

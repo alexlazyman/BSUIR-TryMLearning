@@ -72,7 +72,7 @@ namespace TryMLearning.Application.Services
                 try
                 {
                     algorithm.AlgorithmId = 0;
-                    addedAlgorithm = await _algorithmDao.AddAlgorithmAsync(algorithm);
+                    addedAlgorithm = await _algorithmDao.InsertAlgorithmAsync(algorithm);
 
                     addedAlgorithm.Parameters = new List<AlgorithmParameter>();
                     foreach (var algParam in algorithm.Parameters)
@@ -80,7 +80,7 @@ namespace TryMLearning.Application.Services
                         algParam.AlgorithmParameterId = 0;
                         algParam.AlgorithmId = addedAlgorithm.AlgorithmId;
 
-                        var addedAlgParam = await _algorithmParameterDao.AddAlgorithmParameterAsync(algParam);
+                        var addedAlgParam = await _algorithmParameterDao.InsertAlgorithmParameterAsync(algParam);
 
                         addedAlgorithm.Parameters.Add(addedAlgParam);
                     }
@@ -178,7 +178,7 @@ namespace TryMLearning.Application.Services
             {
                 if (updatedAlgParams[i].AlgorithmParameterId == 0)
                 {
-                    updatedAlgParams[i] = await _algorithmParameterDao.AddAlgorithmParameterAsync(updatedAlgParams[i]);
+                    updatedAlgParams[i] = await _algorithmParameterDao.InsertAlgorithmParameterAsync(updatedAlgParams[i]);
                 }
                 else
                 {

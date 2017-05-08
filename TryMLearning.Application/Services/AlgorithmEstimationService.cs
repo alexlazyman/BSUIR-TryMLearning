@@ -85,7 +85,6 @@ namespace TryMLearning.Application.Services
             return algorithmEstimation;
         }
 
-        // TODO: Add update of status.
         public async Task ExecuteClassifierEstimationAsync(int algorithmEstimationId)
         {
             var algorithmEstimation = await _algorithmEstimationDao.GetAlgorithmEstimationAsync(algorithmEstimationId);
@@ -94,6 +93,9 @@ namespace TryMLearning.Application.Services
                 throw new UnauthorizedAccessException("Algorithm estimation is not classifier estimation");
             }
 
+            algorithmEstimation.Status = AlgorithmEstimationStatus.InProgress;
+            await _algorithmEstimationDao.UpdateAlgorithmEstimationAsync(algorithmEstimation);
+
             var classifier = _classifierFactory.GetClassifier(algorithmEstimation.Algorithm.Alias);
             var classifierEstimator = _classifierEstimatorFactory.GetClassifierEstimator(algorithmEstimation);
 
@@ -101,7 +103,24 @@ namespace TryMLearning.Application.Services
 
             var classificationResults = classifierEstimator.Classify(samples, classifier);
 
-            await _classificationResultService.AddClassificationResultsAsync(algorithmEstimationId, classificationResults);
+            using (var ts = _transactionScope.Begin())
+            {
+                try
+                {
+                    await _classificationResultService.AddClassificationResultsAsync(algorithmEstimationId, classificationResults);
+
+                    algorithmEstimation.Status = AlgorithmEstimationStatus.Completed;
+                    await _algorithmEstimationDao.UpdateAlgorithmEstimationAsync(algorithmEstimation);
+
+                    ts.Commit();
+                }
+                catch
+                {
+                    ts.Rollback();
+                    throw;
+                }
+            }
+
         }
 
         public async Task<ClassifierEstimationResult> GetClassifierEstimationResultAsync(ClassifierEstimationResultRequest request)

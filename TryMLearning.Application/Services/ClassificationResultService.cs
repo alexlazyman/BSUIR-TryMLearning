@@ -20,7 +20,7 @@ namespace TryMLearning.Application.Services
         {
             classificationResults.ForEach(r => r.AlgorithmEstimationId = algorithmEstimationId);
 
-            return await _classificationResultDao.AddClassificationResultsAsync(classificationResults);
+            return await _classificationResultDao.InsertClassificationResultsAsync(classificationResults);
         }
 
         public async Task<List<ClassificationResult>> GetClassificationResultsAsync(int algorithmEstimationId)

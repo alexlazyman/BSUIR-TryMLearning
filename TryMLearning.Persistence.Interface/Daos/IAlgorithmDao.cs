@@ -10,7 +10,7 @@ namespace TryMLearning.Persistence.Interface.Daos
 
         Task<Algorithm> GetAlgorithmAsync(int algorithmId);
 
-        Task<Algorithm> AddAlgorithmAsync(Algorithm algorithm);
+        Task<Algorithm> InsertAlgorithmAsync(Algorithm algorithm);
 
         Task<Algorithm> UpdateAlgorithmAsync(Algorithm algorithm);
 
