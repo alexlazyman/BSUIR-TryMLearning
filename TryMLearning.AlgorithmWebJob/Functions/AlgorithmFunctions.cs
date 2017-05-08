@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using TryMLearning.Application.Interface.MachineLearning;
 using TryMLearning.Application.Interface.Services;
@@ -10,17 +11,17 @@ namespace TryMLearning.AlgorithmWebJob.Functions
 {
     public class AlgorithmFunctions
     {
-        private readonly IAlgorithmService _algorithmService;
+        private readonly IAlgorithmEstimationService _algorithmEstimationService;
 
         public AlgorithmFunctions(
-            IAlgorithmService algorithmService)
+            IAlgorithmEstimationService algorithmEstimationService)
         {
-            _algorithmService = algorithmService;
+            _algorithmEstimationService = algorithmEstimationService;
         }
 
-        public async void RunClassificationAlgorithm([QueueTrigger(StorageQueueNames.ClassificationAlgorithm)] int algorithmEstimateId)
+        public async Task RunClassifierEstimation([QueueTrigger(StorageQueueNames.ClassificationAlgorithm)] int algorithmEstimationId)
         {
-            await _algorithmService.EstimateClassificationAlgorithmAsync(algorithmEstimateId);
+            await _algorithmEstimationService.ExecuteClassifierEstimationAsync(algorithmEstimationId);
         }
     }
 }

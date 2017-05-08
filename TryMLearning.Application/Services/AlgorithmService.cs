@@ -23,38 +23,38 @@ namespace TryMLearning.Application.Services
         private readonly IAlgorithmDao _algorithmDao;
         private readonly IAlgorithmParameterDao _algorithmParameterDao;
 
-        private readonly IAlgorithmEstimateService _algorithmEstimateService;
+        private readonly IAlgorithmEstimationService _algorithmEstimationService;
         private readonly ISampleService<ClassificationSample> _classificationSampleService;
         private readonly IClassificationResultService _classificationResultService;
 
         private readonly IClassifierFactory _classifierFactory;
-        private readonly IClassifierServiceFactory _classifierServiceFactory;
+        private readonly IClassifierEstimatorFactory _classifierEstimatorFactory;
 
         private readonly IValidator<Algorithm> _algorithmValidator;
-        private readonly IValidator<AlgorithmEstimate> _algorithmEstimateValidator;
+        private readonly IValidator<AlgorithmEstimation> _algorithmEstimationValidator;
 
         public AlgorithmService(
             ITransactionScope transactionScope,
             IAlgorithmDao algorithmDao,
             IAlgorithmParameterDao algorithmParameterDao,
-            IAlgorithmEstimateService algorithmEstimateService,
+            IAlgorithmEstimationService algorithmEstimationService,
             ISampleService<ClassificationSample> classificationSampleService,
             IClassificationResultService classificationResultService,
             IClassifierFactory classifierFactory,
-            IClassifierServiceFactory classifierServiceFactory,
+            IClassifierEstimatorFactory classifierEstimatorFactory,
             IValidator<Algorithm> algorithmValidator,
-            IValidator<AlgorithmEstimate> algorithmEstimateValidator)
+            IValidator<AlgorithmEstimation> algorithmEstimationValidator)
         {
             _transactionScope = transactionScope;
             _algorithmDao = algorithmDao;
             _classificationSampleService = classificationSampleService;
             _classificationResultService = classificationResultService;
             _algorithmParameterDao = algorithmParameterDao;
-            _algorithmEstimateService = algorithmEstimateService;
+            _algorithmEstimationService = algorithmEstimationService;
             _classifierFactory = classifierFactory;
-            _classifierServiceFactory = classifierServiceFactory;
+            _classifierEstimatorFactory = classifierEstimatorFactory;
             _algorithmValidator = algorithmValidator;
-            _algorithmEstimateValidator = algorithmEstimateValidator;
+            _algorithmEstimationValidator = algorithmEstimationValidator;
         }
 
         public async Task<Algorithm> AddAlgorithmAsync(Algorithm algorithm)
@@ -159,61 +159,6 @@ namespace TryMLearning.Application.Services
             var algorithm = new Algorithm() { AlgorithmId = algorithmId };
 
             await _algorithmDao.DeleteAlgorithmAsync(algorithm);
-        }
-
-        public async Task<AlgorithmEstimate> RunAlgorithmAsync(AlgorithmEstimate algorithmEstimate)
-        {
-            var validationResult = await _algorithmEstimateValidator.ValidateAsync(algorithmEstimate);
-            if (!validationResult.IsValid)
-            {
-                throw new ValidationException("Algorithm form is not valid", validationResult.Errors);
-            }
-
-            using (var ts = _transactionScope.Begin())
-            {
-                try
-                {
-                    algorithmEstimate = await _algorithmEstimateService.AddAlgorithmEstimateAsync(algorithmEstimate);
-                    await _algorithmDao.AddAlgorithmToRunQueue(algorithmEstimate);
-
-                    ts.Commit();
-                }
-                catch
-                {
-                    ts.Rollback();
-                    throw;
-                }
-            }
-
-            return algorithmEstimate;
-        }
-
-        // TODO: Add update of status.
-        public async Task EstimateClassificationAlgorithmAsync(int algorithmEstimateId)
-        {
-            var algorithmEstimate = await _algorithmEstimateService.GetAlgorithmEstimateAsync(algorithmEstimateId);
-
-            if (!algorithmEstimate.Algorithm.IsClassificationAlgorithm)
-            {
-                // TODO: Throw error.
-                return;
-            }
-
-            if (algorithmEstimate.DataSet.Type != DataSetType.Classification)
-            {
-                // TODO: Throw error.
-                return;
-            }
-
-            var classifier = _classifierFactory.GetClassifier(algorithmEstimate.Algorithm.Alias);
-            var classifierService = _classifierServiceFactory.GetClassifierService(algorithmEstimate);
-
-            var sampleCount = await _classificationSampleService.GetSampleCountAsync(algorithmEstimate.DataSet.DataSetId);
-            var samples = await _classificationSampleService.GetSamplesAsync(algorithmEstimate.DataSet.DataSetId, 0, sampleCount);
-
-            var classificationResults = classifierService.Classify(samples, classifier).ToList();
-
-            await _classificationResultService.AddClassificationResultsAsync(algorithmEstimateId, classificationResults);
         }
 
         private async Task UpdateAlgorithmParametersAsync(List<AlgorithmParameter> existingAlgParams, List<AlgorithmParameter> updatedAlgParams)

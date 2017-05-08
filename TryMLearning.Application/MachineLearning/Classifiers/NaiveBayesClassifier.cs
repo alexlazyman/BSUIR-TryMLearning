@@ -23,12 +23,9 @@ namespace TryMLearning.Application.MachineLearning.Classifiers
             _bayes = teacher.Learn(inputs, outputs);
         }
 
-        public IEnumerable<bool> Check(IEnumerable<ClassificationSample> samples)
+        public int Decide(ClassificationSample sample)
         {
-            foreach (var sample in samples)
-            {
-                yield return _bayes.Decide(sample.Features) == sample.ClassId;
-            }
+            return _bayes.Decide(sample.Features);
         }
     }
 }

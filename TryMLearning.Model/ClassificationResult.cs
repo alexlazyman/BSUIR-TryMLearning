@@ -4,10 +4,12 @@
     {
         public int ClassificationResultId { get; set; }
 
-        public int AlgorithmEstimateId { get; set; }
+        public int AlgorithmEstimationId { get; set; }
 
         public int Index { get; set; }
 
-        public bool[] Answers { get; set; }
+        public int ExpectedClass { get; set; }
+
+        public int ActualClass { get; set; }
     }
 }

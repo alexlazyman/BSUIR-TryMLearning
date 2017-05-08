@@ -15,14 +15,11 @@ namespace TryMLearning.WebAPI.Controllers
     public class AlgorithmController : ApiController
     {
         private readonly IAlgorithmService _algorithmService;
-        private readonly IAlgorithmEstimateService _algorithmEstimateService;
 
         public AlgorithmController(
-            IAlgorithmService algorithmService,
-            IAlgorithmEstimateService algorithmEstimateService)
+            IAlgorithmService algorithmService)
         {
             _algorithmService = algorithmService;
-            _algorithmEstimateService = algorithmEstimateService;
         }
 
         // GET api/algorithm/5
@@ -75,26 +72,6 @@ namespace TryMLearning.WebAPI.Controllers
         public async Task DeleteAlgorithmAsync(int algorithmId)
         {
             await _algorithmService.DeleteAlgorithmAsync(algorithmId);
-        }
-
-        // POST api/algorithm/estimate
-        [Route("estimate")]
-        [HttpPost]
-        [SwaggerOperation("Estimate algorithm")]
-        [SwaggerResponse(HttpStatusCode.OK)]
-        public async Task<AlgorithmEstimate> EstimateAlgorithmAsync(AlgorithmEstimate algorithmEstimate)
-        {
-            return await _algorithmService.RunAlgorithmAsync(algorithmEstimate);
-        }
-
-        // GET api/algorithm/estimate/5
-        [Route("estimate/{algorithmEstimateId:int}")]
-        [HttpGet]
-        [SwaggerOperation("Get status of algorithm estimating")]
-        [SwaggerResponse(HttpStatusCode.OK)]
-        public async Task<AlgorithmEstimate> GetComputingStatusAsync(int algorithmEstimateId)
-        {
-            return await _algorithmEstimateService.GetAlgorithmEstimateAsync(algorithmEstimateId);
         }
     }
 }

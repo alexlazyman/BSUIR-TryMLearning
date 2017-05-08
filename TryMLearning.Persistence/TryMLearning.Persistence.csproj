@@ -82,23 +82,22 @@
     <Compile Include="Daos\ClassificationResultDao.cs" />
     <Compile Include="Daos\DataSetDao.cs" />
     <Compile Include="Daos\AlgorithmParameterDao.cs" />
-    <Compile Include="Daos\AlgorithmEstimateDao.cs" />
+    <Compile Include="Daos\AlgorithmEstimationDao.cs" />
     <Compile Include="Helpers\DbContextExtensions.cs" />
     <Compile Include="Interfaces\IDbEntity.cs" />
-    <Compile Include="Migrations\201705012024555_V_1.cs" />
-    <Compile Include="Migrations\201705012024555_V_1.Designer.cs">
-      <DependentUpon>201705012024555_V_1.cs</DependentUpon>
+    <Compile Include="Migrations\201705081534096_Initial.cs" />
+    <Compile Include="Migrations\201705081534096_Initial.Designer.cs">
+      <DependentUpon>201705081534096_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ClassificationResultDbEntity.cs" />
-    <Compile Include="Models\TestDbEntity.cs" />
+    <Compile Include="Models\AlgorithmEstimatorDbEntity.cs" />
     <Compile Include="Models\AlgorithmDbEntity.cs" />
     <Compile Include="Models\AlgorithmParameterDbEntity.cs" />
     <Compile Include="Models\AlgorithmParameterValueDbEntity.cs" />
-    <Compile Include="Models\AlgorithmEstimateDbEntity.cs" />
+    <Compile Include="Models\AlgorithmEstimationDbEntity.cs" />
     <Compile Include="Models\ClassificationSampleDbEntity.cs" />
     <Compile Include="Models\DataSetDbEntity.cs" />
-    <Compile Include="Models\BoolTupleDbEntity.cs" />
     <Compile Include="Models\DoubleTupleDbEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Daos\AlgorithmDao.cs" />
@@ -110,9 +109,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="StoredProcedures\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TryMLearning.Data\TryMLearning.Data.csproj">
@@ -132,8 +128,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705012024555_V_1.resx">
-      <DependentUpon>201705012024555_V_1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705081534096_Initial.resx">
+      <DependentUpon>201705081534096_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

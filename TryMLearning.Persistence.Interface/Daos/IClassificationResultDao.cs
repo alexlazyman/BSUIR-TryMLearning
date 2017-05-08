@@ -7,5 +7,7 @@ namespace TryMLearning.Persistence.Interface.Daos
     public interface IClassificationResultDao
     {
         Task<List<ClassificationResult>> AddClassificationResultsAsync(List<ClassificationResult> classificationResults);
+
+        Task<List<ClassificationResult>> GetClassificationResultsAsync(int algorithmEstimationId);
     }
 }

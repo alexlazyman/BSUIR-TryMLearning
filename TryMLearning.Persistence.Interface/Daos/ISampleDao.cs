@@ -13,6 +13,8 @@ namespace TryMLearning.Persistence.Interface.Daos
 
         Task<List<T>> GetSamplesAsync(int dataSetId, int start, int count);
 
+        Task<List<T>> GetAllSamplesAsync(int dataSetId);
+
         Task DeleteSamplesAsync(List<T> samples);
     }
 }

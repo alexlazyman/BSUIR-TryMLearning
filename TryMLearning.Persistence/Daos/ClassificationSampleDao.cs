@@ -55,7 +55,7 @@ namespace TryMLearning.Persistence.Daos
         {
             var dbEntity = await _dbContext.ClassificationDataSamples
                 .AsNoTracking()
-                .FirstOrDefaultAsync(e => e.ClassificationDataSetSampleId == sampleId);
+                .FirstOrDefaultAsync(e => e.ClassificationSampleId == sampleId);
 
             var sample = Mapper.Map<ClassificationSample>(dbEntity);
 
@@ -68,9 +68,23 @@ namespace TryMLearning.Persistence.Daos
                 .AsNoTracking()
                 .Include(s => s.FeatureTuples)
                 .Where(s => s.DataSetId == dataSetId)
-                .OrderBy(s => s.ClassificationDataSetSampleId)
+                .OrderBy(s => s.ClassificationSampleId)
                 .Skip(start)
                 .Take(count)
+                .ToListAsync();
+
+            var samples = dbEntities.Select(Mapper.Map<ClassificationSample>).ToList();
+
+            return samples;
+        }
+
+        public async Task<List<ClassificationSample>> GetAllSamplesAsync(int dataSetId)
+        {
+            var dbEntities = await _dbContext.ClassificationDataSamples
+                .AsNoTracking()
+                .Include(s => s.FeatureTuples)
+                .Where(s => s.DataSetId == dataSetId)
+                .OrderBy(s => s.ClassificationSampleId)
                 .ToListAsync();
 
             var samples = dbEntities.Select(Mapper.Map<ClassificationSample>).ToList();

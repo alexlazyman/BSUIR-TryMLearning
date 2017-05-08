@@ -8,6 +8,6 @@ namespace TryMLearning.Application.Interface.MachineLearning.Classifiers
     {
         void Train(IEnumerable<ClassificationSample> samples);
 
-        IEnumerable<bool> Check(IEnumerable<ClassificationSample> samples);
+        int Decide(ClassificationSample sample);
     }
 }

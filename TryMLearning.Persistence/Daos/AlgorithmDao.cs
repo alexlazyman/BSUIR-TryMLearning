@@ -80,14 +80,5 @@ namespace TryMLearning.Persistence.Daos
             _dbContext.SafeDelete(algorithmDbEntity);
             await _dbContext.SaveChangesAsync();
         }
-
-        public async Task AddAlgorithmToRunQueue(AlgorithmEstimate algorithmEstimate)
-        {
-            var queue = await StorageUtils.GetQueue(StorageNames.TryMLearning, StorageQueueNames.ClassificationAlgorithm);
-
-            var message = new CloudQueueMessage(algorithmEstimate.AlgorithmEstimateId.ToString());
-
-            await queue.AddMessageAsync(message);
-        }
     }
 }

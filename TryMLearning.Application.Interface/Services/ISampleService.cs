@@ -12,6 +12,8 @@ namespace TryMLearning.Application.Interface.Services
 
         Task<List<T>> GetSamplesAsync(int dataSetId, int start, int count);
 
+        Task<List<T>> GetAllSamplesAsync(int dataSetId);
+
         Task DeleteSamplesAsync(int dataSetId, List<int> dataSetSampleIds);
     }
 }

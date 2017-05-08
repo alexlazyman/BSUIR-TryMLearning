@@ -84,6 +84,11 @@ namespace TryMLearning.Application.Services
             return samples;
         }
 
+        public async Task<List<ClassificationSample>> GetAllSamplesAsync(int dataSetId)
+        {
+            return await _classificationDataSetSampleDao.GetAllSamplesAsync(dataSetId);
+        }
+
         public async Task DeleteSamplesAsync(int dataSetId, List<int> sampleIds)
         {
             var dataSet = await _dataSetDao.GetDataSetAsync(dataSetId);
@@ -113,7 +118,7 @@ namespace TryMLearning.Application.Services
 
             var samples = sampleIds.Select(id => new ClassificationSample
             {
-                ClassificationDataSetSampleId = id
+                ClassificationSampleId = id
             }).ToList();
 
             await _classificationDataSetSampleDao.DeleteSamplesAsync(samples);

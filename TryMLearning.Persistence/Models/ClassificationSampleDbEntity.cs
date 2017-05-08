@@ -11,12 +11,12 @@ namespace TryMLearning.Persistence.Models
     {
         int IDbEntity.Id
         {
-            get => ClassificationDataSetSampleId;
-            set => ClassificationDataSetSampleId = value;
+            get => ClassificationSampleId;
+            set => ClassificationSampleId = value;
         }
 
         [Key]
-        public int ClassificationDataSetSampleId { get; set; }
+        public int ClassificationSampleId { get; set; }
 
         public int DataSetId { get; set; }
         

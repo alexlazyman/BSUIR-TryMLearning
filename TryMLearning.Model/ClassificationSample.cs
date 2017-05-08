@@ -6,7 +6,7 @@ namespace TryMLearning.Model
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public class ClassificationSample
     {
-        public int ClassificationDataSetSampleId { get; set; }
+        public int ClassificationSampleId { get; set; }
 
         public int DataSetId { get; set; }
 

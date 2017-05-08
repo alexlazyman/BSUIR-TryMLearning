@@ -22,7 +22,7 @@ namespace TryMLearning.Persistence
 
         public DbSet<AlgorithmParameterValueDbEntity> AlgorithmParameterValues { get; set; }
 
-        public DbSet<AlgorithmEstimateDbEntity> AlgorithmEstimates { get; set; }
+        public DbSet<AlgorithmEstimationDbEntity> AlgorithmEstimations { get; set; }
 
         public DbSet<DataSetDbEntity> DataSets { get; set; }
 
@@ -30,11 +30,9 @@ namespace TryMLearning.Persistence
 
         public DbSet<ClassificationResultDbEntity> ClassificationResults { get; set; }
 
-        public DbSet<TestDbEntity> Tests { get; set; }
+        public DbSet<AlgorithmEstimatorDbEntity> AlgorithmEstimators { get; set; }
 
         public DbSet<DoubleTupleDbEntity> DoubleTuples { get; set; }
-
-        public DbSet<BoolTupleDbEntity> BoolTuples { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -42,9 +40,9 @@ namespace TryMLearning.Persistence
                 .Remove<PluralizingTableNameConvention>();
 
             modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
-                .HasRequired(v => v.AlgorithmEstimate)
+                .HasRequired(v => v.AlgorithmEstimation)
                 .WithMany(s => s.AlgorithmParameterValues)
-                .HasForeignKey(v => v.AlgorithmEstimateId)
+                .HasForeignKey(v => v.AlgorithmEstimationId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
@@ -60,16 +58,6 @@ namespace TryMLearning.Persistence
                 {
                     c.ToTable("ClassificationSampleDoubleTuple", "rel");
                     c.MapLeftKey("SampleId");
-                    c.MapRightKey("TupleId");
-                });
-
-            modelBuilder.Entity<ClassificationResultDbEntity>()
-                .HasMany(m => m.AnswerTuples)
-                .WithMany()
-                .Map(c =>
-                {
-                    c.ToTable("ClassificationResultBoolTuple", "rel");
-                    c.MapLeftKey("ResultId");
                     c.MapRightKey("TupleId");
                 });
         }

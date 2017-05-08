@@ -16,11 +16,16 @@ namespace TryMLearning.Application.Services
             _classificationResultDao = classificationResultDao;
         }
 
-        public async Task<List<ClassificationResult>> AddClassificationResultsAsync(int algorithmEstimateId, List<ClassificationResult> classificationResults)
+        public async Task<List<ClassificationResult>> AddClassificationResultsAsync(int algorithmEstimationId, List<ClassificationResult> classificationResults)
         {
-            classificationResults.ForEach(r => r.AlgorithmEstimateId = algorithmEstimateId);
+            classificationResults.ForEach(r => r.AlgorithmEstimationId = algorithmEstimationId);
 
             return await _classificationResultDao.AddClassificationResultsAsync(classificationResults);
+        }
+
+        public async Task<List<ClassificationResult>> GetClassificationResultsAsync(int algorithmEstimationId)
+        {
+            return await _classificationResultDao.GetClassificationResultsAsync(algorithmEstimationId);
         }
     }
 }

@@ -39,5 +39,17 @@ namespace TryMLearning.Persistence.Daos
 
             return classificationResults;
         }
+
+        public async Task<List<ClassificationResult>> GetClassificationResultsAsync(int algorithmEstimationId)
+        {
+            var dbEntities = await _dbContext.ClassificationResults
+                .AsNoTracking()
+                .Where(s => s.AlgorithmEstimationId == algorithmEstimationId)
+                .ToListAsync();
+
+            var classificationResults = dbEntities.Select(Mapper.Map<ClassificationResult>).ToList();
+
+            return classificationResults;
+        }
     }
 }

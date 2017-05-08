@@ -30,9 +30,9 @@ namespace TryMLearning.Persistence.Migrations
 
             context.SaveChanges();
 
-            context.Tests.AddRange(
-                DefaultData.GetTests()
-                    .Select(Mapper.Map<TestDbEntity>));
+            context.AlgorithmEstimators.AddRange(
+                DefaultData.GetAlgorithmEstimators()
+                    .Select(Mapper.Map<AlgorithmEstimatorDbEntity>));
 
             context.SaveChanges();
 

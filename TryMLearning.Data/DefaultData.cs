@@ -32,12 +32,12 @@ namespace TryMLearning.Data
             };
         }
 
-        public static IEnumerable<Test> GetTests()
+        public static IEnumerable<AlgorithmEstimator> GetAlgorithmEstimators()
         {
-            yield return new Test
+            yield return new AlgorithmEstimator
             {
-                TestId = 1,
-                Alias = ClassifierTestAliases.QFoldCrossValidation,
+                AlgorithmEstimatorId = 1,
+                Alias = ClassifierEstimatorAliases.QFoldCrossValidation,
                 Name = "Q-fold cross validation",
                 Description = "There is no description",
             };

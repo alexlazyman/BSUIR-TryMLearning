@@ -6,16 +6,25 @@ using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using TryMLearning.Application.Interface.MachineLearning;
 using TryMLearning.Application.Interface.MachineLearning.Classifiers;
+using TryMLearning.Application.Interface.MachineLearning.Contexts;
+using TryMLearning.Application.Interface.MachineLearning.Estimates.Classifier;
 using TryMLearning.Application.Interface.MachineLearning.Estimators;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Application.Interface.Validation;
 using TryMLearning.Application.MachineLearning;
 using TryMLearning.Application.MachineLearning.Classifiers;
+using TryMLearning.Application.MachineLearning.Contexts;
+using TryMLearning.Application.MachineLearning.Estimates.Classifier.FalseNegativeError;
+using TryMLearning.Application.MachineLearning.Estimates.Classifier.FalsePositiveError;
+using TryMLearning.Application.MachineLearning.Estimates.Classifier.GeneralizationAbility;
 using TryMLearning.Application.MachineLearning.Estimators;
 using TryMLearning.Application.Services;
 using TryMLearning.Application.Validation;
 using TryMLearning.Model;
 using TryMLearning.Model.Constants;
+using TryMLearning.Model.MachineLearning.Estimates.Classifier;
+using TryMLearning.Model.MachineLearning.Estimators;
+using TryMLearning.Model.MachineLearning.Estimators.Interfaces;
 using TryMLearning.Persistence;
 using TryMLearning.Persistence.Daos;
 using TryMLearning.Persistence.Interface;
@@ -38,7 +47,7 @@ namespace TryMLearning.Configuration
                 // Daos
                 .RegisterType<IAlgorithmDao, AlgorithmDao>(new HierarchicalLifetimeManager())
                 .RegisterType<IAlgorithmParameterDao, AlgorithmParameterDao>(new HierarchicalLifetimeManager())
-                .RegisterType<IAlgorithmEstimateDao, AlgorithmEstimateDao>(new HierarchicalLifetimeManager())
+                .RegisterType<IAlgorithmEstimationDao, AlgorithmEstimationDao>(new HierarchicalLifetimeManager())
                 
                 .RegisterType<IClassificationResultDao, ClassificationResultDao>(new HierarchicalLifetimeManager())
                 
@@ -49,7 +58,7 @@ namespace TryMLearning.Configuration
 
                 // Services
                 .RegisterType<IAlgorithmService, AlgorithmService>(new HierarchicalLifetimeManager())
-                .RegisterType<IAlgorithmEstimateService, AlgorithmEstimateService>(new HierarchicalLifetimeManager())
+                .RegisterType<IAlgorithmEstimationService, AlgorithmEstimationService>(new HierarchicalLifetimeManager())
 
                 .RegisterType<IDataSetService, DataSetService>(new HierarchicalLifetimeManager())
                 .RegisterType<ISampleService<ClassificationSample>, ClassificationSampleService>(new HierarchicalLifetimeManager())
@@ -59,18 +68,28 @@ namespace TryMLearning.Configuration
                 // Valiation
                 .RegisterType<IValidator<Algorithm>, AlgorithmValidator>(new HierarchicalLifetimeManager())
                 .RegisterType<IValidator<AlgorithmParameter>, AlgorithmParameterValidator>(new HierarchicalLifetimeManager())
-                .RegisterType<IValidator<AlgorithmEstimate>, AlgorithmEstimateValidator>(new HierarchicalLifetimeManager())
-
-                .RegisterType<IEstimateFactory, EstimateFactory>(new HierarchicalLifetimeManager())
+                .RegisterType<IValidator<AlgorithmEstimation>, AlgorithmEstimationValidator>(new HierarchicalLifetimeManager())
 
                 // Machine learning
+                
+                .RegisterType<IClassificationContext, ClassificationContext>(new HierarchicalLifetimeManager())
+
+                // Clasificators
                 .RegisterType<IClassifier, NaiveBayesClassifier>(AlgorithmAliases.NaiveBayes, new HierarchicalLifetimeManager())
 
-                .RegisterType<IClassifierService, QFoldCrossValidation>(ClassifierTestAliases.QFoldCrossValidation, new HierarchicalLifetimeManager())
+                // Estimators
+                .RegisterType<IClassifierEstimator, QFoldCrossValidation>(ClassifierEstimatorAliases.QFoldCrossValidation, new HierarchicalLifetimeManager())
+
+                .RegisterType<IQFoldCrossValidationConfig, DefaultQFoldCrossValidationConfig>(new HierarchicalLifetimeManager())
+
+                // Estimates
+                .RegisterType<IClassifierEstimate, GeneralizationAbility>(ClassifierEstimateAliases.GeneralizationAbility, new HierarchicalLifetimeManager())
+                .RegisterType<IClassifierEstimate, FalseNegativeError>(ClassifierEstimateAliases.FalseNegativeError, new HierarchicalLifetimeManager())
+                .RegisterType<IClassifierEstimate, FalsePositiveError>(ClassifierEstimateAliases.FalsePositiveError, new HierarchicalLifetimeManager())
 
                 .RegisterType<IClassifierFactory, ClassifierFactory>(new HierarchicalLifetimeManager())
-                .RegisterType<IClassifierServiceFactory, ClassifierServiceFactory>(new HierarchicalLifetimeManager())
-                .RegisterType<IEstimateFactory, EstimateFactory>(new HierarchicalLifetimeManager());
+                .RegisterType<IClassifierEstimatorFactory, ClassifierEstimatorFactory>(new HierarchicalLifetimeManager())
+                .RegisterType<IClassifierEstimateFactory, ClassifierEstimateFactory>(new HierarchicalLifetimeManager());
         }
     }
 }

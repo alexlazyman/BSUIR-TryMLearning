@@ -43,7 +43,7 @@
     <Compile Include="Daos\IClassificationResultDao.cs" />
     <Compile Include="Daos\IDataSetDao.cs" />
     <Compile Include="Daos\IAlgorithmParameterDao.cs" />
-    <Compile Include="Daos\IAlgorithmEstimateDao.cs" />
+    <Compile Include="Daos\IAlgorithmEstimationDao.cs" />
     <Compile Include="Daos\IAlgorithmDao.cs" />
     <Compile Include="Daos\ISampleDao.cs" />
     <Compile Include="ITransactionScope.cs" />

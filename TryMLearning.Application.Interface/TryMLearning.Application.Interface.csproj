@@ -41,16 +41,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MachineLearning\Classifiers\IClassifier.cs" />
-    <Compile Include="MachineLearning\EstimateResults\IEstimateResult.cs" />
-    <Compile Include="MachineLearning\Estimates\IEstimate.cs" />
-    <Compile Include="MachineLearning\Estimators\IClassifierService.cs" />
-    <Compile Include="MachineLearning\IClassifierServiceFactory.cs" />
-    <Compile Include="MachineLearning\IEstimateFactory.cs" />
+    <Compile Include="MachineLearning\Contexts\IClassificationContext.cs" />
+    <Compile Include="MachineLearning\Estimates\Classifier\IClassifierEstimateResult.cs" />
+    <Compile Include="MachineLearning\Estimates\Classifier\IClassifierEstimate.cs" />
+    <Compile Include="MachineLearning\Estimators\IClassifierEstimator.cs" />
+    <Compile Include="MachineLearning\IClassifierEstimatorFactory.cs" />
+    <Compile Include="MachineLearning\IClassifierEstimateFactory.cs" />
     <Compile Include="MachineLearning\IClassifierFactory.cs" />
     <Compile Include="Services\IClassificationResultService.cs" />
     <Compile Include="Services\ISampleService.cs" />
     <Compile Include="Services\IDataSetService.cs" />
-    <Compile Include="Services\IAlgorithmEstimateService.cs" />
+    <Compile Include="Services\IAlgorithmEstimationService.cs" />
     <Compile Include="Services\IAlgorithmService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\IValidator.cs" />
