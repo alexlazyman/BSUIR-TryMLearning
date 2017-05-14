@@ -11,6 +11,9 @@ namespace TryMLearning.Persistence.Configuration
     {
         public static void RegisterDtoMaps(this IMapperConfigurationExpression cfg)
         {
+            cfg.CreateMap<User, UserDbEntity>();
+            cfg.CreateMap<UserDbEntity, User>();
+
             cfg.CreateMap<AlgorithmEstimator, AlgorithmEstimatorDbEntity>();
             cfg.CreateMap<AlgorithmEstimatorDbEntity, AlgorithmEstimator>();
 

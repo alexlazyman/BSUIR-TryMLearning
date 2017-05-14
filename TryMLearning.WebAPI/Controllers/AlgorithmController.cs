@@ -37,6 +37,7 @@ namespace TryMLearning.WebAPI.Controllers
         [HttpGet]
         [SwaggerOperation("Get all algorithms")]
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(List<Algorithm>))]
+        [Authorize]
         public async Task<List<Algorithm>> GetAllAlgorithmsAsync()
         {
             return await _algorithmService.GetAllAlgorithmsAsync();

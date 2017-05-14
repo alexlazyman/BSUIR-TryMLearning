@@ -1,5 +1,6 @@
 ﻿using System;
-using Microsoft.Practices.Unity;
+using Ninject;
+using Ninject.Parameters;
 using TryMLearning.Application.Interface.MachineLearning;
 using TryMLearning.Application.Interface.MachineLearning.Classifiers;
 using TryMLearning.Application.Interface.MachineLearning.Estimators;
@@ -11,9 +12,9 @@ namespace TryMLearning.Application.MachineLearning
 {
     public class ClassifierEstimatorFactory : IClassifierEstimatorFactory
     {
-        private readonly IUnityContainer _container;
+        private readonly IKernel _container;
 
-        public ClassifierEstimatorFactory(IUnityContainer container)
+        public ClassifierEstimatorFactory(IKernel container)
         {
             _container = container;
         }
@@ -24,17 +25,17 @@ namespace TryMLearning.Application.MachineLearning
             switch (alias)
             {
                 case ClassifierEstimatorAliases.QFoldCrossValidation:
-                    return _container.Resolve<IClassifierEstimator>(alias, GetParameterOverride(algorithmEstimation.QFoldCrossValidationConfig));
+                    return _container.Get<IClassifierEstimator>(alias, GetParameterOverride(algorithmEstimation.QFoldCrossValidationConfig));
                 default:
                     throw new ArgumentException($"There is no test of classifier with alias: {algorithmEstimation.AlgorithmEstimator.Alias}");
             }
         }
 
-        private ResolverOverride[] GetParameterOverride<T>(T config)
+        private IParameter[] GetParameterOverride<T>(T config)
         {
             return config == null
-                ? new ResolverOverride[0]
-                : new ResolverOverride[] { new ParameterOverride("config", config) };
+                ? new IParameter[0]
+                : new IParameter[] { new ConstructorArgument("config", config) };
         }
     }
 }

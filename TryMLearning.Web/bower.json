@@ -1,0 +1,26 @@
+{
+  "name": "trymlearning",
+  "homepage": "https://github.com/alexlazyman/TryMLearning",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Alexandr Fedorov <alexlazyman@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.4",
+    "angular-ui-router": "^1.0.3",
+    "less": "^2.7.2",
+    "bootstrap": "^3.3.7",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "angular-oauth2": "^4.1.1"
+  }
+}

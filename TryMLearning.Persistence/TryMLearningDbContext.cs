@@ -34,6 +34,8 @@ namespace TryMLearning.Persistence
 
         public DbSet<DoubleTupleDbEntity> DoubleTuples { get; set; }
 
+        public DbSet<UserDbEntity> Users { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions

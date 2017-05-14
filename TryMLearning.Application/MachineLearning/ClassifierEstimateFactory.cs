@@ -1,5 +1,6 @@
 ﻿using System;
-using Microsoft.Practices.Unity;
+using Ninject;
+using Ninject.Parameters;
 using TryMLearning.Application.Interface.MachineLearning;
 using TryMLearning.Application.Interface.MachineLearning.Estimates.Classifier;
 using TryMLearning.Model;
@@ -9,9 +10,9 @@ namespace TryMLearning.Application.MachineLearning
 {
     public class ClassifierEstimateFactory : IClassifierEstimateFactory
     {
-        private readonly IUnityContainer _container;
+        private readonly IKernel _container;
 
-        public ClassifierEstimateFactory(IUnityContainer container)
+        public ClassifierEstimateFactory(IKernel container)
         {
             _container = container;
         }
@@ -27,14 +28,14 @@ namespace TryMLearning.Application.MachineLearning
             switch (alias)
             {
                 case ClassifierEstimateAliases.GeneralizationAbility:
-                    return _container.Resolve<IClassifierEstimate>(estimateAlias);
+                    return _container.Get<IClassifierEstimate>(estimateAlias);
                 case ClassifierEstimateAliases.FalsePositiveError:
                     if (request.FNErrorEstimateConfig == null)
                     {
                         throw new ArgumentNullException(nameof(request.FPErrorEstimateConfig));
                     }
 
-                    return _container.Resolve<IClassifierEstimate>(estimateAlias,
+                    return _container.Get<IClassifierEstimate>(estimateAlias,
                         GetParameterOverride(request.FPErrorEstimateConfig));
                 case ClassifierEstimateAliases.FalseNegativeError:
                     if (request.FNErrorEstimateConfig == null)
@@ -42,16 +43,16 @@ namespace TryMLearning.Application.MachineLearning
                         throw new ArgumentNullException(nameof(request.FNErrorEstimateConfig));
                     }
 
-                    return _container.Resolve<IClassifierEstimate>(estimateAlias,
+                    return _container.Get<IClassifierEstimate>(estimateAlias,
                         GetParameterOverride(request.FNErrorEstimateConfig));
                 default:
                     throw new ArgumentException($"There is no estimate with alias: {estimateAlias}");
             }
         }
 
-        private ResolverOverride[] GetParameterOverride<T>(T config)
+        private IParameter[] GetParameterOverride<T>(T config)
         {
-            return new ResolverOverride[] { new ParameterOverride("config", config) };
+            return new IParameter[] { new ConstructorArgument("config", config) };
         }
     }
 }

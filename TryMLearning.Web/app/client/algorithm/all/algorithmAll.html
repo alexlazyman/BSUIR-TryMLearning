@@ -1,0 +1,20 @@
+﻿<h2>All algorithms</h2>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="alg in vm.algorithms">
+            <td data-ng-bind=":: $index + 1"></td>
+            <td data-ng-bind=":: alg.name"></td>
+            <td data-ng-bind=":: alg.description"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

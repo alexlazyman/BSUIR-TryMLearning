@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.12
+VisualStudioVersion = 15.0.26430.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryMLearning.Application", "TryMLearning.Application\TryMLearning.Application.csproj", "{46C61935-DBFA-4622-A7CA-86941DCA8D2A}"
 EndProject
@@ -13,13 +13,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryMLearning.Persistence", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryMLearning.Persistence.Interface", "TryMLearning.Persistence.Interface\TryMLearning.Persistence.Interface.csproj", "{B329896D-BADB-44FA-895D-7030ACF49256}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryMLearning.WebAPI", "TryMLearning.WebAPI\TryMLearning.WebAPI.csproj", "{F035A499-9D60-4A9D-B653-923D82122F3F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryMLearning.AlgorithmWebJob", "TryMLearning.AlgorithmWebJob\TryMLearning.AlgorithmWebJob.csproj", "{8ED5C1CA-24C0-4A77-8310-BE08A7F1CBB2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryMLearning.Configuration", "TryMLearning.Configuration\TryMLearning.Configuration.csproj", "{DB548098-B208-4CC4-AABC-2CB723BE254D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryMLearning.Data", "TryMLearning.Data\TryMLearning.Data.csproj", "{06878DF0-FA5F-4796-8107-7A2D12FCB5AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryMLearning.WebAPI", "TryMLearning.WebAPI\TryMLearning.WebAPI.csproj", "{CC8B8E51-4EE3-432F-90CD-8800B2F5A040}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryMLearning.Web", "TryMLearning.Web\TryMLearning.Web.csproj", "{830F9BD7-54AD-41B6-B937-65F52B77B8EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +49,6 @@ Global
 		{B329896D-BADB-44FA-895D-7030ACF49256}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B329896D-BADB-44FA-895D-7030ACF49256}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B329896D-BADB-44FA-895D-7030ACF49256}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F035A499-9D60-4A9D-B653-923D82122F3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F035A499-9D60-4A9D-B653-923D82122F3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F035A499-9D60-4A9D-B653-923D82122F3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F035A499-9D60-4A9D-B653-923D82122F3F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8ED5C1CA-24C0-4A77-8310-BE08A7F1CBB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8ED5C1CA-24C0-4A77-8310-BE08A7F1CBB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ED5C1CA-24C0-4A77-8310-BE08A7F1CBB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,6 +61,14 @@ Global
 		{06878DF0-FA5F-4796-8107-7A2D12FCB5AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06878DF0-FA5F-4796-8107-7A2D12FCB5AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06878DF0-FA5F-4796-8107-7A2D12FCB5AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC8B8E51-4EE3-432F-90CD-8800B2F5A040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC8B8E51-4EE3-432F-90CD-8800B2F5A040}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC8B8E51-4EE3-432F-90CD-8800B2F5A040}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC8B8E51-4EE3-432F-90CD-8800B2F5A040}.Release|Any CPU.Build.0 = Release|Any CPU
+		{830F9BD7-54AD-41B6-B937-65F52B77B8EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{830F9BD7-54AD-41B6-B937-65F52B77B8EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{830F9BD7-54AD-41B6-B937-65F52B77B8EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{830F9BD7-54AD-41B6-B937-65F52B77B8EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
