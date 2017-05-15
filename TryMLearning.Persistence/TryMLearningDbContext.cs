@@ -62,6 +62,11 @@ namespace TryMLearning.Persistence
                     c.MapLeftKey("SampleId");
                     c.MapRightKey("TupleId");
                 });
+
+            modelBuilder.Entity<DataSetDbEntity>()
+                .HasRequired(e => e.Author)
+                .WithMany()
+                .WillCascadeOnDelete(false);
         }
     }
 }

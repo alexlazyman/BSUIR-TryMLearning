@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Ninject;
 using Ninject.Web.Common;
+using TryMLearning.Application.Interface.Contexts;
 using TryMLearning.Application.Interface.MachineLearning;
 using TryMLearning.Application.Interface.MachineLearning.Classifiers;
 using TryMLearning.Application.Interface.MachineLearning.Contexts;
@@ -25,6 +26,7 @@ using TryMLearning.Persistence;
 using TryMLearning.Persistence.Daos;
 using TryMLearning.Persistence.Interface;
 using TryMLearning.Persistence.Interface.Daos;
+using TryMLearning.WebAPI.App_Infrastructure;
 
 namespace TryMLearning.WebAPI
 {
@@ -52,6 +54,7 @@ namespace TryMLearning.WebAPI
 
             // Identity
             kernel.Bind<IUserStore<User>>().To<UserService>();
+            kernel.Bind<IUserContext>().To<UserContext>();
 
             // Services
             kernel.Bind<IUserService>().To<UserService>();

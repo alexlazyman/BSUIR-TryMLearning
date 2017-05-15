@@ -105,10 +105,10 @@
     <Content Include="app\client\algorithm\all\algorithmAllCtrl.js" />
     <Content Include="app\client\algorithm\details\algorithmDetails.html" />
     <Content Include="app\client\algorithm\details\algorithmDetailsCtrl.js" />
-    <Content Include="app\client\dataset\all\datasetAll.html" />
-    <Content Include="app\client\dataset\all\datasetAllCtrl.js" />
-    <Content Include="app\client\dataset\details\datasetDetails.html" />
-    <Content Include="app\client\dataset\details\datasetDetailsCtrl.js" />
+    <Content Include="app\client\dataset\all\dataSetAll.html" />
+    <Content Include="app\client\dataset\all\dataSetAllCtrl.js" />
+    <Content Include="app\client\dataset\details\dataSetDetails.html" />
+    <Content Include="app\client\dataset\details\dataSetDetailsCtrl.js" />
     <Content Include="app\client\estimation\all\estimationAll.html" />
     <Content Include="app\client\estimation\all\estimationAllCtrl.js" />
     <Content Include="app\client\estimation\details\estimationDetails.html" />
@@ -117,7 +117,11 @@
     <Content Include="app\client\clientMasterCtrl.js" />
     <Content Include="app\shared\config.js" />
     <Content Include="app\shared\interceptors\notAuthorizedInterceptor.js" />
+    <Content Include="app\shared\services\dataSetSvc.js" />
     <Content Include="app\shared\services\algorithmSvc.js" />
+    <Content Include="app\shared\services\promiseSvc.js" />
+    <Content Include="app\shared\services\sampleSvc.js" />
+    <Content Include="app\shared\services\spinnerSvc.js" />
     <Content Include="app\shared\services\urlBuilder.js" />
     <Content Include="app\shared\services\userSvc.js" />
     <Content Include="Client.aspx" />
@@ -132,6 +136,9 @@
     <Content Include="libraries\angular-oauth2\src\interceptors\oauth-interceptor.js" />
     <Content Include="libraries\angular-oauth2\src\providers\oauth-provider.js" />
     <Content Include="libraries\angular-oauth2\src\providers\oauth-token-provider.js" />
+    <Content Include="libraries\angular-spinner\.gitignore" />
+    <Content Include="libraries\angular-spinner\dist\angular-spinner.js" />
+    <Content Include="libraries\angular-spinner\dist\angular-spinner.min.js" />
     <Content Include="libraries\angular-ui-router\karma.conf.js" />
     <Content Include="libraries\angular-ui-router\migrate\migratewarn.js" />
     <Content Include="libraries\angular-ui-router\release\angular-ui-router.js" />
@@ -947,8 +954,10 @@
     <Content Include="app\client\home\home.less" />
     <Content Include="app\client\clientMaster.less" />
     <Content Include="app\client\account\signin\signin.less" />
-    <Content Include="app\client\algorithm\all\algorithmAll.less" />
-    <Content Include="app\client\algorithm\details\algorithmDetails.less" />
+    <Content Include="libraries\angular-spinner\.bower.json" />
+    <Content Include="libraries\angular-spinner\bower.json" />
+    <Content Include="libraries\angular-spinner\dist\angular-spinner.js.map" />
+    <Content Include="libraries\angular-spinner\README.md" />
     <None Include="Properties\PublishProfiles\TryMLearning - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -966,8 +975,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AngularJsHtmlBundle.cs" />
-    <Compile Include="App_Start\AngularJsHtmlCombine.cs" />
+    <Compile Include="App_Start\Bundles\AngularJsHtmlBundle.cs" />
+    <Compile Include="App_Start\Bundles\AngularJsHtmlCombine.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\JsEngineSwitcherConfig.cs" />
     <Compile Include="Client.aspx.cs">

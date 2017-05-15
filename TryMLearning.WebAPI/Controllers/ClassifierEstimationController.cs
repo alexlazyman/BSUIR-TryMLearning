@@ -5,13 +5,13 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Swashbuckle.Swagger.Annotations;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Model;
 using TryMLearning.Model.MachineLearning.EstimationResults.Classifier;
 
 namespace TryMLearning.WebAPI.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/estimation/classifier")]
     public class ClassifierEstimationController : ApiController
     {
@@ -23,31 +23,22 @@ namespace TryMLearning.WebAPI.Controllers
             _algorithmEstimationService = algorithmEstimationService;
         }
 
-        // POST api/estimation/classifier
-        [Route("")]
         [HttpPost]
-        [SwaggerOperation("Estimate algorithm")]
-        [SwaggerResponse(HttpStatusCode.OK)]
+        [Route("")]
         public async Task<AlgorithmEstimation> EstimateAlgorithmAsync(AlgorithmEstimation algorithmEstimation)
         {
             return await _algorithmEstimationService.RunEstimationAsync(algorithmEstimation);
         }
 
-        // GET api/estimation/classifier/5
-        [Route("{algorithmEstimationId:int}")]
         [HttpGet]
-        [SwaggerOperation("Get classifier estimation")]
-        [SwaggerResponse(HttpStatusCode.OK)]
+        [Route("{algorithmEstimationId:int}")]
         public async Task<AlgorithmEstimation> GetAlgorithmEstimationAsync(int algorithmEstimationId)
         {
             return await _algorithmEstimationService.GetAlgorithmEstimationAsync(algorithmEstimationId);
         }
 
-        // GET api/estimation/result
-        [Route("result")]
         [HttpGet]
-        [SwaggerOperation("Get classifier estimation result")]
-        [SwaggerResponse(HttpStatusCode.OK)]
+        [Route("result")]
         public async Task<ClassifierEstimationResult> GetClassifierEstimationResultAsync([FromUri] ClassifierEstimationResultRequest request)
         {
             return await _algorithmEstimationService.GetClassifierEstimationResultAsync(request);

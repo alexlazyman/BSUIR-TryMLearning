@@ -30,10 +30,31 @@ namespace TryMLearning.Persistence.Daos
         public async Task<List<Algorithm>> GetAllAlgorithmsAsync()
         {
             var algorithmDbEntity = await _dbContext.Algorithms
-                .Include(a => a.AlgorithmParameters)
+                .Include(a => a.Author)
+                .Select(a => new
+                {
+                    a.AlgorithmId,
+                    a.Name,
+                    Author = new
+                    {
+                        a.Author.UserId,
+                        a.Author.UserName
+                    }
+                })
                 .ToListAsync();
 
-            var algorithms = algorithmDbEntity.Select(Mapper.Map<Algorithm>).ToList();
+            var algorithms = algorithmDbEntity
+                .Select(a => new AlgorithmDbEntity
+                {
+                    AlgorithmId = a.AlgorithmId,
+                    Name = a.Name,
+                    Author = new UserDbEntity
+                    {
+                        UserId = a.Author.UserId,
+                        UserName = a.Author.UserName
+                    }
+                })
+                .Select(Mapper.Map<Algorithm>).ToList();
 
             return algorithms;
         }
@@ -41,6 +62,7 @@ namespace TryMLearning.Persistence.Daos
         public async Task<Algorithm> GetAlgorithmAsync(int id)
         {
             var algorithmDbEntity = await _dbContext.Algorithms
+                .Include(a => a.Author)
                 .Include(a => a.AlgorithmParameters)
                 .FirstOrDefaultAsync(a => a.AlgorithmId == id);
 

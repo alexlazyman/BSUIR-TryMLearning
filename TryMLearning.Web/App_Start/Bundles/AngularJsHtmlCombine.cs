@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Optimization;
 using Newtonsoft.Json;
 
-namespace TryMLearning.Web
+namespace TryMLearning.Web.Bundles
 {
     public class AngularJsHtmlCombine : IBundleTransform
     {

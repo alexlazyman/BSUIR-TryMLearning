@@ -4,6 +4,7 @@
     angular
         .module('app', [
             'ng',
+            'angularSpinner',
             'ui.router',
             'angular-oauth2'
         ])
@@ -43,11 +44,25 @@
                 controller: 'siginCtrl',
                 controllerAs: 'vm'
             })
+            .state('client.signup',
+            {
+                url: '/signup',
+                templateUrl: '/app/client/account/signup/signup.html',
+                controller: 'sigupCtrl',
+                controllerAs: 'vm'
+            })
             .state('client.home',
             {
                 url: '/home',
                 templateUrl: '/app/client/home/home.html',
                 controller: 'homeCtrl',
+                controllerAs: 'vm'
+            })
+            .state('client.algorithm',
+            {
+                url: '/algorithm?id',
+                templateUrl: '/app/client/algorithm/details/algorithmDetails.html',
+                controller: 'algorithmDetailsCtrl',
                 controllerAs: 'vm'
             })
             .state('client.algorithmAll',
@@ -57,18 +72,25 @@
                 controller: 'algorithmAllCtrl',
                 controllerAs: 'vm'
             })
-            .state('client.datasetAll',
+            .state('client.dataSet',
+            {
+                url: '/dataset?id',
+                templateUrl: '/app/client/dataSet/details/dataSetDetails.html',
+                controller: 'dataSetDetailsCtrl',
+                controllerAs: 'vm'
+            })
+            .state('client.dataSetAll',
             {
                 url: '/datasets',
-                templateUrl: '/app/client/dataset/all/datasetAll.html',
-                controller: 'datasetAllCtrl',
+                templateUrl: '/app/client/dataSet/all/dataSetAll.html',
+                controller: 'dataSetAllCtrl',
                 controllerAs: 'vm'
             })
             ;
 
         $urlRouterProvider.otherwise('/client/home');
 
-        //This will make it look like the url is actually changing
+        // This will make it look like the url is actually changing
         $locationProvider.hashPrefix('!');
         $locationProvider.html5Mode({
             enabled: true,
@@ -77,17 +99,16 @@
         });
 
         OAuthProvider.configure({
-            
             baseUrl: window.tryMLearningWebApiSrvUri,
             clientId: 'trymlearning-web',
             grantPath: '/Token',
+            revokePath: '/api/Account/Logout'
         });
 
         OAuthTokenProvider.configure({
-            name: 'mytoken1',
             options: {
                 secure: false
-            },
+            }
         });
 
         $httpProvider.interceptors.push("notAuthorizedInterceptor");

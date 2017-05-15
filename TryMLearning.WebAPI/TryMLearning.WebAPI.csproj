@@ -122,9 +122,6 @@
     <Reference Include="Swagger.Net, Version=0.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Swagger.Net.0.5.5\lib\net40\Swagger.Net.dll</HintPath>
     </Reference>
-    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Swashbuckle.Core.5.5.3\lib\net40\Swashbuckle.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.40306.1554, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.4.0.4.403061554\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
@@ -175,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Compile Include="App_Infrastructure\UserContext.cs" />
     <Compile Include="App_Start\Startup.DependencyInjection.cs" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -187,13 +185,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Helpers\ApplicationExceptionAttribute.cs" />
-    <Compile Include="App_Helpers\ApplicationJwtFormat.cs" />
+    <Compile Include="App_Infrastructure\ApplicationExceptionAttribute.cs" />
     <Compile Include="App_Start\Startup.Identity.cs" />
     <Compile Include="App_Start\Startup.AutoMapper.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\Startup.WebApi.cs" />
-    <Compile Include="App_Start\Startup.Swagger.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlgorithmController.cs" />
     <Compile Include="Controllers\ClassifierEstimationController.cs" />

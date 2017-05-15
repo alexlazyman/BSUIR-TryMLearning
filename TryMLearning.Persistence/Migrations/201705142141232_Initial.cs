@@ -30,11 +30,14 @@ namespace TryMLearning.Persistence.Migrations
                 c => new
                     {
                         AlgorithmId = c.Int(nullable: false, identity: true),
+                        AuthorId = c.Int(nullable: false),
                         Name = c.String(maxLength: 256),
                         Description = c.String(maxLength: 1024),
                         Alias = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.AlgorithmId)
+                .ForeignKey("dbo.User", t => t.AuthorId, cascadeDelete: true)
+                .Index(t => t.AuthorId)
                 .Index(t => t.Alias, unique: true);
             
             CreateTable(
@@ -51,6 +54,17 @@ namespace TryMLearning.Persistence.Migrations
                 .PrimaryKey(t => t.AlgorithmParameterId)
                 .ForeignKey("dbo.Algorithm", t => t.AlgorithmId, cascadeDelete: true)
                 .Index(t => t.AlgorithmId);
+            
+            CreateTable(
+                "dbo.User",
+                c => new
+                    {
+                        UserId = c.Int(nullable: false, identity: true),
+                        UserName = c.String(maxLength: 128),
+                        Email = c.String(maxLength: 128),
+                        PasswordHash = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.UserId);
             
             CreateTable(
                 "dbo.AlgorithmEstimator",
@@ -86,11 +100,14 @@ namespace TryMLearning.Persistence.Migrations
                 c => new
                     {
                         DataSetId = c.Int(nullable: false, identity: true),
+                        AuthorId = c.Int(nullable: false),
                         Name = c.String(maxLength: 256),
                         Description = c.String(maxLength: 1024),
                         Type = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.DataSetId);
+                .PrimaryKey(t => t.DataSetId)
+                .ForeignKey("dbo.User", t => t.AuthorId)
+                .Index(t => t.AuthorId);
             
             CreateTable(
                 "dbo.ClassificationSample",
@@ -193,17 +210,6 @@ namespace TryMLearning.Persistence.Migrations
                 .Index(t => t.AlgorithmEstimationId);
             
             CreateTable(
-                "dbo.User",
-                c => new
-                    {
-                        UserId = c.Int(nullable: false, identity: true),
-                        UserName = c.String(maxLength: 128),
-                        Email = c.String(maxLength: 128),
-                        PasswordHash = c.String(maxLength: 128),
-                    })
-                .PrimaryKey(t => t.UserId);
-            
-            CreateTable(
                 "rel.ClassificationSampleDoubleTuple",
                 c => new
                     {
@@ -225,31 +231,35 @@ namespace TryMLearning.Persistence.Migrations
             DropForeignKey("rel.ClassificationSampleDoubleTuple", "SampleId", "dbo.ClassificationSample");
             DropForeignKey("dbo.ClassificationSample", "DataSetId", "dbo.DataSet");
             DropForeignKey("dbo.AlgorithmEstimation", "DataSetId", "dbo.DataSet");
+            DropForeignKey("dbo.DataSet", "AuthorId", "dbo.User");
             DropForeignKey("dbo.AlgorithmParameterValue", "AlgorithmParameterId", "dbo.AlgorithmParameter");
             DropForeignKey("dbo.AlgorithmParameterValue", "AlgorithmEstimationId", "dbo.AlgorithmEstimation");
             DropForeignKey("dbo.AlgorithmEstimation", "AlgorithmEstimatorId", "dbo.AlgorithmEstimator");
             DropForeignKey("dbo.AlgorithmEstimation", "AlgorithmId", "dbo.Algorithm");
+            DropForeignKey("dbo.Algorithm", "AuthorId", "dbo.User");
             DropForeignKey("dbo.AlgorithmParameter", "AlgorithmId", "dbo.Algorithm");
             DropIndex("rel.ClassificationSampleDoubleTuple", new[] { "TupleId" });
             DropIndex("rel.ClassificationSampleDoubleTuple", new[] { "SampleId" });
             DropIndex("dbo.ClassificationResult", new[] { "AlgorithmEstimationId" });
             DropIndex("dbo.ClassificationSample", new[] { "DataSetId" });
+            DropIndex("dbo.DataSet", new[] { "AuthorId" });
             DropIndex("dbo.AlgorithmParameterValue", new[] { "AlgorithmEstimationId" });
             DropIndex("dbo.AlgorithmParameterValue", new[] { "AlgorithmParameterId" });
             DropIndex("dbo.AlgorithmEstimator", new[] { "Alias" });
             DropIndex("dbo.AlgorithmParameter", new[] { "AlgorithmId" });
             DropIndex("dbo.Algorithm", new[] { "Alias" });
+            DropIndex("dbo.Algorithm", new[] { "AuthorId" });
             DropIndex("dbo.AlgorithmEstimation", new[] { "AlgorithmEstimatorId" });
             DropIndex("dbo.AlgorithmEstimation", new[] { "DataSetId" });
             DropIndex("dbo.AlgorithmEstimation", new[] { "AlgorithmId" });
             DropTable("rel.ClassificationSampleDoubleTuple");
-            DropTable("dbo.User");
             DropTable("dbo.ClassificationResult");
             DropTable("dbo.DoubleTuple");
             DropTable("dbo.ClassificationSample");
             DropTable("dbo.DataSet");
             DropTable("dbo.AlgorithmParameterValue");
             DropTable("dbo.AlgorithmEstimator");
+            DropTable("dbo.User");
             DropTable("dbo.AlgorithmParameter");
             DropTable("dbo.Algorithm");
             DropTable("dbo.AlgorithmEstimation");

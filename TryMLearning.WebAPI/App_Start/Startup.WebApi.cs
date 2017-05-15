@@ -5,7 +5,7 @@ using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using TryMLearning.WebAPI.App_Helpers;
+using TryMLearning.WebAPI.App_Infrastructure;
 
 namespace TryMLearning.WebAPI
 {

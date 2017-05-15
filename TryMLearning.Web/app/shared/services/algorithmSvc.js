@@ -7,25 +7,34 @@
 
     algorithmSvc.$inject = [
         '$http',
-        'urlBuilder'
+        'urlBuilder',
+        'promiseSvc'
     ];
 
     function algorithmSvc(
         $http,
-        urlBuilder
+        urlBuilder,
+        promiseSvc
     ) {
         var service = {
-            getAll: getAll
+            getProm: getProm,
+            getAllProm: getAllProm
         };
 
         return service;
 
-        function getAll() {
+        function getProm(algorithmId) {
+            var url = urlBuilder.build('api/algorithm/' + algorithmId);
+
+            return $http.get(url)
+                .then(promiseSvc.requestComplete);
+        }
+
+        function getAllProm() {
             var url = urlBuilder.build('api/algorithm');
 
-            return $http.get(url).then(function(response) {
-                return response.data;
-            });
+            return $http.get(url)
+                .then(promiseSvc.requestComplete);
         }
     }
 })();

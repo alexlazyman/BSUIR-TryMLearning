@@ -6,15 +6,17 @@
         .controller('algorithmAllCtrl', algorithmAllCtrl);
 
     algorithmAllCtrl.$inject = [
-        'algorithmSvc'
+        'algorithmSvc',
+        'spinnerSvc'
     ];
 
     function algorithmAllCtrl(
-        algorithmSvc
+        algorithmSvc,
+        spinnerSvc
     ) {
         var vm = this;
 
-        vm.algorithms = [];
+        vm.algorithms = undefined;
 
         activate();
 
@@ -23,9 +25,13 @@
         }
 
         function loadData() {
-            algorithmSvc.getAll()
+            spinnerSvc.registerLoader();
+            algorithmSvc.getAllProm()
                 .then(function (algorithms) {
                     vm.algorithms = algorithms;
+                })
+                .finally(function() {
+                    spinnerSvc.unregisterLoader();
                 });
         }
     }

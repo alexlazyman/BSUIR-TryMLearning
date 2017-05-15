@@ -9,7 +9,6 @@ using Microsoft.Owin.Security.OAuth;
 using Ninject;
 using Owin;
 using TryMLearning.Model;
-using TryMLearning.WebAPI.App_Helpers;
 using TryMLearning.WebAPI.Providers;
 
 namespace TryMLearning.WebAPI
@@ -37,10 +36,10 @@ namespace TryMLearning.WebAPI
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 8,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                RequireNonLetterOrDigit = false,
+                RequireDigit = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
             };
 
             var dataProtectionProvider = options.DataProtectionProvider;

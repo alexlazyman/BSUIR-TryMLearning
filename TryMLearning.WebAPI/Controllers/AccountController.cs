@@ -13,10 +13,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using Swashbuckle.Swagger.Annotations;
 using TryMLearning.Model;
 using TryMLearning.Model.Account;
-using TryMLearning.WebAPI.App_Helpers;
 using TryMLearning.WebAPI.Providers;
 
 namespace TryMLearning.WebAPI.Controllers
@@ -32,21 +30,16 @@ namespace TryMLearning.WebAPI.Controllers
         {
         }
 
-        // POST api/Account/Logout
-        [Route("Logout")]
-        [Route("{algorithmId:int}")]
         [HttpPost]
-        [SwaggerOperation("Log out")]
+        [Route("Logout")]
         public IHttpActionResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             return Ok();
         }
 
-        // POST api/Account/ChangePassword
-        [Route("ChangePassword")]
         [HttpPost]
-        [SwaggerOperation("Change password")]
+        [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(UserChangePasswordForm model)
         {
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
@@ -61,9 +54,8 @@ namespace TryMLearning.WebAPI.Controllers
         }
 
         [AllowAnonymous]
-        [Route("Register")]
         [HttpPost]
-        [SwaggerOperation("Register")]
+        [Route("Register")]
         public async Task<IHttpActionResult> Register(UserRegisterForm form)
         {
             var user = new User

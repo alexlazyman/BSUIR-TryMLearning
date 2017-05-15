@@ -1,15 +1,28 @@
-﻿<div class="container">
+﻿<div class="awaiter" data-ng-show="vm.isSpinnerActive()">
+    <div class="awaiter__back"></div>
+    <div class="awaiter__spinner" us-spinner="{lines:11, length:32, width: 3, radius: 30, scale: 1, color: '#FFF'}"></div>
+</div>
+<div class="container">
     <div class="header clearfix">
         <nav>
             <ul class="nav nav-pills pull-right">
-                <li class="nav-item">
+                <li class="nav-item" data-ng-class="{'active': vm.isState('client.home')}">
                     <a class="nav-link active" ui-sref="client.home">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" data-ng-class="{'active': vm.isState('client.algorithmAll')}">
                     <a class="nav-link" ui-sref="client.algorithmAll">Algorithms</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" ui-sref="client.datasetAll">Datasets</a>
+                <li class="nav-item" data-ng-class="{'active': vm.isState('client.dataSetAll')}">
+                    <a class="nav-link" ui-sref="client.dataSetAll">Data sets</a>
+                </li>
+                <li class="nav-item" data-ng-class="{'active': vm.isState('client.signin')}" data-ng-if="!vm.isAuthenticated()">
+                    <a class="nav-link" ui-sref="client.signin">Sign In</a>
+                </li>
+                <li class="nav-item" data-ng-class="{'active': vm.isState('client.signup')}" data-ng-if="!vm.isAuthenticated()">
+                    <a class="nav-link" ui-sref="client.signup">Sign Up</a>
+                </li>
+                <li class="nav-item" data-ng-if="vm.isAuthenticated()">
+                    <a class="nav-link" href="" data-ng-click="vm.signOutClick()">Sign Out</a>
                 </li>
             </ul>
         </nav>

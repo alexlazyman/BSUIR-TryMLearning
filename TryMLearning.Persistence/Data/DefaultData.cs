@@ -1,17 +1,32 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNet.Identity;
 using TryMLearning.Model;
 using TryMLearning.Model.Constants;
 
-namespace TryMLearning.Data
+namespace TryMLearning.Persistence.Data
 {
     // TODO: Move data to files.
     public static class DefaultData
     {
+        public static IEnumerable<User> GetUsers()
+        {
+            var passwordHasher = new PasswordHasher();
+
+            yield return new User
+            {
+                UserId = 1,
+                UserName = "admin",
+                PasswordHash = passwordHasher.HashPassword("12345678"),
+                Email = "alexlazyman@gmail.com"
+            };
+        }
+
         public static IEnumerable<Algorithm> GetAlgorithms()
         {
             yield return new Algorithm
             {
                 AlgorithmId = 1,
+                Author = new User { UserId = 1 },
                 Name = "Naive Bayes",
                 Description = "There is no description",
                 Alias = AlgorithmAliases.NaiveBayes,
@@ -26,6 +41,7 @@ namespace TryMLearning.Data
             yield return new DataSet
             {
                 DataSetId = 1,
+                Author = new User { UserId = 1 },
                 Name = "Iris",
                 Description = "There is no description",
                 Type = DataSetType.Classification

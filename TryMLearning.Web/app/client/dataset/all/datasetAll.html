@@ -1,5 +1,25 @@
-﻿<div class="row">
-    <div class="col-md-offset-3 col-md-6">
-        <p>All datasets</p>
+﻿<div data-ng-if=":: vm.dataSets">
+    <div data-ng-if=":: vm.dataSets.length !== 0" class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Author</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="dataSet in vm.dataSets">
+                    <td data-ng-bind=":: $index + 1"></td>
+                    <td data-ng-bind=":: dataSet.name"></td>
+                    <td data-ng-bind=":: vm.stringifyType(dataSet.type)"></td>
+                    <td data-ng-bind=":: dataSet.author.userName"></td>
+                    <td><a class="btn btn-default" data-ui-sref="client.dataSet({id: dataSet.dataSetId})">Details</a></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+    <p data-ng-if=":: vm.dataSets.length === 0">There is no dataSets</p>
 </div>

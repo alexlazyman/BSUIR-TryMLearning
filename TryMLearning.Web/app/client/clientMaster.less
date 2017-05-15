@@ -1,10 +1,26 @@
 ﻿html {
     height: 100%;
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    position: relative;
+    min-height: 100%;
 }
 
 body {
     padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 75px;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
 }
 
 .header {
@@ -35,5 +51,29 @@ body {
 
     .header {
         margin-bottom: 2rem;
+    }
+}
+
+.fullscreen {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.awaiter {
+    .fullscreen;
+    z-index: 1000;
+
+    &__back {
+        .fullscreen;
+
+        background-color: black;
+        opacity: 0.75;
+    }
+
+    &__spinner {
+        .fullscreen;
     }
 }

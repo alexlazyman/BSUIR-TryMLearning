@@ -9,7 +9,6 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using TryMLearning.Model;
-using TryMLearning.WebAPI.App_Helpers;
 
 namespace TryMLearning.WebAPI.Providers
 {

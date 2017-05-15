@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Swashbuckle.Swagger.Annotations;
+using Microsoft.AspNet.Identity;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Model;
 
@@ -22,54 +22,39 @@ namespace TryMLearning.WebAPI.Controllers
             _algorithmService = algorithmService;
         }
 
-        // GET api/algorithm/5
-        [Route("{algorithmId:int}")]
         [HttpGet]
-        [SwaggerOperation("Get algorithm by id")]
-        [SwaggerResponse(HttpStatusCode.OK)]
+        [Route("{algorithmId:int}")]
         public async Task<Algorithm> GetAlgorithmAsync(int algorithmId)
         {
             return await _algorithmService.GetAlgorithmAsync(algorithmId);
         }
 
-        // GET api/algorithm
-        [Route]
         [HttpGet]
-        [SwaggerOperation("Get all algorithms")]
-        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(List<Algorithm>))]
-        [Authorize]
+        [Route("")]
         public async Task<List<Algorithm>> GetAllAlgorithmsAsync()
         {
             return await _algorithmService.GetAllAlgorithmsAsync();
         }
 
-        // POST api/algorithm
-        [Route("")]
+        [Authorize]
         [HttpPost]
-        [SwaggerOperation("Create algorithm")]
-        [SwaggerResponse(HttpStatusCode.Created)]
+        [Route("")]
         public async Task<Algorithm> CreateAlgorithmAsync(Algorithm algorithm)
         {
             return await _algorithmService.AddAlgorithmAsync(algorithm);
         }
 
-        // PUT api/algorithm
-        [Route("")]
+        [Authorize]
         [HttpPut]
-        [SwaggerOperation("Update algorithm")]
-        [SwaggerResponse(HttpStatusCode.OK)]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
+        [Route("")]
         public async Task<Algorithm> UpdateAlgorithmAsync(Algorithm algorithm)
         {
             return await _algorithmService.UpdateAlgorithmAsync(algorithm);
         }
 
-        // DELETE api/algorithm/5
-        [Route("{algorithmId:int}")]
+        [Authorize]
         [HttpDelete]
-        [SwaggerOperation("Delete algorithm")]
-        [SwaggerResponse(HttpStatusCode.OK)]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
+        [Route("{algorithmId:int}")]
         public async Task DeleteAlgorithmAsync(int algorithmId)
         {
             await _algorithmService.DeleteAlgorithmAsync(algorithmId);

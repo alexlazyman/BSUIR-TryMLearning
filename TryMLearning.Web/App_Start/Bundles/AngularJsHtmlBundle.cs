@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace TryMLearning.Web
+namespace TryMLearning.Web.Bundles
 {
     public class AngularJsHtmlBundle : Bundle
     {

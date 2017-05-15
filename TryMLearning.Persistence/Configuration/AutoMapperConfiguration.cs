@@ -18,7 +18,9 @@ namespace TryMLearning.Persistence.Configuration
             cfg.CreateMap<AlgorithmEstimatorDbEntity, AlgorithmEstimator>();
 
             cfg.CreateMap<Algorithm, AlgorithmDbEntity>()
-                .ForMember(sdb => sdb.AlgorithmParameters, opt => opt.Ignore());
+                .ForMember(sdb => sdb.AlgorithmParameters, opt => opt.Ignore())
+                .ForMember(sdb => sdb.Author, opt => opt.Ignore())
+                .ForMember(sdb => sdb.AuthorId, opt => opt.MapFrom(s => s.Author.UserId));
             cfg.CreateMap<AlgorithmDbEntity, Algorithm>()
                 .ForMember(s => s.Parameters, opt => opt.MapFrom(sdb => sdb.AlgorithmParameters));
 
@@ -42,7 +44,9 @@ namespace TryMLearning.Persistence.Configuration
                 .ForMember(s => s.DataSet, opt => opt.ResolveUsing(sdb => sdb.DataSet ?? (object) new DataSet(sdb.DataSetId)))
                 .ForMember(s => s.AlgorithmEstimator, opt => opt.ResolveUsing(sdb => sdb.AlgorithmEstimator ?? (object) new AlgorithmEstimator(sdb.AlgorithmEstimatorId)));
 
-            cfg.CreateMap<DataSet, DataSetDbEntity>();
+            cfg.CreateMap<DataSet, DataSetDbEntity>()
+                .ForMember(sdb => sdb.Author, opt => opt.Ignore())
+                .ForMember(sdb => sdb.AuthorId, opt => opt.MapFrom(s => s.Author.UserId));
             cfg.CreateMap<DataSetDbEntity, DataSet>();
 
             cfg.CreateMap<ClassificationSample, ClassificationSampleDbEntity>()

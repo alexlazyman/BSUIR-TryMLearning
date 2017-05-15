@@ -7,12 +7,12 @@
 
     siginCtrl.$inject = [
         'OAuth',
-        '$cookies'
+        '$state'
     ];
 
     function siginCtrl(
         OAuth,
-        $cookies
+        $state
     ) {
         var vm = this;
 
@@ -29,7 +29,10 @@
                 password: vm.password
             }
 
-            OAuth.getAccessToken(data);
+            OAuth.getAccessToken(data)
+                .then(function () {
+                    $state.go('client.home');
+                });
         }
     }
 })();

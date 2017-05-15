@@ -20,7 +20,7 @@
                     return $q.reject(rejection);
                 }
 
-                if (401 === rejection.status) {
+                if (rejection.status === 401 && (!rejection.data || rejection.data.error !== "invalid_token")) {
                     $rootScope.$emit("auth:error", rejection);
                 }
 

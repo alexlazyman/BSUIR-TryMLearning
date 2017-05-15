@@ -23,6 +23,11 @@ namespace TryMLearning.Persistence.Models
         [Key]
         public int AlgorithmId { get; set; }
 
+        public int AuthorId { get; set; }
+
+        [ForeignKey(nameof(AuthorId))]
+        public UserDbEntity Author { get; set; }
+
         [MaxLength(256)]
         public string Name { get; set; }
 

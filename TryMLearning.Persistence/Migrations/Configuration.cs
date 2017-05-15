@@ -1,6 +1,6 @@
 using AutoMapper;
-using TryMLearning.Data;
 using TryMLearning.Persistence.Configuration;
+using TryMLearning.Persistence.Data;
 using TryMLearning.Persistence.Models;
 
 namespace TryMLearning.Persistence.Migrations
@@ -23,6 +23,12 @@ namespace TryMLearning.Persistence.Migrations
             {
                 cfg.RegisterDtoMaps();
             });
+
+            context.Users.AddRange(
+                DefaultData.GetUsers()
+                    .Select(Mapper.Map<UserDbEntity>));
+
+            context.SaveChanges();
 
             context.Algorithms.AddRange(
                 DefaultData.GetAlgorithms()

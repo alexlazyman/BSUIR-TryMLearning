@@ -2,7 +2,7 @@
 using BundleTransformer.Core.Builders;
 using BundleTransformer.Core.Orderers;
 using BundleTransformer.Core.Transformers;
-using TryMLearning.WebAPI.App_Helpers;
+using TryMLearning.Web.Bundles;
 
 namespace TryMLearning.Web
 {
@@ -33,6 +33,7 @@ namespace TryMLearning.Web
                     "~/libraries/lodash/lodash.js",
                     "~/libraries/moment/moment.js",
                     "~/libraries/angular/angular.js",
+                    "~/libraries/angular-spinner/dist/angular-spinner.js",
                     "~/libraries/angular-cookies/angular-cookies.js",
                     "~/libraries/query-string/query-string.js",
                     "~/libraries/angular-oauth2/dist/angular-oauth2.js",

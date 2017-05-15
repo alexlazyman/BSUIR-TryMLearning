@@ -1,5 +1,28 @@
-﻿<div class="row">
-    <div class="col-md-offset-3 col-md-6">
-        <p>Dataset details</p>
+﻿<div data-ng-if=":: vm.dataSet">
+    <h4>{{ :: vm.dataSet.name }} ({{ :: vm.stringifyType(vm.dataSet.type)}})</h4>
+    <p>{{ :: vm.dataSet.description }}</p>
+    <p>Added by {{ :: vm.dataSet.author.userName }}</p>
+</div>
+<div data-ng-if=":: vm.samples">
+    <br />
+    <h4>Samples</h4>
+    <div data-ng-if=":: vm.samples.length > 0" class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Class</th>
+                    <th>Features</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="sample in vm.samples">
+                    <td data-ng-bind=":: $index + 1"></td>
+                    <td data-ng-bind=":: sample.class"></td>
+                    <td data-ng-bind=":: sample.features | joinBy:', '"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+    <p data-ng-if=":: vm.samples.length === 0">There is no samples</p>
 </div>
