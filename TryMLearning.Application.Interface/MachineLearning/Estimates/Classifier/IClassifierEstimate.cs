@@ -7,8 +7,8 @@ namespace TryMLearning.Application.Interface.MachineLearning.Estimates.Classifie
     {
         int Count { get; }
 
-        IClassifierEstimateResult Estimate(List<ClassificationResult> classificationResults, bool accumulate = false);
+        void Estimate(List<ClassificationResult> classificationResults);
 
-        IClassifierEstimateResult Average { get; }
+        EstimateResponse Average { get; }
     }
 }

@@ -30,6 +30,7 @@ namespace TryMLearning.WebAPI.Controllers
         {
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("Logout")]
         public IHttpActionResult Logout()

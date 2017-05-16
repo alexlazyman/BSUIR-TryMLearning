@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using TryMLearning.Application.Interface.MachineLearning.Contexts;
 using TryMLearning.Model;
 using TryMLearning.Model.MachineLearning.Estimates.Classifier;
@@ -16,6 +18,11 @@ namespace TryMLearning.Application.MachineLearning.Estimates.Classifier.FalsePos
             FPErrorEstimateConfig config,
             IClassificationContext classificationContext)
         {
+            if (config == null)
+            {
+                throw new ArgumentException(nameof(config));
+            }
+
             _config = config;
             _classificationContext = classificationContext;
         }
@@ -27,11 +34,14 @@ namespace TryMLearning.Application.MachineLearning.Estimates.Classifier.FalsePos
             return new FalsePositiveErrorResult(falsePositiveError);
         }
 
-        protected override FalsePositiveErrorResult GetAverageResult(List<FalsePositiveErrorResult> estimateResults)
+        protected override EstimateResponse GetAverageResult(List<FalsePositiveErrorResult> estimateResults)
         {
             var falsePositiveError = estimateResults.Sum(r => r.FalsePositiveError) / estimateResults.Count;
 
-            return new FalsePositiveErrorResult(falsePositiveError);
+            return new EstimateResponse
+            {
+                Value = falsePositiveError
+            };
         }
     }
 }

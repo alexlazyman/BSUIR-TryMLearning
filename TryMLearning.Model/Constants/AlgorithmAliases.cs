@@ -2,8 +2,7 @@
 {
     public static class AlgorithmAliases
     {
-        public const string ClassificationPrefix = "CLASSIFICATION-";
 
-        public const string NaiveBayes = ClassificationPrefix + "NAIVE-BAYES";
+        public const string NaiveBayes = "NAIVE-BAYES";
     }
 }

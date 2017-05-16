@@ -23,9 +23,12 @@ body {
     vertical-align: middle;
 }
 
+.table > thead > tr > th {
+    padding: 6px 8px;
+}
+
 .header {
     padding: 0 1rem 1rem 1rem;
-    border-bottom: .05rem solid #e5e5e5;
 
     & h3 {
         margin: 0 auto;
@@ -75,5 +78,16 @@ body {
 
     &__spinner {
         .fullscreen;
+    }
+}
+
+.btn-transparent {
+    background: transparent;
+    border: 0;
+    outline: none;
+
+    &:disabled {
+        opacity: 0.25;
+        cursor: not-allowed;
     }
 }

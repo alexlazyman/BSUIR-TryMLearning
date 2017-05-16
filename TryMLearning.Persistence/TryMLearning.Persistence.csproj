@@ -81,6 +81,8 @@
   <ItemGroup>
     <Compile Include="Configuration\AutoMapperConfiguration.cs" />
     <Compile Include="Constants\DatabaseNames.cs" />
+    <Compile Include="Daos\AlgorithmParameterValueDao.cs" />
+    <Compile Include="Daos\EstimatorDao.cs" />
     <Compile Include="Daos\ClassificationSampleDao.cs" />
     <Compile Include="Daos\ClassificationResultDao.cs" />
     <Compile Include="Daos\DataSetDao.cs" />
@@ -90,13 +92,13 @@
     <Compile Include="Data\DefaultData.cs" />
     <Compile Include="Helpers\DbContextExtensions.cs" />
     <Compile Include="Interfaces\IDbEntity.cs" />
-    <Compile Include="Migrations\201705142141232_Initial.cs" />
-    <Compile Include="Migrations\201705142141232_Initial.Designer.cs">
-      <DependentUpon>201705142141232_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201705151521013_Initial.cs" />
+    <Compile Include="Migrations\201705151521013_Initial.Designer.cs">
+      <DependentUpon>201705151521013_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ClassificationResultDbEntity.cs" />
-    <Compile Include="Models\AlgorithmEstimatorDbEntity.cs" />
+    <Compile Include="Models\EstimatorDbEntity.cs" />
     <Compile Include="Models\AlgorithmDbEntity.cs" />
     <Compile Include="Models\AlgorithmParameterDbEntity.cs" />
     <Compile Include="Models\AlgorithmParameterValueDbEntity.cs" />
@@ -130,8 +132,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705142141232_Initial.resx">
-      <DependentUpon>201705142141232_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705151521013_Initial.resx">
+      <DependentUpon>201705151521013_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

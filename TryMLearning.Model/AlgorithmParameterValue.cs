@@ -3,7 +3,6 @@ using Newtonsoft.Json.Serialization;
 
 namespace TryMLearning.Model
 {
-    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public class AlgorithmParameterValue
     {
         public int AlgorithmParameterValueId { get; set; }

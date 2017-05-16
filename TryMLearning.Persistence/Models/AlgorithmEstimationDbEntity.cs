@@ -20,6 +20,11 @@ namespace TryMLearning.Persistence.Models
 
         public AlgorithmEstimationStatus Status { get; set; }
 
+        public int UserId { get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public virtual UserDbEntity User { get; set; }
+
         public int AlgorithmId { get; set; }
 
         [ForeignKey(nameof(AlgorithmId))]
@@ -30,10 +35,10 @@ namespace TryMLearning.Persistence.Models
         [ForeignKey(nameof(DataSetId))]
         public virtual DataSetDbEntity DataSet { get; set; }
 
-        public int AlgorithmEstimatorId { get; set; }
+        public int EstimatorId { get; set; }
 
-        [ForeignKey(nameof(AlgorithmEstimatorId))]
-        public virtual AlgorithmEstimatorDbEntity AlgorithmEstimator { get; set; }
+        [ForeignKey(nameof(EstimatorId))]
+        public virtual EstimatorDbEntity Estimator { get; set; }
 
         public ICollection<AlgorithmParameterValueDbEntity> AlgorithmParameterValues { get; set; }
     }

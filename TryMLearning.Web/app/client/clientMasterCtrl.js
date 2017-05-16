@@ -20,6 +20,7 @@
 
         vm.isAuthenticated = OAuth.isAuthenticated;
         vm.isState = $state.is;
+        vm.includesState = $state.includes;
         vm.isSpinnerActive = spinnerSvc.isActive;
 
         vm.signOutClick = signOutClick;

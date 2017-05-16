@@ -14,11 +14,14 @@ namespace TryMLearning.Application.MachineLearning.Estimates.Classifier.Generali
             return new GeneralizationAbilityResult(generalizationAbility);
         }
 
-        protected override GeneralizationAbilityResult GetAverageResult(List<GeneralizationAbilityResult> estimateResults)
+        protected override EstimateResponse GetAverageResult(List<GeneralizationAbilityResult> estimateResults)
         {
             var generalizationAbility = estimateResults.Sum(r => r.GeneralizationAbility) / estimateResults.Count;
 
-            return new GeneralizationAbilityResult(generalizationAbility);
+            return new EstimateResponse
+            {
+                Value = generalizationAbility
+            };
         }
     }
 }

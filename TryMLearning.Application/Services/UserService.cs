@@ -2,14 +2,13 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Model;
 using TryMLearning.Persistence.Interface.Daos;
 
 namespace TryMLearning.Application.Services
 {
-    public class UserService : IUserService, IUserStore<User>, IUserPasswordStore<User, string>, IUserEmailStore<User>
+    public class UserService : IUserService
     {
         private readonly IUserDao _userDao;
 
@@ -18,78 +17,34 @@ namespace TryMLearning.Application.Services
             _userDao = userDao;
         }
 
-        public async Task CreateAsync(User user)
+        public Task<User> InsertUserAsync(User user)
         {
-            await _userDao.InsertUserAsync(user);
+            return _userDao.InsertUserAsync(user);
         }
 
-        public async Task UpdateAsync(User user)
+        public Task<User> UpdateUserAsync(User user)
         {
-            await _userDao.UpdateUserAsync(user);
+            return _userDao.UpdateUserAsync(user);
         }
 
-        public async Task DeleteAsync(User user)
+        public Task DeleteUserAsync(User user)
         {
-            await _userDao.DeleteUserAsync(user);
+            return _userDao.DeleteUserAsync(user);
         }
 
-        public async Task<User> FindByIdAsync(string userId)
+        public Task<User> GetUserAsync(int userId)
         {
-            int userIdInt;
-            if (!int.TryParse(userId, out userIdInt))
-            {
-                return null;
-            }
-
-            return await _userDao.GetUserAsync(userIdInt);
+            return _userDao.GetUserAsync(userId);
         }
 
-        public async Task<User> FindByNameAsync(string userName)
+        public Task<User> GetUserByNameAsync(string userName)
         {
-            return await _userDao.GetUserByNameAsync(userName);
+            return _userDao.GetUserByNameAsync(userName);
         }
 
-        public async Task SetPasswordHashAsync(User user, string passwordHash)
+        public Task<User> GetUserByEmailAsync(string email)
         {
-            user.PasswordHash = passwordHash;
-        }
-
-        public async Task<string> GetPasswordHashAsync(User user)
-        {
-            return user.PasswordHash;
-        }
-
-        public async Task<bool> HasPasswordAsync(User user)
-        {
-            return true;
-        }
-
-        public async Task SetEmailAsync(User user, string email)
-        {
-            user.Email = email;
-        }
-
-        public async Task<string> GetEmailAsync(User user)
-        {
-            return user.Email;
-        }
-
-        public async Task<bool> GetEmailConfirmedAsync(User user)
-        {
-            return true;
-        }
-
-        public async Task SetEmailConfirmedAsync(User user, bool confirmed)
-        {
-        }
-
-        public async Task<User> FindByEmailAsync(string email)
-        {
-            return await _userDao.GetUserByEmailAsync(email);
-        }
-
-        public void Dispose()
-        {
+            return _userDao.GetUserByEmailAsync(email);
         }
     }
 }

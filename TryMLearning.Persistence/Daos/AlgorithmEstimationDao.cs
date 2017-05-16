@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Azure;
@@ -23,14 +25,32 @@ namespace TryMLearning.Persistence.Daos
             _dbContext = dbContext;
         }
 
+        public async Task<List<AlgorithmEstimation>> GetAllAlgorithmEstimationsAsync(int userId)
+        {
+            var estimationDbEntity = await _dbContext.AlgorithmEstimations
+                .Include(a => a.User)
+                .Include(a => a.Algorithm)
+                .Include(a => a.Algorithm.AlgorithmParameters)
+                .Include(a => a.AlgorithmParameterValues)
+                .Include(a => a.DataSet)
+                .Include(a => a.Estimator)
+                .Where(a => a.UserId == userId)
+                .ToListAsync();
+
+            var estimations = estimationDbEntity.Select(Mapper.Map<AlgorithmEstimation>).ToList();
+
+            return estimations;
+        }
+
         public async Task<AlgorithmEstimation> GetAlgorithmEstimationAsync(int algorithmEstimationId)
         {
             var algorithmEstimationDbEntity = await _dbContext.AlgorithmEstimations
+                .Include(a => a.User)
                 .Include(a => a.Algorithm)
                 .Include(a => a.Algorithm.AlgorithmParameters)
-                .Include(a => a.DataSet)
-                .Include(a => a.AlgorithmEstimator)
                 .Include(a => a.AlgorithmParameterValues)
+                .Include(a => a.DataSet)
+                .Include(a => a.Estimator)
                 .FirstOrDefaultAsync(a => a.AlgorithmEstimationId == algorithmEstimationId);
 
             var algorithmEstimation = Mapper.Map<AlgorithmEstimation>(algorithmEstimationDbEntity);

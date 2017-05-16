@@ -1,5 +1,33 @@
-﻿<div class="row">
-    <div class="col-md-offset-3 col-md-6">
-        <p>All estimations</p>
-    </div>
+﻿<div data-ng-if=":: vm.estimations.length !== 0" class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Status</th>
+                <th>Algorithm</th>
+                <th>Data Set</th>
+                <th>Parameters</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="estimation in vm.estimations">
+                <td data-ng-bind=":: $index + 1"></td>
+                <td data-ng-bind=":: vm.stringifyStatus(estimation.status)"></td>
+                <td>
+                    <a data-ui-sref="client.algorithm.details({id: estimation.algorithm.algorithmId})">{{ :: estimation.algorithm.name }}</a>
+                </td>
+                <td>
+                    <a data-ui-sref="client.dataSet.details({id: estimation.dataSet.dataSetId})">{{ :: estimation.dataSet.name }}</a>
+                </td>
+                <td>
+                    <div data-ng-repeat="param in estimation.algorithm.parameters">{{ :: param.name }}: <strong>{{ :: vm.getParamValue(param, estimation.parameterValues) }}</strong></div>
+                </td>
+                <td>
+                    <a class="btn btn-default" data-ui-sref="client.estimation.resultComposer({id: estimation.algorithmEstimationId})">Result</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
+<p data-ng-if=":: vm.estimations.length === 0">There is no estimations</p>

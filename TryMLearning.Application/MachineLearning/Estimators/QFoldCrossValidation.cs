@@ -64,7 +64,7 @@ namespace TryMLearning.Application.MachineLearning.Estimators
             return classificationResults;
         }
 
-        public List<IClassifierEstimateResult> Estimate(List<ClassificationResult> classificationResults, List<IClassifierEstimate> estimates)
+        public List<EstimateResponse> Estimate(List<ClassificationResult> classificationResults, List<IClassifierEstimate> estimates)
         {
             var resultGroups = classificationResults.GroupBy(s => s.Index);
 
@@ -72,7 +72,7 @@ namespace TryMLearning.Application.MachineLearning.Estimators
             {
                 foreach (var estimate in estimates)
                 {
-                    estimate.Estimate(resultGroup.ToList(), true);
+                    estimate.Estimate(resultGroup.ToList());
                 }
             }
 

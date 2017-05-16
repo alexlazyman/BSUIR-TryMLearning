@@ -2,6 +2,7 @@
 using Ninject;
 using TryMLearning.Application.Interface.MachineLearning;
 using TryMLearning.Application.Interface.MachineLearning.Classifiers;
+using TryMLearning.Model;
 using TryMLearning.Model.Constants;
 
 namespace TryMLearning.Application.MachineLearning
@@ -15,16 +16,17 @@ namespace TryMLearning.Application.MachineLearning
             _container = container;
         }
 
-        public IClassifier GetClassifier(string algorithmAlias)
+        public IClassifier GetClassifier(Algorithm algorithm)
         {
-            var alias = algorithmAlias.ToUpper();
-            switch (alias)
+            var alias = $"{algorithm.Type}:{algorithm.Alias.ToUpper()}";
+
+            var classifier = _container.TryGet<IClassifier>(alias);
+            if (classifier == null)
             {
-                case AlgorithmAliases.NaiveBayes:
-                    return _container.Get<IClassifier>(alias);
-                default:
-                    throw new ArgumentException($"There is no classifier with alias: {algorithmAlias}");
+                throw new ArgumentException($"There is no classifier with alias: {algorithm.Alias}");
             }
+
+            return classifier;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
+using TryMLearning.Model;
 using TryMLearning.Persistence.Interfaces;
 
 namespace TryMLearning.Persistence.Models
@@ -22,6 +23,8 @@ namespace TryMLearning.Persistence.Models
 
         [Key]
         public int AlgorithmId { get; set; }
+
+        public AlgorithmType Type { get; set; }
 
         public int AuthorId { get; set; }
 

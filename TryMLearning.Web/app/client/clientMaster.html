@@ -5,15 +5,18 @@
 <div class="container">
     <div class="header clearfix">
         <nav>
-            <ul class="nav nav-pills pull-right">
+            <ul class="nav nav-tabs nav-justified">
                 <li class="nav-item" data-ng-class="{'active': vm.isState('client.home')}">
-                    <a class="nav-link active" ui-sref="client.home">Home</a>
+                    <a class="nav-link" ui-sref="client.home">Home</a>
                 </li>
-                <li class="nav-item" data-ng-class="{'active': vm.isState('client.algorithmAll')}">
-                    <a class="nav-link" ui-sref="client.algorithmAll">Algorithms</a>
+                <li class="nav-item" data-ng-class="{'active': vm.includesState('client.algorithm')}">
+                    <a class="nav-link" ui-sref="client.algorithm.all">Algorithm</a>
                 </li>
-                <li class="nav-item" data-ng-class="{'active': vm.isState('client.dataSetAll')}">
-                    <a class="nav-link" ui-sref="client.dataSetAll">Data sets</a>
+                <li class="nav-item" data-ng-class="{'active': vm.includesState('client.dataSet')}">
+                    <a class="nav-link" ui-sref="client.dataSet.all">Data set</a>
+                </li>
+                <li class="nav-item" data-ng-class="{'active': vm.includesState('client.estimation')}">
+                    <a class="nav-link" ui-sref="client.estimation.add">Estimation</a>
                 </li>
                 <li class="nav-item" data-ng-class="{'active': vm.isState('client.signin')}" data-ng-if="!vm.isAuthenticated()">
                     <a class="nav-link" ui-sref="client.signin">Sign In</a>
@@ -26,9 +29,8 @@
                 </li>
             </ul>
         </nav>
-        <h3 class="text-muted">TryMLearning</h3>
     </div>
-    
+   
     <div data-ui-view></div>
     
     <footer class="footer">

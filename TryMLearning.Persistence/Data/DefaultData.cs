@@ -30,9 +30,43 @@ namespace TryMLearning.Persistence.Data
                 Name = "Naive Bayes",
                 Description = "There is no description",
                 Alias = AlgorithmAliases.NaiveBayes,
+                Type = AlgorithmType.Classifier,
                 Parameters = new List<AlgorithmParameter>
                 {
                 }
+            };
+        }
+
+        public static IEnumerable<AlgorithmParameter> GetAlgorithmParameters()
+        {
+            yield return new AlgorithmParameter
+            {
+                AlgorithmParameterId = 1,
+                AlgorithmId = 1,
+                Name = "Param 1",
+                Description = "There is no description",
+                Order = 0,
+                ValueType = AlgorithmParameterType.Int
+            };
+
+            yield return new AlgorithmParameter
+            {
+                AlgorithmParameterId = 2,
+                AlgorithmId = 1,
+                Name = "Param 2",
+                Description = "There is no description",
+                Order = 1,
+                ValueType = AlgorithmParameterType.Double
+            };
+
+            yield return new AlgorithmParameter
+            {
+                AlgorithmParameterId = 3,
+                AlgorithmId = 1,
+                Name = "Param 3",
+                Description = "There is no description",
+                Order = 2,
+                ValueType = AlgorithmParameterType.String
             };
         }
 
@@ -48,11 +82,11 @@ namespace TryMLearning.Persistence.Data
             };
         }
 
-        public static IEnumerable<AlgorithmEstimator> GetAlgorithmEstimators()
+        public static IEnumerable<Estimator> GetEstimators()
         {
-            yield return new AlgorithmEstimator
+            yield return new Estimator
             {
-                AlgorithmEstimatorId = 1,
+                EstimatorId = 1,
                 Alias = ClassifierEstimatorAliases.QFoldCrossValidation,
                 Name = "Q-fold cross validation",
                 Description = "There is no description",

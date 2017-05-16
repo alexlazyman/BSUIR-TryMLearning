@@ -31,30 +31,10 @@ namespace TryMLearning.Persistence.Daos
         {
             var algorithmDbEntity = await _dbContext.Algorithms
                 .Include(a => a.Author)
-                .Select(a => new
-                {
-                    a.AlgorithmId,
-                    a.Name,
-                    Author = new
-                    {
-                        a.Author.UserId,
-                        a.Author.UserName
-                    }
-                })
+                .Include(a => a.AlgorithmParameters)
                 .ToListAsync();
 
-            var algorithms = algorithmDbEntity
-                .Select(a => new AlgorithmDbEntity
-                {
-                    AlgorithmId = a.AlgorithmId,
-                    Name = a.Name,
-                    Author = new UserDbEntity
-                    {
-                        UserId = a.Author.UserId,
-                        UserName = a.Author.UserName
-                    }
-                })
-                .Select(Mapper.Map<Algorithm>).ToList();
+            var algorithms = algorithmDbEntity.Select(Mapper.Map<Algorithm>).ToList();
 
             return algorithms;
         }

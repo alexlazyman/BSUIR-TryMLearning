@@ -36,9 +36,15 @@ namespace TryMLearning.Persistence.Migrations
 
             context.SaveChanges();
 
-            context.AlgorithmEstimators.AddRange(
-                DefaultData.GetAlgorithmEstimators()
-                    .Select(Mapper.Map<AlgorithmEstimatorDbEntity>));
+            context.AlgorithmParameters.AddRange(
+                DefaultData.GetAlgorithmParameters()
+                    .Select(Mapper.Map<AlgorithmParameterDbEntity>));
+
+            context.SaveChanges();
+
+            context.Estimators.AddRange(
+                DefaultData.GetEstimators()
+                    .Select(Mapper.Map<EstimatorDbEntity>));
 
             context.SaveChanges();
 

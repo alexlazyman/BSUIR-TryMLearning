@@ -14,8 +14,8 @@ namespace TryMLearning.Persistence.Configuration
             cfg.CreateMap<User, UserDbEntity>();
             cfg.CreateMap<UserDbEntity, User>();
 
-            cfg.CreateMap<AlgorithmEstimator, AlgorithmEstimatorDbEntity>();
-            cfg.CreateMap<AlgorithmEstimatorDbEntity, AlgorithmEstimator>();
+            cfg.CreateMap<Estimator, EstimatorDbEntity>();
+            cfg.CreateMap<EstimatorDbEntity, Estimator>();
 
             cfg.CreateMap<Algorithm, AlgorithmDbEntity>()
                 .ForMember(sdb => sdb.AlgorithmParameters, opt => opt.Ignore())
@@ -31,18 +31,20 @@ namespace TryMLearning.Persistence.Configuration
             cfg.CreateMap<AlgorithmParameterValueDbEntity, AlgorithmParameterValue>();
 
             cfg.CreateMap<AlgorithmEstimation, AlgorithmEstimationDbEntity>()
+                .ForMember(sdb => sdb.User, opt => opt.Ignore())
+                .ForMember(sdb => sdb.UserId, opt => opt.MapFrom(s => s.User.UserId))
                 .ForMember(sdb => sdb.AlgorithmParameterValues, opt => opt.Ignore())
                 .ForMember(sdb => sdb.Algorithm, opt => opt.Ignore())
                 .ForMember(sdb => sdb.AlgorithmId, opt => opt.ResolveUsing(s => s.Algorithm.AlgorithmId))
                 .ForMember(sdb => sdb.DataSet, opt => opt.Ignore())
                 .ForMember(sdb => sdb.DataSetId, opt => opt.ResolveUsing(s => s.DataSet.DataSetId))
-                .ForMember(sdb => sdb.AlgorithmEstimator, opt => opt.Ignore())
-                .ForMember(sdb => sdb.AlgorithmEstimatorId, opt => opt.ResolveUsing(s => s.AlgorithmEstimator.AlgorithmEstimatorId));
+                .ForMember(sdb => sdb.Estimator, opt => opt.Ignore())
+                .ForMember(sdb => sdb.EstimatorId, opt => opt.ResolveUsing(s => s.Estimator.EstimatorId));
             cfg.CreateMap<AlgorithmEstimationDbEntity, AlgorithmEstimation>()
                 .ForMember(s => s.ParameterValues, opt => opt.MapFrom(sdb => sdb.AlgorithmParameterValues))
                 .ForMember(s => s.Algorithm, opt => opt.ResolveUsing(sdb => sdb.Algorithm ?? (object) new Algorithm(sdb.AlgorithmId)))
                 .ForMember(s => s.DataSet, opt => opt.ResolveUsing(sdb => sdb.DataSet ?? (object) new DataSet(sdb.DataSetId)))
-                .ForMember(s => s.AlgorithmEstimator, opt => opt.ResolveUsing(sdb => sdb.AlgorithmEstimator ?? (object) new AlgorithmEstimator(sdb.AlgorithmEstimatorId)));
+                .ForMember(s => s.Estimator, opt => opt.ResolveUsing(sdb => sdb.Estimator ?? (object) new Estimator(sdb.EstimatorId)));
 
             cfg.CreateMap<DataSet, DataSetDbEntity>()
                 .ForMember(sdb => sdb.Author, opt => opt.Ignore())

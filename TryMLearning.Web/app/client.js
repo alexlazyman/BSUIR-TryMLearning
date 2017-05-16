@@ -6,7 +6,10 @@
             'ng',
             'angularSpinner',
             'ui.router',
-            'angular-oauth2'
+            'angular-oauth2',
+            'ui.bootstrap',
+            'base64',
+            'chart.js'
         ])
         .config(config)
         .run(run);
@@ -41,7 +44,7 @@
             {
                 url: '/signin',
                 templateUrl: '/app/client/account/signin/signin.html',
-                controller: 'siginCtrl',
+                controller: 'signinCtrl',
                 controllerAs: 'vm'
             })
             .state('client.signup',
@@ -60,30 +63,92 @@
             })
             .state('client.algorithm',
             {
-                url: '/algorithm?id',
+                abstract: true,
+                url: '/algorithm',
+                templateUrl: '/app/client/algorithm/algorithm.html'
+            })
+            .state('client.algorithm.details',
+            {
+                url: '?id',
                 templateUrl: '/app/client/algorithm/details/algorithmDetails.html',
                 controller: 'algorithmDetailsCtrl',
                 controllerAs: 'vm'
             })
-            .state('client.algorithmAll',
+            .state('client.algorithm.all',
             {
-                url: '/algorithms',
+                url: '/all',
                 templateUrl: '/app/client/algorithm/all/algorithmAll.html',
                 controller: 'algorithmAllCtrl',
                 controllerAs: 'vm'
             })
             .state('client.dataSet',
             {
-                url: '/dataset?id',
+                abstract: true,
+                url: '/dataset',
+                templateUrl: '/app/client/dataSet/dataSet.html'
+            })
+            .state('client.dataSet.details',
+            {
+                url: '?id',
                 templateUrl: '/app/client/dataSet/details/dataSetDetails.html',
                 controller: 'dataSetDetailsCtrl',
                 controllerAs: 'vm'
             })
-            .state('client.dataSetAll',
+            .state('client.dataSet.all',
             {
-                url: '/datasets',
+                url: '/all',
                 templateUrl: '/app/client/dataSet/all/dataSetAll.html',
                 controller: 'dataSetAllCtrl',
+                controllerAs: 'vm'
+            })
+            .state('client.estimation',
+            {
+                abstract: true,
+                url: '/estimation',
+                templateUrl: '/app/client/estimation/estimation.html'
+            })
+            .state('client.estimation.add',
+            {
+                url: '/add',
+                templateUrl: '/app/client/estimation/add/estimationAdd.html',
+                controller: 'estimationAddCtrl',
+                controllerAs: 'vm'
+            })
+            .state('client.estimation.all',
+            {
+                url: '/all',
+                templateUrl: '/app/client/estimation/all/estimationAll.html',
+                controller: 'estimationAllCtrl',
+                controllerAs: 'vm'
+            })
+            .state('client.estimation.resultComposer',
+            {
+                url: '/result/composer?id&{e:json}',
+                params: {
+                    e: null
+                },
+                templateUrl: '/app/client/estimation/resultComposer/estimationResultComposer.html',
+                controller: 'estimationResultComposerCtrl',
+                controllerAs: 'vm'
+            })
+            .state('client.estimation.result',
+            {
+                url: '/result?id&{e:json}',
+                params: {
+                    e: null
+                },
+                templateUrl: '/app/client/estimation/result/estimationResult.html',
+                controller: 'estimationResultCtrl',
+                controllerAs: 'vm'
+            })
+            .state('client.estimation.compare',
+            {
+                url: '/compare?{id:int}',
+                params: {
+                    id: { array: true }
+                },
+                templateUrl: '/app/client/estimation/add/estimationCompare.html',
+                controller: 'estimationCompareCtrl',
                 controllerAs: 'vm'
             })
             ;
@@ -140,7 +205,10 @@
         });
 
         $rootScope.$on('auth:error', function (event, rejection) {
-            $state.go('client.signin');
+            OAuth.revokeToken()
+                .finally(function() {
+                    $state.go('client.signin');
+                });
         });
     }
 })();

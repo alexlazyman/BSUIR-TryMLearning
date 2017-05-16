@@ -8,13 +8,15 @@
     dataSetSvc.$inject = [
         '$http',
         'urlBuilder',
-        'promiseSvc'
+        'promiseSvc',
+        'config'
     ];
 
     function dataSetSvc(
         $http,
         urlBuilder,
-        promiseSvc
+        promiseSvc,
+        config
     ) {
         var service = {
             getProm: getProm,
@@ -40,7 +42,7 @@
 
         function stringifyType(type) {
             switch (type) {
-                case 0:
+                case config.dataSetType.classification:
                     return 'classification';
                 default:
                     return 'unknown';

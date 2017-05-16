@@ -21,13 +21,13 @@ namespace TryMLearning.Application.MachineLearning
 
         public IClassifierEstimator GetClassifierEstimator(AlgorithmEstimation algorithmEstimation)
         {
-            var alias = algorithmEstimation.AlgorithmEstimator.Alias.ToUpper();
+            var alias = algorithmEstimation.Estimator.Alias.ToUpper();
             switch (alias)
             {
                 case ClassifierEstimatorAliases.QFoldCrossValidation:
                     return _container.Get<IClassifierEstimator>(alias, GetParameterOverride(algorithmEstimation.QFoldCrossValidationConfig));
                 default:
-                    throw new ArgumentException($"There is no test of classifier with alias: {algorithmEstimation.AlgorithmEstimator.Alias}");
+                    throw new ArgumentException($"There is no test of classifier with alias: {algorithmEstimation.Estimator.Alias}");
             }
         }
 

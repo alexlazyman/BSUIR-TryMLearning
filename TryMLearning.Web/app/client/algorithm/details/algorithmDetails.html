@@ -1,28 +1,26 @@
-﻿<div data-ng-if=":: vm.algorithm">
-    <h4>{{ :: vm.algorithm.name }}</h4>
-    <p>{{ :: vm.algorithm.description }}</p>
-    <p>Added by {{ :: vm.algorithm.author.userName }}</p>
-    <br />
-    <h4>Parameters</h4>
-    <div data-ng-if=":: vm.algorithm.parameters.length > 0" class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr data-ng-repeat="param in vm.algorithm.parameters | orderBy:'order'">
-                <td data-ng-bind=":: $index + 1"></td>
-                <td data-ng-bind=":: param.name"></td>
-                <td data-ng-bind=":: param.description"></td>
-                <td data-ng-bind=":: param.valueType"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <p data-ng-if=":: vm.algorithm.parameters.length === 0">There is no parameters</p>
+﻿<h4>{{ :: vm.algorithm.name }}</h4>
+<p>{{ :: vm.algorithm.description }}</p>
+<p>Added by {{ :: vm.algorithm.author.userName }}</p>
+<br />
+<h4>Parameters</h4>
+<div data-ng-if=":: vm.algorithm.parameters.length > 0" class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="param in vm.algorithm.parameters | orderBy:'order'">
+            <td data-ng-bind=":: $index + 1"></td>
+            <td data-ng-bind=":: param.name"></td>
+            <td data-ng-bind=":: vm.stringifyParamType(param.valueType)"></td>
+            <td data-ng-bind=":: param.description"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+<p data-ng-if=":: vm.algorithm.parameters.length === 0">There is no parameters</p>

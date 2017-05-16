@@ -20,6 +20,8 @@
 
         vm.algorithm = undefined;
 
+        vm.stringifyParamType = algorithmSvc.stringifyParamType;
+
         activate();
 
         function activate() {

@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using TryMLearning.Model;
-
-namespace TryMLearning.Application.Interface.Contexts
+﻿namespace TryMLearning.Application.Interface.Contexts
 {
     public interface IUserContext
     {

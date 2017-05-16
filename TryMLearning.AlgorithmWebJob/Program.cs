@@ -1,30 +1,24 @@
 ﻿using AutoMapper;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Practices.Unity;
+using Ninject;
 using TryMLearning.AlgorithmWebJob.Configuration;
-using TryMLearning.Configuration;
 
 namespace TryMLearning.AlgorithmWebJob
 {
-    public class Program
+    public partial class Program
     {
         private static void Main()
         {
             // AutoMapper initialization.
-            Mapper.Initialize(cfg =>
-            {
-                cfg.RegisterCommonMaps();
-            });
+            InitializeAutoMapper();
 
             // Unity initialization.
-            var container = new UnityContainer();
-            container.RegisterCommonComponents();
-            var unityJobActivator = new UnityJobActivator(container);
+            var container = CreateKernel();
 
             // WebJon initialization.
             var config = new JobHostConfiguration()
             {
-                JobActivator = unityJobActivator
+                JobActivator = new NinjectJobActivator(container)
             };
 
             if (config.IsDevelopment)

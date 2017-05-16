@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
+using Ninject;
+using TryMLearning.AlgorithmWebJob.Infrastructure;
 using TryMLearning.Application.Interface.MachineLearning;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Model;
@@ -11,17 +13,21 @@ namespace TryMLearning.AlgorithmWebJob.Functions
 {
     public class AlgorithmFunctions
     {
-        private readonly IAlgorithmEstimationService _algorithmEstimationService;
+        private readonly IDependencyResolver _dependencyResolver;
 
-        public AlgorithmFunctions(
-            IAlgorithmEstimationService algorithmEstimationService)
+        public AlgorithmFunctions(IDependencyResolver dependencyResolver)
         {
-            _algorithmEstimationService = algorithmEstimationService;
+            _dependencyResolver = dependencyResolver;
         }
 
         public async Task RunClassifierEstimation([QueueTrigger(StorageQueueNames.ClassificationAlgorithm)] int algorithmEstimationId)
         {
-            await _algorithmEstimationService.ExecuteClassifierEstimationAsync(algorithmEstimationId);
+            using (var sope = _dependencyResolver.BeginScope())
+            {
+                var algorithmEstimationService = sope.Get<IAlgorithmEstimationService>();
+
+                await algorithmEstimationService.ExecuteClassifierEstimationAsync(algorithmEstimationId);
+            }
         }
     }
 }

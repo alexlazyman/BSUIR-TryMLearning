@@ -7,5 +7,7 @@
         public const string FalsePositiveError = "FALSE-POSITIVE-ERROR";
 
         public const string FalseNegativeError = "FALSE-NEGATIVE-ERROR";
+
+        public const string RocCurve = "ROC-CURVE";
     }
 }

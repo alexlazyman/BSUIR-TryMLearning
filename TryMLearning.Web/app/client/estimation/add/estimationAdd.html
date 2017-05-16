@@ -1,0 +1,72 @@
+﻿<div class="row">
+    <div class="col-sm-offset-2 col-sm-8">
+        <form name="esimationForm" class="form-horizontal">
+            <div class="form-group row" data-ng-class="{ 'has-error': esimationForm.$submitted && esimationForm.algorithm.$invalid }">
+                <label for="estimation-algorithm-param" class="col-sm-2 control-label">Algorithm</label>
+                <div class="col-sm-10">
+                    <select id="estimation-algorithm-param"
+                            class="form-control"
+                            name="algorithm"
+                            data-ng-options="algorithm as algorithm.name for algorithm in vm.algorithms track by algorithm.algorithmId"
+                            data-ng-model="vm.estimation.algorithm"
+                            data-ng-required="true">
+                        <option value="" disabled>Select algorithm</option>
+                    </select>
+                </div>
+            </div>
+            <div data-ng-if="vm.estimation.algorithm.parameters.length > 0">
+                <hr />
+                <div class="form-group row"
+                     data-ng-repeat="param in vm.estimation.algorithm.parameters | orderBy:'order'"
+                     data-ng-class="{ 'has-error': esimationForm.$submitted && esimationForm['parameter' + $index].$invalid }"
+                     data-ng-init="vm.estimation.parameterValues[$index].algorithmParameterId = param.algorithmParameterId">
+                    <label for="estimation-param-{{ :: $index }}"
+                           class="col-sm-2 control-label"
+                           title="{{ param.description }}">{{ param.name }}</label>
+                    <div class="col-sm-10">
+                        <input id="estimation-param-{{ :: $index }}"
+                               type="{{ :: vm.getParamInputType(param.valueType) }}"
+                               placeholder="{{ :: vm.stringifyParamType(param.valueType) }}"
+                               class="form-control"
+                               name="parameter{{ :: $index }}"
+                               data-ng-model="vm.estimation.parameterValues[$index][vm.stringifyParamType(param.valueType) + 'Value']"
+                               ng-model-options="{ getterSetter: true }"
+                               data-ng-required="true"/>
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div class="form-group row" data-ng-class="{ 'has-error': esimationForm.$submitted && esimationForm.dataSet.$invalid }">
+                <label for="estimation-data-set-param" class="col-sm-2 control-label">Data set</label>
+                <div class="col-sm-10">
+                    <select id="estimation-data-set-param"
+                            class="form-control"
+                            name="dataSet"
+                            data-ng-options="dataSet as dataSet.name for dataSet in vm.dataSets track by dataSet.dataSetId"
+                            data-ng-model="vm.estimation.dataSet"
+                            data-ng-required="true">
+                        <option value="" disabled>Select data set</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row" data-ng-class="{ 'has-error': esimationForm.$submitted && esimationForm.estimator.$invalid }">
+                <label for="estimation-estimator-param" class="col-sm-2 control-label">Estimator</label>
+                <div class="col-sm-10">
+                    <select id="estimation-estimator-param"
+                            class="form-control"
+                            name="estimator"
+                            data-ng-options="estimator as estimator.name for estimator in vm.estimators track by estimator.estimatorId"
+                            data-ng-model="vm.estimation.estimator"
+                            data-ng-required="true">
+                        <option value="" disabled>Select estimator</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary" data-ng-click="vm.estimateClick()">Estimate</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

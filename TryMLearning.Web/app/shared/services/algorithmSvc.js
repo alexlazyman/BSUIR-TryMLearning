@@ -8,17 +8,20 @@
     algorithmSvc.$inject = [
         '$http',
         'urlBuilder',
-        'promiseSvc'
+        'promiseSvc',
+        'config'
     ];
 
     function algorithmSvc(
         $http,
         urlBuilder,
-        promiseSvc
+        promiseSvc,
+        config
     ) {
         var service = {
             getProm: getProm,
-            getAllProm: getAllProm
+            getAllProm: getAllProm,
+            stringifyParamType: stringifyParamType
         };
 
         return service;
@@ -35,6 +38,19 @@
 
             return $http.get(url)
                 .then(promiseSvc.requestComplete);
+        }
+
+        function stringifyParamType(type) {
+            switch(type) {
+                case config.parameterType.int:
+                    return 'int';
+                case config.parameterType.double:
+                    return 'double';
+                case config.parameterType.string:
+                    return 'string';
+                default:
+                    return 'unknown';
+            }
         }
     }
 })();

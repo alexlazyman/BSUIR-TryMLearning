@@ -8,13 +8,15 @@
     sampleSvc.$inject = [
         '$http',
         'urlBuilder',
-        'promiseSvc'
+        'promiseSvc',
+        'config'
     ];
 
     function sampleSvc(
         $http,
         urlBuilder,
-        promiseSvc
+        promiseSvc,
+        config
     ) {
         var service = {
             getSamplesProm: getSamplesProm
@@ -24,7 +26,7 @@
 
         function getSamplesProm(dataSetId, dataSetType) {
             switch (dataSetType) {
-                case 0:
+                case config.dataSetType.classification:
                     return getClassificationSamplesProm(dataSetId);
                 default:
                     return null;

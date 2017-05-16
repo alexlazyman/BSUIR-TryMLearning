@@ -30,7 +30,7 @@ namespace TryMLearning.Persistence
 
         public DbSet<ClassificationResultDbEntity> ClassificationResults { get; set; }
 
-        public DbSet<AlgorithmEstimatorDbEntity> AlgorithmEstimators { get; set; }
+        public DbSet<EstimatorDbEntity> Estimators { get; set; }
 
         public DbSet<DoubleTupleDbEntity> DoubleTuples { get; set; }
 
@@ -65,6 +65,16 @@ namespace TryMLearning.Persistence
 
             modelBuilder.Entity<DataSetDbEntity>()
                 .HasRequired(e => e.Author)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<AlgorithmDbEntity>()
+                .HasRequired(e => e.Author)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<AlgorithmEstimationDbEntity>()
+                .HasRequired(e => e.User)
                 .WithMany()
                 .WillCascadeOnDelete(false);
         }

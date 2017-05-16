@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using TryMLearning.Application.Interface.MachineLearning.Contexts;
 using TryMLearning.Model;
 using TryMLearning.Model.MachineLearning.Estimates.Classifier;
@@ -16,6 +18,11 @@ namespace TryMLearning.Application.MachineLearning.Estimates.Classifier.FalseNeg
             FNErrorEstimateConfig config,
             IClassificationContext classificationContext)
         {
+            if (config == null)
+            {
+                throw new ArgumentException(nameof(config));
+            }
+
             _config = config;
             _classificationContext = classificationContext;
         }
@@ -27,11 +34,14 @@ namespace TryMLearning.Application.MachineLearning.Estimates.Classifier.FalseNeg
             return new FalseNegativeErrorResult(falseNegativeError);
         }
 
-        protected override FalseNegativeErrorResult GetAverageResult(List<FalseNegativeErrorResult> estimateResults)
+        protected override EstimateResponse GetAverageResult(List<FalseNegativeErrorResult> estimateResults)
         {
             var falseNegativeError = estimateResults.Sum(r => r.FalseNegativeError) / estimateResults.Count;
 
-            return new FalseNegativeErrorResult(falseNegativeError);
+            return new EstimateResponse
+            {
+                Value = falseNegativeError
+            };
         }
     }
 }

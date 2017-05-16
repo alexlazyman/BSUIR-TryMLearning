@@ -5,9 +5,10 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Model;
-using TryMLearning.Model.MachineLearning.EstimationResults.Classifier;
 
 namespace TryMLearning.WebAPI.Controllers
 {
@@ -30,18 +31,16 @@ namespace TryMLearning.WebAPI.Controllers
             return await _algorithmEstimationService.RunEstimationAsync(algorithmEstimation);
         }
 
-        [HttpGet]
-        [Route("{algorithmEstimationId:int}")]
-        public async Task<AlgorithmEstimation> GetAlgorithmEstimationAsync(int algorithmEstimationId)
-        {
-            return await _algorithmEstimationService.GetAlgorithmEstimationAsync(algorithmEstimationId);
-        }
-
+        [AllowAnonymous]
         [HttpGet]
         [Route("result")]
-        public async Task<ClassifierEstimationResult> GetClassifierEstimationResultAsync([FromUri] ClassifierEstimationResultRequest request)
+        public async Task<List<EstimateResponse>> GetClassifierEstimationResultAsync(
+            [FromUri(Name = "id")] int algorithmEstimationId,
+            [FromUri(Name = "e")] string estimates)
         {
-            return await _algorithmEstimationService.GetClassifierEstimationResultAsync(request);
+            var estimateRequests = JsonConvert.DeserializeObject<List<EstimateRequest>>(estimates);
+
+            return await _algorithmEstimationService.GetClassifierEstimationResultAsync(algorithmEstimationId, estimateRequests);
         }
     }
 }

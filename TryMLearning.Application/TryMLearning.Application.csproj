@@ -53,11 +53,11 @@
     <Reference Include="Castle.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
@@ -78,6 +78,8 @@
     <Compile Include="MachineLearning\Classifiers\NaiveBayesClassifier.cs" />
     <Compile Include="MachineLearning\ClassifierEstimateFactory.cs" />
     <Compile Include="MachineLearning\Contexts\ClassificationContext.cs" />
+    <Compile Include="MachineLearning\Estimates\Classifier\BaseRoc\RocEstimateResult.cs" />
+    <Compile Include="MachineLearning\Estimates\Classifier\BaseRoc\BaseRocEstimate.cs" />
     <Compile Include="MachineLearning\Estimates\Classifier\BaseClassifierEstimate.cs" />
     <Compile Include="MachineLearning\Estimates\Classifier\FalsePositiveError\FalseNegativeError.cs" />
     <Compile Include="MachineLearning\Estimates\Classifier\FalsePositiveError\FalseNegativeErrorResult.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="MachineLearning\Estimates\Classifier\FalseNegativeError\FalseNegativeErrorResult.cs" />
     <Compile Include="MachineLearning\Estimates\Classifier\GeneralizationAbility\GeneralizationAbilityResult.cs" />
     <Compile Include="MachineLearning\Estimates\Classifier\GeneralizationAbility\GeneralizationAbility.cs" />
+    <Compile Include="MachineLearning\Estimates\Classifier\RocCurve\RocCurve.cs" />
     <Compile Include="MachineLearning\Estimators\QFoldCrossValidation.cs" />
     <Compile Include="Services\AlgorithmService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -92,6 +95,7 @@
     <Compile Include="Services\ClassificationSampleService.cs" />
     <Compile Include="Services\ClassificationResultService.cs" />
     <Compile Include="Services\DataSetService.cs" />
+    <Compile Include="Services\EstimatorService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Validation\AlgorithmParameterValidator.cs" />
     <Compile Include="Validation\AlgorithmEstimationValidator.cs" />
