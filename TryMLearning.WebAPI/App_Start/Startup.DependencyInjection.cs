@@ -90,7 +90,7 @@ namespace TryMLearning.WebAPI
             kernel.Bind<IClassifierEstimate>().To<GeneralizationAbility>().Named(ClassifierEstimateAliases.GeneralizationAbility);
             kernel.Bind<IClassifierEstimate>().To<FalseNegativeError>().Named(ClassifierEstimateAliases.FalseNegativeError);
             kernel.Bind<IClassifierEstimate>().To<FalsePositiveError>().Named(ClassifierEstimateAliases.FalsePositiveError);
-            kernel.Bind<IClassifierEstimate>().To<RocCurve>().Named(ClassifierEstimateAliases.RocCurves);
+            kernel.Bind<IClassifierEstimate>().To<RocCurve>().Named(ClassifierEstimateAliases.RocCurve);
             
             kernel.Bind<IClassifierFactory>().To<ClassifierFactory>();
             kernel.Bind<IClassifierEstimatorFactory>().To<ClassifierEstimatorFactory>();
