@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using TryMLearning.Application.Interface.MachineLearning;
-using TryMLearning.Application.Interface.MachineLearning.Estimators;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Application.Interface.Validation;
 using TryMLearning.Application.Validation;
@@ -23,38 +22,18 @@ namespace TryMLearning.Application.Services
         private readonly IAlgorithmDao _algorithmDao;
         private readonly IAlgorithmParameterDao _algorithmParameterDao;
 
-        private readonly IAlgorithmEstimationService _algorithmEstimationService;
-        private readonly ISampleService<ClassificationSample> _classificationSampleService;
-        private readonly IClassificationResultService _classificationResultService;
-
-        private readonly IClassifierFactory _classifierFactory;
-        private readonly IClassifierEstimatorFactory _classifierEstimatorFactory;
-
         private readonly IValidator<Algorithm> _algorithmValidator;
-        private readonly IValidator<AlgorithmEstimation> _algorithmEstimationValidator;
 
         public AlgorithmService(
             ITransactionScope transactionScope,
             IAlgorithmDao algorithmDao,
             IAlgorithmParameterDao algorithmParameterDao,
-            IAlgorithmEstimationService algorithmEstimationService,
-            ISampleService<ClassificationSample> classificationSampleService,
-            IClassificationResultService classificationResultService,
-            IClassifierFactory classifierFactory,
-            IClassifierEstimatorFactory classifierEstimatorFactory,
-            IValidator<Algorithm> algorithmValidator,
-            IValidator<AlgorithmEstimation> algorithmEstimationValidator)
+            IValidator<Algorithm> algorithmValidator)
         {
             _transactionScope = transactionScope;
             _algorithmDao = algorithmDao;
-            _classificationSampleService = classificationSampleService;
-            _classificationResultService = classificationResultService;
             _algorithmParameterDao = algorithmParameterDao;
-            _algorithmEstimationService = algorithmEstimationService;
-            _classifierFactory = classifierFactory;
-            _classifierEstimatorFactory = classifierEstimatorFactory;
             _algorithmValidator = algorithmValidator;
-            _algorithmEstimationValidator = algorithmEstimationValidator;
         }
 
         public async Task<Algorithm> AddAlgorithmAsync(Algorithm algorithm)

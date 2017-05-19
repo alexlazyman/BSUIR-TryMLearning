@@ -49,19 +49,6 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group row" data-ng-class="{ 'has-error': esimationForm.$submitted && esimationForm.estimator.$invalid }">
-                <label for="estimation-estimator-param" class="col-sm-2 control-label">Estimator</label>
-                <div class="col-sm-10">
-                    <select id="estimation-estimator-param"
-                            class="form-control"
-                            name="estimator"
-                            data-ng-options="estimator as estimator.name for estimator in vm.estimators track by estimator.estimatorId"
-                            data-ng-model="vm.estimation.estimator"
-                            data-ng-required="true">
-                        <option value="" disabled>Select estimator</option>
-                    </select>
-                </div>
-            </div>
             <div class="form-group row">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-primary" data-ng-click="vm.estimateClick()">Estimate</button>

@@ -36,5 +36,13 @@ namespace TryMLearning.Persistence.Daos
 
             return algorithmParameterValue;
         }
+
+        public async Task DeleteAlgorithmParameterValueAsync(AlgorithmParameterValue algorithmParameterValue)
+        {
+            var algorithmParameterValueDbEntity = Mapper.Map<AlgorithmParameterValueDbEntity>(algorithmParameterValue);
+
+            _dbContext.SafeDelete(algorithmParameterValueDbEntity);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

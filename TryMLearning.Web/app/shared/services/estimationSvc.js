@@ -19,6 +19,7 @@
         config
     ) {
         var service = {
+            deleteProm: deleteProm,
             getProm: getProm,
             getAllProm: getAllProm,
             estimateProm: estimateProm,
@@ -27,6 +28,13 @@
         };
 
         return service;
+
+        function deleteProm(estimationId) {
+            var url = urlBuilder.build('api/estimation/' + estimationId);
+
+            return $http.delete(url)
+                .then(promiseSvc.requestComplete);
+        }
 
         function getProm(estimationId) {
             var url = urlBuilder.build('api/estimation/' + estimationId);

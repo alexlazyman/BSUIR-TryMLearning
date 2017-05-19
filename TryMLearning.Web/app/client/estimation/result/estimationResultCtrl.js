@@ -8,20 +8,18 @@
     estimationResultCtrl.$inject = [
         'spinnerSvc',
         'estimationSvc',
-        '$state',
-        'config'
+        '$state'
     ];
 
     function estimationResultCtrl(
         spinnerSvc,
         estimationSvc,
-        $state,
-        config
+        $state
     ) {
         var vm = this;
 
-        vm.results = undefined;
-        vm.estimateAliases = config.classifierEstimates;
+        vm.estimateConfigs = undefined;
+        vm.estimateResults = undefined;
 
         activate();
 
@@ -30,65 +28,20 @@
         }
         
         function loadData() {
-            var estimates = $state.params.e;
-            if (!_.isArray(estimates)) {
-                estimates = [estimates];
+            var estimateConfigs = $state.params.e;
+            if (!_.isArray(estimateConfigs)) {
+                estimateConfigs = [estimateConfigs];
             }
 
             spinnerSvc.registerLoader();
-            estimationSvc.getResultProm($state.params.id, estimates)
-                .then(function (results) {
-                    vm.results = results;
-
-                    for (var i = 0; i < vm.results.length; i++) {
-                        vm.results[i].$src = estimates[i];
-
-                        if (estimates[i].alias === config.classifierEstimates.rocCurves) {
-                            _.reverse(vm.results[i].value);
-                            vm.results[i].$chart = getChartConfig(vm.results[i].value);
-                        }
-                    }
+            estimationSvc.getResultProm($state.params.id, estimateConfigs)
+                .then(function (estimateResults) {
+                    vm.estimateConfigs = estimateConfigs;
+                    vm.estimateResults = [estimateResults];
                 })
                 .finally(function () {
                     spinnerSvc.unregisterLoader();
                 });
-        }
-
-        function getChartConfig(data) {
-            return {
-                series: ['Series'],
-                data: [
-                    _.map(data, function (d) { return { x: d.v1, y: d.v2 } })
-                ],
-                options: {
-                    scales: {
-                        xAxes: [{
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'False Positive Rate'
-                            },
-                            type: 'linear',
-                            position: 'bottom'
-                        }],
-                        yAxes: [{
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'Sensitivity'
-                            }
-                        }]
-                    },
-                    tooltips: {
-                        callbacks: {
-                            title: function (e) {
-                                return e[0].xLabel.toFixed(4) + ' - ' + e[0].yLabel.toFixed(4);
-                            },
-                            label: function (e) {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            };
         }
     }
 })();

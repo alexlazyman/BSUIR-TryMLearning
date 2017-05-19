@@ -13,8 +13,8 @@
             <li role="presentation" data-ng-class="vm.isState('client.estimation.result') ? 'active' : 'disabled'">
                 <a href="">Result</a>
             </li>
-            <li role="presentation" data-ng-class="vm.isState('client.estimation.compare') ? 'active' : 'disabled'">
-                <a href="">Compare</a>
+            <li role="presentation" data-ng-class="{'active': vm.isState('client.estimation.compare'), 'disabled': !vm.isState('client.estimation.compare') && !vm.isCmpLinkEnabled()}">
+                <a href="" data-ng-click="vm.cmpLinkClick()" data-ng-disabled="!vm.isCmpLinkEnabled()">Compare</a>
             </li>
         </ul>
     </div>

@@ -19,9 +19,9 @@ namespace TryMLearning.Model
 
         public int AlgorithmId { get; set; }
 
-        public AlgorithmType Type { get; set; }
-
         public User Author { get; set; }
+
+        public AlgorithmType Type { get; set; }
 
         public string Alias { get; set; }
 

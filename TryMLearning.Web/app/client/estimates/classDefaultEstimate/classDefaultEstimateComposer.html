@@ -1,0 +1,27 @@
+﻿<div class="form-group" data-ng-class="{ 'has-error': vm.form.$submitted && vm.form.primaryClass.$invalid }">
+    <label for="esimate-config-primary-class" class="control-label">Primary class</label>
+    <input type="number"
+           id="esimate-config-primary-class"
+           class="form-control"
+           name="primaryClass"
+           data-ng-model="vm.estimate.config.primaryClass"
+           data-ng-required="true" />
+</div>
+
+<div class="form-group" data-ng-class="{ 'has-error': vm.form.$submitted && vm.form.falsePositiveError.$invalid }">
+    <input id="esimate-config-fpe"
+           class="pull-right"
+           name="falsePositiveError"
+           data-ng-model="vm.estimate.config.falsePositiveError"
+           type="checkbox"/>
+    <label for="esimate-config-fpe" class="control-label">False Positive Error</label>
+</div>
+
+<div class="form-group" data-ng-class="{ 'has-error': vm.form.$submitted && vm.form.falseNegativeError.$invalid }">
+    <input id="esimate-config-fne"
+           class="pull-right"
+           name="falseNegativeError"
+           data-ng-model="vm.estimate.config.falseNegativeError"
+           type="checkbox" />
+    <label for="esimate-config-fne" class="control-label">False Negative Error</label>
+</div>

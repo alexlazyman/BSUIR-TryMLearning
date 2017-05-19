@@ -3,24 +3,21 @@ using TryMLearning.AlgorithmWebJob.Contexts;
 using TryMLearning.Application.Interface.Contexts;
 using TryMLearning.Application.Interface.MachineLearning;
 using TryMLearning.Application.Interface.MachineLearning.Classifiers;
-using TryMLearning.Application.Interface.MachineLearning.Contexts;
 using TryMLearning.Application.Interface.MachineLearning.Estimates.Classifier;
-using TryMLearning.Application.Interface.MachineLearning.Estimators;
+using TryMLearning.Application.Interface.MachineLearning.Testers;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Application.Interface.Validation;
 using TryMLearning.Application.MachineLearning;
 using TryMLearning.Application.MachineLearning.Classifiers;
-using TryMLearning.Application.MachineLearning.Contexts;
-using TryMLearning.Application.MachineLearning.Estimates.Classifier.FalseNegativeError;
-using TryMLearning.Application.MachineLearning.Estimates.Classifier.FalsePositiveError;
-using TryMLearning.Application.MachineLearning.Estimates.Classifier.GeneralizationAbility;
-using TryMLearning.Application.MachineLearning.Estimators;
+using TryMLearning.Application.MachineLearning.Estimates.Classifier.Default;
+using TryMLearning.Application.MachineLearning.Estimates.Classifier.Roc;
+using TryMLearning.Application.MachineLearning.Testers;
 using TryMLearning.Application.Services;
 using TryMLearning.Application.Validation;
 using TryMLearning.Model;
 using TryMLearning.Model.Constants;
-using TryMLearning.Model.MachineLearning.Estimators;
-using TryMLearning.Model.MachineLearning.Estimators.Interfaces;
+using TryMLearning.Model.MachineLearning.Testers;
+using TryMLearning.Model.MachineLearning.Testers.Interfaces;
 using TryMLearning.Persistence;
 using TryMLearning.Persistence.Daos;
 using TryMLearning.Persistence.Interface;
@@ -52,7 +49,6 @@ namespace TryMLearning.AlgorithmWebJob.Infrastructure
             kernel.Bind<IAlgorithmParameterDao>().To<AlgorithmParameterDao>();
             kernel.Bind<IAlgorithmParameterValueDao>().To<AlgorithmParameterValueDao>();
             kernel.Bind<IAlgorithmEstimationDao>().To<AlgorithmEstimationDao>();
-            kernel.Bind<IEstimatorDao>().To<EstimatorDao>();
             kernel.Bind<IClassificationResultDao>().To<ClassificationResultDao>();
             kernel.Bind<IUserDao>().To<UserDao>();
             kernel.Bind<IDataSetDao>().To<DataSetDao>();
@@ -65,7 +61,6 @@ namespace TryMLearning.AlgorithmWebJob.Infrastructure
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IAlgorithmService>().To<AlgorithmService>();
             kernel.Bind<IAlgorithmEstimationService>().To<AlgorithmEstimationService>();
-            kernel.Bind<IEstimatorService>().To<EstimatorService>();
             kernel.Bind<IDataSetService>().To<DataSetService>();
             kernel.Bind<ISampleService<ClassificationSample>>().To<ClassificationSampleService>();
             kernel.Bind<IClassificationResultService>().To<ClassificationResultService>();
@@ -77,23 +72,19 @@ namespace TryMLearning.AlgorithmWebJob.Infrastructure
 
             // Machine learning
 
-            kernel.Bind<IClassificationContext>().To<ClassificationContext>();
-
             // Clasificators
-            kernel.Bind<IClassifier>().To<NaiveBayesClassifier>().Named($"{AlgorithmType.Classifier}:{AlgorithmAliases.NaiveBayes}");
+            kernel.Bind<IClassifier>().To<NaiveBayesClassifier>().Named(AlgorithmAliases.NaiveBayes);
 
-            // Estimators
-            kernel.Bind<IClassifierEstimator>().To<QFoldCrossValidation>().Named(ClassifierEstimatorAliases.QFoldCrossValidation);
+            // Testers
+            kernel.Bind<IClassifierTester>().To<QFoldCrossValidation>();
 
             kernel.Bind<IQFoldCrossValidationConfig>().To<DefaultQFoldCrossValidationConfig>();
 
             // Estimates
-            kernel.Bind<IClassifierEstimate>().To<GeneralizationAbility>().Named(ClassifierEstimateAliases.GeneralizationAbility);
-            kernel.Bind<IClassifierEstimate>().To<FalseNegativeError>().Named(ClassifierEstimateAliases.FalseNegativeError);
-            kernel.Bind<IClassifierEstimate>().To<FalsePositiveError>().Named(ClassifierEstimateAliases.FalsePositiveError);
+            kernel.Bind<IClassifierEstimate>().To<DefaultEstimate>().Named(ClassifierEstimateAliases.Default);
+            kernel.Bind<IClassifierEstimate>().To<RocEstimate>().Named(ClassifierEstimateAliases.Roc);
 
             kernel.Bind<IClassifierFactory>().To<ClassifierFactory>();
-            kernel.Bind<IClassifierEstimatorFactory>().To<ClassifierEstimatorFactory>();
             kernel.Bind<IClassifierEstimateFactory>().To<ClassifierEstimateFactory>();
 
             return kernel;

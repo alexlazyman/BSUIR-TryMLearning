@@ -19,10 +19,8 @@
             completed: 2
         },
         classifierEstimates: {
-            generalizationAbility: 'GENERALIZATION-ABILITY',
-            falsePositiveError: 'FALSE-POSITIVE-ERROR',
-            falseNegativeError: 'FALSE-NEGATIVE-ERROR',
-            rocCurve: 'ROC-CURVE'
+            default: 'CLASS-DEFAULT',
+            roc: 'CLASS-ROC'
         }
     };
 

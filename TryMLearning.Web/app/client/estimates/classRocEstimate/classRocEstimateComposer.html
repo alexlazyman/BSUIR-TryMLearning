@@ -1,0 +1,45 @@
+﻿<div class="form-group" data-ng-class="{ 'has-error': vm.form.$submitted && vm.form.primaryClass.$invalid }">
+    <label for="esimate-config-primary-class" class="control-label">Primary class</label>
+    <input type="number"
+           id="esimate-config-primary-class"
+           class="form-control"
+           name="primaryClass"
+           data-ng-model="vm.estimate.config.primaryClass"
+           data-ng-required="true" />
+</div>
+
+<div class="form-group" data-ng-class="{ 'has-error': vm.form.$submitted && vm.form.curve.$invalid }">
+    <input id="esimate-config-curve"
+           class="pull-right"
+           name="curve"
+           data-ng-model="vm.estimate.config.curve"
+           type="checkbox" />
+    <label for="esimate-config-curve" class="control-label">Curve</label>
+</div>
+
+<div class="form-group" data-ng-class="{ 'has-error': vm.form.$submitted && vm.form.auc.$invalid }">
+    <input id="esimate-config-auc"
+           class="pull-right"
+           name="auc"
+           data-ng-model="vm.estimate.config.auc"
+           type="checkbox" />
+    <label for="esimate-config-auc" class="control-label">AUC</label>
+</div>
+
+<div class="form-group" data-ng-class="{ 'has-error': vm.form.$submitted && vm.form.standardError.$invalid }">
+    <input id="esimate-config-standard-error"
+           class="pull-right"
+           name="standardError"
+           data-ng-model="vm.estimate.config.standardError"
+           type="checkbox" />
+    <label for="esimate-config-standard-error" class="control-label">Standard error</label>
+</div>
+
+<div class="form-group" data-ng-class="{ 'has-error': vm.form.$submitted && vm.form.variance.$invalid }">
+    <input id="esimate-config-variance"
+           class="pull-right"
+           name="variance"
+           data-ng-model="vm.estimate.config.variance"
+           type="checkbox" />
+    <label for="esimate-config-variance" class="control-label">variance</label>
+</div>

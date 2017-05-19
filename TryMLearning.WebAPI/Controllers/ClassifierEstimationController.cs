@@ -34,7 +34,7 @@ namespace TryMLearning.WebAPI.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("result")]
-        public async Task<List<EstimateResponse>> GetClassifierEstimationResultAsync(
+        public async Task<List<EstimateResult>> GetClassifierEstimationResultAsync(
             [FromUri(Name = "id")] int algorithmEstimationId,
             [FromUri(Name = "e")] string estimates)
         {

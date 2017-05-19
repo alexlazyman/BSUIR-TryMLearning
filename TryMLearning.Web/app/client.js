@@ -105,7 +105,9 @@
             {
                 abstract: true,
                 url: '/estimation',
-                templateUrl: '/app/client/estimation/estimation.html'
+                templateUrl: '/app/client/estimation/estimation.html',
+                controller: 'estimationCtrl',
+                controllerAs: 'vm'
             })
             .state('client.estimation.add',
             {
@@ -124,9 +126,6 @@
             .state('client.estimation.resultComposer',
             {
                 url: '/result/composer?id&{e:json}',
-                params: {
-                    e: null
-                },
                 templateUrl: '/app/client/estimation/resultComposer/estimationResultComposer.html',
                 controller: 'estimationResultComposerCtrl',
                 controllerAs: 'vm'
@@ -143,11 +142,8 @@
             })
             .state('client.estimation.compare',
             {
-                url: '/compare?{id:int}',
-                params: {
-                    id: { array: true }
-                },
-                templateUrl: '/app/client/estimation/add/estimationCompare.html',
+                url: '/compare?id&{e:json}',
+                templateUrl: '/app/client/estimation/compare/estimationCompare.html',
                 controller: 'estimationCompareCtrl',
                 controllerAs: 'vm'
             })

@@ -6,5 +6,7 @@ namespace TryMLearning.Persistence.Interface.Daos
     public interface IAlgorithmParameterValueDao
     {
         Task<AlgorithmParameterValue> InsertAlgorithmParameterValueAsync(AlgorithmParameterValue algorithmParameterValue);
+
+        Task DeleteAlgorithmParameterValueAsync(AlgorithmParameterValue algorithmParameterValue);
     }
 }

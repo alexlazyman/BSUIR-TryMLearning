@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using TryMLearning.Model.MachineLearning.Estimators;
 
 namespace TryMLearning.Model
 {
@@ -17,10 +16,6 @@ namespace TryMLearning.Model
 
         public DataSet DataSet { get; set; }
 
-        public Estimator Estimator { get; set; }
-
         public List<AlgorithmParameterValue> ParameterValues { get; set; }
-
-        public QFoldCrossValidationConfig QFoldCrossValidationConfig { get; set; }
     }
 }

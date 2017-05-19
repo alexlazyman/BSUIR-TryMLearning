@@ -18,7 +18,7 @@ namespace TryMLearning.Application.MachineLearning
 
         public IClassifier GetClassifier(Algorithm algorithm)
         {
-            var alias = $"{algorithm.Type}:{algorithm.Alias.ToUpper()}";
+            var alias = algorithm.Alias;
 
             var classifier = _container.TryGet<IClassifier>(alias);
             if (classifier == null)

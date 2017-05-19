@@ -1,0 +1,33 @@
+﻿<h2>Default estimates <small>class: <span ng-bind="vm.config.primaryClass"></span></small></h2>
+<div data-ng-if="vm.config.auc">
+    <h4>AUC</h4>
+    <div class="row">
+        <div class="col-sm-4" data-ng-repeat="r in vm.result">
+            <p><strong>{{ r.properties.auc }}</strong></p>
+        </div>
+    </div>
+</div>
+<div data-ng-if="vm.config.standardError">
+    <h4>Standard error</h4>
+    <div class="row">
+        <div class="col-sm-4" data-ng-repeat="r in vm.result">
+            <p><strong>{{ r.properties.standardError | percent }}</strong></p>
+        </div>
+    </div>
+</div>
+<div data-ng-if="vm.config.variance">
+    <h4>Variance</h4>
+    <div class="row">
+        <div class="col-sm-4" data-ng-repeat="r in vm.result">
+            <p><strong>{{ r.properties.variance | percent }}</strong></p>
+        </div>
+    </div>
+</div>
+<div data-ng-if="vm.config.curve">
+    <h4>Curve</h4>
+    <canvas class="chart chart-line"
+            chart-data="vm.result.$chart.data"
+            chart-series="vm.result.$chart.series"
+            chart-options="vm.result.$chart.options">
+    </canvas>
+</div>

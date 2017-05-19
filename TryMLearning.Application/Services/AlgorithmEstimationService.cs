@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using TryMLearning.Application.Interface.Contexts;
 using TryMLearning.Application.Interface.MachineLearning;
 using TryMLearning.Application.Interface.MachineLearning.Estimates.Classifier;
+using TryMLearning.Application.Interface.MachineLearning.Testers;
 using TryMLearning.Application.Interface.Services;
 using TryMLearning.Application.Interface.Validation;
 using TryMLearning.Model;
@@ -25,7 +26,7 @@ namespace TryMLearning.Application.Services
         private readonly ISampleService<ClassificationSample> _classificationSampleService;
         private readonly IClassificationResultService _classificationResultService;
         private readonly IClassifierFactory _classifierFactory;
-        private readonly IClassifierEstimatorFactory _classifierEstimatorFactory;
+        private readonly IClassifierTester _classifierTester;
         private readonly IClassifierEstimateFactory _classifierEstimateFactory;
 
         private readonly IValidator<AlgorithmEstimation> _algorithmEstimationValidator;
@@ -38,7 +39,7 @@ namespace TryMLearning.Application.Services
             ISampleService<ClassificationSample> classificationSampleService,
             IClassificationResultService classificationResultService,
             IClassifierFactory classifierFactory,
-            IClassifierEstimatorFactory classifierEstimatorFactory,
+            IClassifierTester classifierTester,
             IClassifierEstimateFactory classifierEstimateFactory,
             IValidator<AlgorithmEstimation> algorithmEstimationValidator)
         {
@@ -49,7 +50,7 @@ namespace TryMLearning.Application.Services
             _classificationSampleService = classificationSampleService;
             _classificationResultService = classificationResultService;
             _classifierFactory = classifierFactory;
-            _classifierEstimatorFactory = classifierEstimatorFactory;
+            _classifierTester = classifierTester;
             _classifierEstimateFactory = classifierEstimateFactory;
             _algorithmEstimationValidator = algorithmEstimationValidator;
         }
@@ -68,6 +69,42 @@ namespace TryMLearning.Application.Services
         public async Task<AlgorithmEstimation> GetAlgorithmEstimationAsync(int algorithmEstimationId)
         {
             return await _algorithmEstimationDao.GetAlgorithmEstimationAsync(algorithmEstimationId);
+        }
+
+        public async Task DeleteAlgorithmEstimationAsync(int algorithmEstimationId)
+        {
+            var id = _userContext.GetCurrentUserId();
+            if (id == null)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            var algorithmEstimation = await _algorithmEstimationDao.GetAlgorithmEstimationAsync(algorithmEstimationId);
+            if (algorithmEstimation.User.UserId != id)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            using (var ts = _transactionScope.Begin())
+            {
+                try
+                {
+                    foreach (var parameterValue in algorithmEstimation.ParameterValues)
+                    {
+                        await _algorithmParameterValueDao.DeleteAlgorithmParameterValueAsync(parameterValue);
+                    }
+
+                    await _algorithmEstimationDao.DeleteAlgorithmEstimationAsync(algorithmEstimation);
+
+                    ts.Commit();
+                }
+                catch
+                {
+                    ts.Rollback();
+                    throw;
+                }
+            }
+
         }
 
         public async Task<AlgorithmEstimation> RunEstimationAsync(AlgorithmEstimation algorithmEstimation)
@@ -127,11 +164,24 @@ namespace TryMLearning.Application.Services
             await _algorithmEstimationDao.UpdateAlgorithmEstimationAsync(algorithmEstimation);
 
             var classifier = _classifierFactory.GetClassifier(algorithmEstimation.Algorithm);
-            var classifierEstimator = _classifierEstimatorFactory.GetClassifierEstimator(algorithmEstimation);
+
+            var algorithmParameterValuePairs = algorithmEstimation.Algorithm.Parameters
+                .Join(
+                    algorithmEstimation.ParameterValues,
+                    p => p.AlgorithmParameterId,
+                    v => v.AlgorithmParameterId,
+                    (p, v) => new AlgorithmParameterValuePair
+                    {
+                        Parameter = p,
+                        Value = v
+                    })
+                .ToList();
+
+            classifier.Init(algorithmParameterValuePairs);
 
             var samples = await _classificationSampleService.GetAllSamplesAsync(algorithmEstimation.DataSet.DataSetId);
 
-            var classificationResults = classifierEstimator.Classify(samples, classifier);
+            var classificationResults = _classifierTester.Classify(samples, classifier);
 
             using (var ts = _transactionScope.Begin())
             {
@@ -153,7 +203,7 @@ namespace TryMLearning.Application.Services
 
         }
 
-        public async Task<List<EstimateResponse>> GetClassifierEstimationResultAsync(int algorithmEstimationId, List<EstimateRequest> estimateRequests)
+        public async Task<List<EstimateResult>> GetClassifierEstimationResultAsync(int algorithmEstimationId, List<EstimateRequest> estimateRequests)
         {
             var algorithmEstimation = await _algorithmEstimationDao.GetAlgorithmEstimationAsync(algorithmEstimationId);
             if (!IsClassifierExtimation(algorithmEstimation))
@@ -166,12 +216,10 @@ namespace TryMLearning.Application.Services
                 throw new UnauthorizedAccessException("Algorithm estimation is not completed");
             }
 
-            var classifierEstimator = _classifierEstimatorFactory.GetClassifierEstimator(algorithmEstimation);
-
             var estimates = estimateRequests.Select(_classifierEstimateFactory.GetEstimate).ToList();
             var classificationResults = await _classificationResultService.GetClassificationResultsAsync(algorithmEstimation.AlgorithmEstimationId);
 
-            var estimateResponses = classifierEstimator.Estimate(classificationResults, estimates);
+            var estimateResponses = _classifierTester.Estimate(classificationResults, estimates);
 
             return estimateResponses;
         }

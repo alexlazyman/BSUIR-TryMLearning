@@ -8,10 +8,11 @@
                 <th>Data Set</th>
                 <th>Parameters</th>
                 <th>Actions</th>
+                <th>CMP</th>
             </tr>
         </thead>
         <tbody>
-            <tr data-ng-repeat="estimation in vm.estimations">
+            <tr data-ng-repeat="estimation in vm.estimations | filter:vm.selectedEstimationFilter">
                 <td data-ng-bind=":: $index + 1"></td>
                 <td data-ng-bind=":: vm.stringifyStatus(estimation.status)"></td>
                 <td>
@@ -25,6 +26,10 @@
                 </td>
                 <td>
                     <a class="btn btn-default" data-ui-sref="client.estimation.resultComposer({id: estimation.algorithmEstimationId})">Result</a>
+                    <a class="btn btn-default" href="" data-ng-click="vm.estimationDeleteClick(estimation)">Delete</a>
+                </td>
+                <td>
+                    <input type="checkbox" data-ng-model="estimation.$selected" data-ng-change="vm.selectEstimationClick(estimation)"/>
                 </td>
             </tr>
         </tbody>

@@ -35,5 +35,12 @@ namespace TryMLearning.WebAPI.Controllers
         {
             return await _algorithmEstimationService.GetAllAlgorithmEstimationsAsync();
         }
+
+        [HttpDelete]
+        [Route("{algorithmEstimationId:int}")]
+        public async Task DeleteAlgorithmEstimationAsync(int algorithmEstimationId)
+        {
+            await _algorithmEstimationService.DeleteAlgorithmEstimationAsync(algorithmEstimationId);
+        }
     }
 }

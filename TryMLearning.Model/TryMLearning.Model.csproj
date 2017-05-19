@@ -29,6 +29,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -51,17 +69,15 @@
     <Compile Include="Account\UserRegisterForm.cs" />
     <Compile Include="Algorithm.cs" />
     <Compile Include="AlgorithmType.cs" />
-    <Compile Include="EstimateResponse.cs" />
+    <Compile Include="DistributionType.cs" />
+    <Compile Include="EstimateResult.cs" />
     <Compile Include="EstimateRequest.cs" />
     <Compile Include="ClassificationResult.cs" />
-    <Compile Include="Constants\ClassifierEstimatorAliases.cs" />
     <Compile Include="MachineLearning\Estimates\Classifier\RocConfig.cs" />
-    <Compile Include="MachineLearning\Estimates\Classifier\FPErrorEstimateConfig.cs" />
-    <Compile Include="MachineLearning\Estimates\Classifier\FNErrorEstimateConfig.cs" />
-    <Compile Include="Estimator.cs" />
-    <Compile Include="MachineLearning\Estimators\Interfaces\IQFoldCrossValidationConfig.cs" />
-    <Compile Include="MachineLearning\Estimators\DefaultQFoldCrossValidationConfig.cs" />
-    <Compile Include="MachineLearning\Estimators\QFoldCrossValidationConfig.cs" />
+    <Compile Include="MachineLearning\Estimates\Classifier\DefaultConfig.cs" />
+    <Compile Include="MachineLearning\Testers\Interfaces\IQFoldCrossValidationConfig.cs" />
+    <Compile Include="MachineLearning\Testers\DefaultQFoldCrossValidationConfig.cs" />
+    <Compile Include="MachineLearning\Testers\QFoldCrossValidationConfig.cs" />
     <Compile Include="Constants\AlgorithmAliases.cs" />
     <Compile Include="DataSetType.cs" />
     <Compile Include="AlgorithmEstimation.cs" />
@@ -73,8 +89,9 @@
     <Compile Include="Constants\StorageNames.cs" />
     <Compile Include="Constants\StorageQueueNames.cs" />
     <Compile Include="DataSet.cs" />
-    <Compile Include="ClassifierEstimateAliases.cs" />
+    <Compile Include="Constants\ClassifierEstimateAliases.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
+    <Compile Include="AlgorithmParameterValuePair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Validation\ValidationError.cs" />

@@ -33,7 +33,6 @@ namespace TryMLearning.Persistence.Daos
                 .Include(a => a.Algorithm.AlgorithmParameters)
                 .Include(a => a.AlgorithmParameterValues)
                 .Include(a => a.DataSet)
-                .Include(a => a.Estimator)
                 .Where(a => a.UserId == userId)
                 .ToListAsync();
 
@@ -50,7 +49,6 @@ namespace TryMLearning.Persistence.Daos
                 .Include(a => a.Algorithm.AlgorithmParameters)
                 .Include(a => a.AlgorithmParameterValues)
                 .Include(a => a.DataSet)
-                .Include(a => a.Estimator)
                 .FirstOrDefaultAsync(a => a.AlgorithmEstimationId == algorithmEstimationId);
 
             var algorithmEstimation = Mapper.Map<AlgorithmEstimation>(algorithmEstimationDbEntity);
@@ -80,6 +78,14 @@ namespace TryMLearning.Persistence.Daos
             algorithmEstimation = Mapper.Map<AlgorithmEstimation>(algorithmEstimationDbEntity);
 
             return algorithmEstimation;
+        }
+
+        public async Task DeleteAlgorithmEstimationAsync(AlgorithmEstimation algorithmEstimation)
+        {
+            var algorithmEstimationDbEntity = Mapper.Map<AlgorithmEstimationDbEntity>(algorithmEstimation);
+
+            _dbContext.SafeDelete(algorithmEstimationDbEntity);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task QueueAlgorithmEstimationAsync(AlgorithmEstimation algorithmEstimation)

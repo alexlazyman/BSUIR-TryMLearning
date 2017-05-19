@@ -30,8 +30,6 @@ namespace TryMLearning.Persistence
 
         public DbSet<ClassificationResultDbEntity> ClassificationResults { get; set; }
 
-        public DbSet<EstimatorDbEntity> Estimators { get; set; }
-
         public DbSet<DoubleTupleDbEntity> DoubleTuples { get; set; }
 
         public DbSet<UserDbEntity> Users { get; set; }

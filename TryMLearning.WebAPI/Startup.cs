@@ -27,7 +27,6 @@ namespace TryMLearning.WebAPI
             var httpConfiguration = new HttpConfiguration();
 
             InitializeWebApi(httpConfiguration);
-            SwaggerConfig.Register(httpConfiguration);
 
             app.UseNinjectWebApi(httpConfiguration);
         }

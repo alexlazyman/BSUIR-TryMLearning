@@ -35,11 +35,6 @@ namespace TryMLearning.Persistence.Models
         [ForeignKey(nameof(DataSetId))]
         public virtual DataSetDbEntity DataSet { get; set; }
 
-        public int EstimatorId { get; set; }
-
-        [ForeignKey(nameof(EstimatorId))]
-        public virtual EstimatorDbEntity Estimator { get; set; }
-
         public ICollection<AlgorithmParameterValueDbEntity> AlgorithmParameterValues { get; set; }
     }
 }

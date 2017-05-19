@@ -3,40 +3,28 @@
         <ng-form name="esimateForm">
             <div class="form-group">
                 <button class="btn btn-primary btn-block"
-                        data-ng-click="vm.addEstimateClick()">
+                        ng-click="vm.addEstimateClick()">
                     {{ vm.selectedEstimate.$id ? ('Change ' + (vm.selectedEstimateIndex + 1)) : 'Add' }} estimate
                 </button>
             </div>
-            <div class="form-group" data-ng-class="{ 'has-error': esimateForm.$submitted && esimateForm.estimate.$invalid }">
+            <div class="form-group" ng-class="{ 'has-error': esimateForm.$submitted && esimateForm.estimate.$invalid }">
                 <select class="form-control"
                         name="estimate"
-                        data-ng-options="estimate for estimate in vm.estimateAliases"
-                        data-ng-model="vm.selectedEstimate.alias"
-                        data-ng-required="true">
+                        ng-options="estimate for estimate in vm.estimateAliases"
+                        ng-model="vm.selectedEstimate.alias"
+                        ng-required="true">
                     <option value="" disabled>Select estimate</option>
                 </select>
             </div>
-            <div class="form-group"
-                 data-ng-class="{ 'has-error': esimateForm.$submitted && esimateForm.primaryClass.$invalid }"
-                 data-ng-if="vm.selectedEstimate.alias === vm.estimateAliases.falsePositiveError ||
-                             vm.selectedEstimate.alias === vm.estimateAliases.falseNegativeError ||
-                             vm.selectedEstimate.alias === vm.estimateAliases.rocCurves">
-                <label for="esimate-config-primary-class">Primary class</label>
-                <input type="number"
-                       id="esimate-config-primary-class"
-                       class="form-control"
-                       name="primaryClass"
-                       data-ng-model="vm.selectedEstimate.config.primaryClass"
-                       data-ng-required="true"/>
-
-            </div>
+            
+            <estimate-composer estimate="vm.selectedEstimate" is-composer="true"></estimate-composer>
         </ng-form>
     </div>
     <div class="col-sm-7">
         <div class="form-group">
             <button class="btn btn-primary btn-block"
-                    data-ng-disabled="!vm.resultRequest.estimates.length"
-                    data-ng-click="vm.getResultClick()">
+                    ng-disabled="!vm.resultRequest.estimates.length"
+                    ng-click="vm.getResultClick()">
                 Get result
             </button>
         </div>
@@ -49,21 +37,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr data-ng-repeat="estimate in vm.resultRequest.estimates track by estimate.$id">
-                    <td data-ng-bind="$index + 1"></td>
+                <tr ng-repeat="estimate in vm.resultRequest.estimates track by estimate.$id">
+                    <td ng-bind="$index + 1"></td>
                     <td>
                         {{ estimate.alias }}
                         <div class="pull-right">
                             <button class="btn-transparent glyphicon glyphicon-cog"
-                                    data-ng-click="vm.estimateClick(estimate)"></button>
+                                    ng-click="vm.estimateClick(estimate)"></button>
                             <button class="btn-transparent glyphicon glyphicon-arrow-up"
-                                    data-ng-disabled="$first"
-                                    data-ng-click="vm.upClick(estimate)"></button>
+                                    ng-disabled="$first"
+                                    ng-click="vm.upClick(estimate)"></button>
                             <button class="btn-transparent glyphicon glyphicon-arrow-down"
-                                    data-ng-disabled="$last"
-                                    data-ng-click="vm.downClick(estimate)"></button>
+                                    ng-disabled="$last"
+                                    ng-click="vm.downClick(estimate)"></button>
                             <button class="btn-transparent glyphicon glyphicon-trash"
-                                    data-ng-click="vm.removeClick(estimate)"></button>
+                                    ng-click="vm.removeClick(estimate)"></button>
                         </div>
                     </td>
                 </tr>

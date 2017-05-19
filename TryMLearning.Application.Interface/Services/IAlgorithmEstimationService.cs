@@ -10,10 +10,12 @@ namespace TryMLearning.Application.Interface.Services
 
         Task<AlgorithmEstimation> GetAlgorithmEstimationAsync(int algorithmEstimationId);
 
+        Task DeleteAlgorithmEstimationAsync(int algorithmEstimationId);
+
         Task<AlgorithmEstimation> RunEstimationAsync(AlgorithmEstimation algorithmEstimation);
 
         Task ExecuteClassifierEstimationAsync(int algorithmEstimationId);
 
-        Task<List<EstimateResponse>> GetClassifierEstimationResultAsync(int algorithmEstimationId, List<EstimateRequest> estimateRequests);
+        Task<List<EstimateResult>> GetClassifierEstimationResultAsync(int algorithmEstimationId, List<EstimateRequest> estimateRequests);
     }
 }

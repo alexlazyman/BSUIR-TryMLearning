@@ -1,22 +1,3 @@
-﻿<div data-ng-repeat="result in vm.results">
-    <div data-ng-if="result.$src.alias === vm.estimateAliases.generalizationAbility">
-        <h4>Generalization Ability</h4>
-        <p><strong>{{ result.value.toFixed(4) }}</strong></p>
-    </div>
-    <div data-ng-if="result.$src.alias === vm.estimateAliases.falsePositiveError">
-        <h4>False Positive Error (PC: {{ result.$src.config.primaryClass }})</h4>
-        <p><strong>{{ result.value.toFixed(4) }}</strong></p>
-    </div>
-    <div data-ng-if="result.$src.alias === vm.estimateAliases.falseNegativeError">
-        <h4>False Negative Error (PC: {{ result.$src.config.primaryClass }})</h4>
-        <p><strong>{{ result.value.toFixed(4) }}</strong></p>
-    </div>
-    <div data-ng-if="result.$src.alias === vm.estimateAliases.rocCurves">
-        <h4>ROC Curves (PC: {{ result.$src.config.primaryClass }})</h4>
-        <canvas class="chart chart-line"
-                chart-data="result.$chart.data"
-                chart-series="result.$chart.series"
-                chart-options="result.$chart.options">
-        </canvas>
-    </div>
+﻿<div data-ng-repeat="estimateResult in vm.estimateResults">
+    <estimate-result alias="vm.estimateConfigs[$index].alias" config="vm.estimateConfigs[$index].config" result="vm.estimateResults[$index]" />
 </div>

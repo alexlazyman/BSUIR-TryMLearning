@@ -94,7 +94,7 @@
 
             var estimates = getPureEstimates();
 
-            $state.go('client.estimation.resultComposer', { e: estimates }, { notify: false }) 
+            $state.go('client.estimation.resultComposer', { e: estimates }, { notify: false });
         }
 
         function removeClick(estimate) {
@@ -127,7 +127,12 @@
         }
 
         function getResultClick() {
-            $state.go('client.estimation.result', { id: +$stateParams.id, e: getPureEstimates() });
+            if (_.isArray($stateParams.id)) {
+                $state.go('client.estimation.compare', { id: $stateParams.id, e: getPureEstimates() });
+            } else {
+                $state.go('client.estimation.result', { id: $stateParams.id, e: getPureEstimates() });
+            }
+
         }
 
         function getPureEstimates() {

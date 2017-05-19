@@ -5,6 +5,7 @@ using Ninject.Parameters;
 using TryMLearning.Application.Interface.MachineLearning;
 using TryMLearning.Application.Interface.MachineLearning.Estimates.Classifier;
 using TryMLearning.Model;
+using TryMLearning.Model.Constants;
 using TryMLearning.Model.MachineLearning.Estimates.Classifier;
 
 namespace TryMLearning.Application.MachineLearning
@@ -30,15 +31,10 @@ namespace TryMLearning.Application.MachineLearning
 
             switch (alias)
             {
-                case ClassifierEstimateAliases.GeneralizationAbility:
-                    return _container.Get<IClassifierEstimate>(alias);
-                case ClassifierEstimateAliases.FalsePositiveError:
+                case ClassifierEstimateAliases.Default:
                     return _container.Get<IClassifierEstimate>(alias,
-                        new ConstructorArgument("config", JsonConvert.DeserializeObject<FPErrorEstimateConfig>(config)));
-                case ClassifierEstimateAliases.FalseNegativeError:
-                    return _container.Get<IClassifierEstimate>(alias,
-                        new ConstructorArgument("config", JsonConvert.DeserializeObject<FNErrorEstimateConfig>(config)));
-                case ClassifierEstimateAliases.RocCurve:
+                        new ConstructorArgument("config", JsonConvert.DeserializeObject<DefaultConfig>(config)));
+                case ClassifierEstimateAliases.Roc:
                     return _container.Get<IClassifierEstimate>(alias,
                         new ConstructorArgument("config", JsonConvert.DeserializeObject<RocConfig>(config)));
                 default:

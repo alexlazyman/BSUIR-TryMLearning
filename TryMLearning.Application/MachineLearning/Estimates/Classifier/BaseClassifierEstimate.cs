@@ -13,15 +13,18 @@ namespace TryMLearning.Application.MachineLearning.Estimates.Classifier
 
         public void Estimate(List<ClassificationResult> classificationResults)
         {
-            var result = GetEstimateResult(classificationResults);
+            var result = Estimating(classificationResults);
 
             _estimateResults.Add(result);
         }
 
-        public EstimateResponse Average => GetAverageResult(_estimateResults);
+        public EstimateResult GetAverageEstimate()
+        {
+            return GetAverageEstimate(_estimateResults);
+        }
 
-        protected abstract T GetEstimateResult(List<ClassificationResult> classificationResults);
+        protected abstract T Estimating(List<ClassificationResult> classificationResults);
 
-        protected abstract EstimateResponse GetAverageResult(List<T> estimateResults);
+        protected abstract EstimateResult GetAverageEstimate(List<T> estimateResults);
     }
 }

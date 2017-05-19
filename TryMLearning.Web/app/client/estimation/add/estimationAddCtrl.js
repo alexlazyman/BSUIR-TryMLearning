@@ -9,7 +9,6 @@
         'spinnerSvc',
         'dataSetSvc',
         'algorithmSvc',
-        'estimatorSvc',
         'estimationSvc',
         '$q',
         '$scope',
@@ -21,7 +20,6 @@
         spinnerSvc,
         dataSetSvc,
         algorithmSvc,
-        estimatorSvc,
         estimationSvc,
         $q,
         $scope,
@@ -36,7 +34,6 @@
 
         vm.algorithms = undefined;
         vm.dataSets = undefined;
-        vm.estimators = undefined;
 
         vm.stringifyParamType = algorithmSvc.stringifyParamType;
         vm.getParamInputType = getParamInputType;
@@ -63,15 +60,9 @@
                     vm.dataSets = dataSets;
                 });
 
-            var getEstimatorsProm = estimatorSvc.getAllProm()
-                .then(function (estimators) {
-                    vm.estimators = estimators;
-                });
-
             $q.all([
                 getAlgorithmsProm,
-                getDataSetsProm,
-                getEstimatorsProm
+                getDataSetsProm
             ]).finally(function () {
                 spinnerSvc.unregisterLoader();
             });
@@ -86,7 +77,7 @@
             spinnerSvc.registerLoader();
             estimationSvc.estimateProm(vm.estimation)
                 .then(function (estimation) {
-                    $state.go('client.estimation.details', { id: estimation.algorithmEstimationId });
+                    $state.go('client.estimation.resultComposer', { id: estimation.algorithmEstimationId });
                 })
                 .finally(function () {
                     spinnerSvc.unregisterLoader();
