@@ -1,4 +1,4 @@
-﻿namespace TryMLearning.Model.MachineLearning.Testers.Interfaces
+﻿namespace TryMLearning.Model.MachineLearning.Estimators.Interfaces
 {
     public interface IQFoldCrossValidationConfig
     {

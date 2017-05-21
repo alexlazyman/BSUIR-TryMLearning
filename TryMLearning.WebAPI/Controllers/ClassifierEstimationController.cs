@@ -16,31 +16,31 @@ namespace TryMLearning.WebAPI.Controllers
     [RoutePrefix("api/estimation/classifier")]
     public class ClassifierEstimationController : ApiController
     {
-        private readonly IAlgorithmEstimationService _algorithmEstimationService;
+        private readonly IEstimationService _estimationService;
 
         public ClassifierEstimationController(
-            IAlgorithmEstimationService algorithmEstimationService)
+            IEstimationService estimationService)
         {
-            _algorithmEstimationService = algorithmEstimationService;
+            _estimationService = estimationService;
         }
 
         [HttpPost]
         [Route("")]
-        public async Task<AlgorithmEstimation> EstimateAlgorithmAsync(AlgorithmEstimation algorithmEstimation)
+        public async Task<Estimation> EstimateAlgorithmAsync(Estimation estimation)
         {
-            return await _algorithmEstimationService.RunEstimationAsync(algorithmEstimation);
+            return await _estimationService.RunEstimationAsync(estimation);
         }
 
         [AllowAnonymous]
         [HttpGet]
         [Route("result")]
         public async Task<List<EstimateResult>> GetClassifierEstimationResultAsync(
-            [FromUri(Name = "id")] int algorithmEstimationId,
+            [FromUri(Name = "id")] int estimationId,
             [FromUri(Name = "e")] string estimates)
         {
             var estimateRequests = JsonConvert.DeserializeObject<List<EstimateRequest>>(estimates);
 
-            return await _algorithmEstimationService.GetClassifierEstimationResultAsync(algorithmEstimationId, estimateRequests);
+            return await _estimationService.GetClassifierEstimationResultAsync(estimationId, estimateRequests);
         }
     }
 }

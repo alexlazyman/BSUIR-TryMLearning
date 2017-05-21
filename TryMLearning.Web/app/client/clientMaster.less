@@ -89,9 +89,44 @@ body {
     background: transparent;
     border: 0;
     outline: none;
+    text-decoration: none;
+    color: black;
+    opacity: 0.80;
+
+    &:hover {
+        color: black;
+        opacity: 1;
+        text-decoration: none;
+    }
 
     &:disabled {
         opacity: 0.25;
         cursor: not-allowed;
+    }
+}
+
+.table {
+    & tr {
+        &:not(:hover) {
+            & .show-row-hover {
+                display: none !important;
+            }
+        }
+    }
+}
+
+.estimation-table {
+    &__cell {
+        &-cmp {
+            width: 30px;
+        }
+
+        &-index {
+            width: 30px;
+        }
+
+        &-actions {
+            width: 60px;
+        }
     }
 }

@@ -40,11 +40,11 @@ namespace TryMLearning.Persistence.Daos
             return classificationResults;
         }
 
-        public async Task<List<ClassificationResult>> GetClassificationResultsAsync(int algorithmEstimationId)
+        public async Task<List<ClassificationResult>> GetClassificationResultsAsync(int estimationId)
         {
             var dbEntities = await _dbContext.ClassificationResults
                 .AsNoTracking()
-                .Where(s => s.AlgorithmEstimationId == algorithmEstimationId)
+                .Where(s => s.EstimationId == estimationId)
                 .ToListAsync();
 
             var classificationResults = dbEntities.Select(Mapper.Map<ClassificationResult>).ToList();

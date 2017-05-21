@@ -6,8 +6,8 @@ namespace TryMLearning.Application.Interface.Services
 {
     public interface IClassificationResultService
     {
-        Task<List<ClassificationResult>> AddClassificationResultsAsync(int algorithmEstimationId, List<ClassificationResult> classificationResults);
+        Task<List<ClassificationResult>> AddClassificationResultsAsync(int estimationId, List<ClassificationResult> classificationResults);
 
-        Task<List<ClassificationResult>> GetClassificationResultsAsync(int algorithmEstimationId);
+        Task<List<ClassificationResult>> GetClassificationResultsAsync(int estimationId);
     }
 }

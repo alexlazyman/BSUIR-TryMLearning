@@ -14,14 +14,16 @@
         'spinnerSvc',
         'dataSetSvc',
         'sampleSvc',
-        '$state'
+        '$state',
+        '$q'
     ];
 
     function dataSetDetailsCtrl(
         spinnerSvc,
         dataSetSvc,
         sampleSvc,
-        $state
+        $state,
+        $q
     ) {
         var vm = this;
 
@@ -29,6 +31,7 @@
 
         vm.dataSet = undefined;
         vm.samples = undefined;
+        vm.classAliases = undefined;
 
         activate();
 
@@ -44,10 +47,11 @@
                 .then(function (dataSet) {
                     vm.dataSet = dataSet;
 
-                    return sampleSvc.getSamplesProm(dataSet.dataSetId, dataSet.type);
+                    return $q.all(sampleSvc.getSamplesProm(dataSet.dataSetId, dataSet.type));
                 })
-                .then(function (samples) {
-                    vm.samples = samples;
+                .then(function (results) {
+                    vm.samples = results[0];
+                    vm.classAliases = results[1];
                 })
                 .finally(function () {
                     spinnerSvc.unregisterLoader();

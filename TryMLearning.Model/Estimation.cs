@@ -4,13 +4,15 @@ using Newtonsoft.Json.Serialization;
 
 namespace TryMLearning.Model
 {
-    public class AlgorithmEstimation
+    public class Estimation
     {
-        public int AlgorithmEstimationId { get; set; }
+        public int EstimationId { get; set; }
 
-        public AlgorithmEstimationStatus Status { get; set; }
+        public EstimationStatus Status { get; set; }
 
         public User User { get; set; }
+
+        public EstimationAccessType Access { get; set; }
 
         public Algorithm Algorithm { get; set; }
 

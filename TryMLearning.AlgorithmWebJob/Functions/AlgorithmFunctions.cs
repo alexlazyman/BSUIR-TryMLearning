@@ -20,13 +20,13 @@ namespace TryMLearning.AlgorithmWebJob.Functions
             _dependencyResolver = dependencyResolver;
         }
 
-        public async Task RunClassifierEstimation([QueueTrigger(StorageQueueNames.ClassificationAlgorithm)] int algorithmEstimationId)
+        public async Task RunClassifierEstimation([QueueTrigger(StorageQueueNames.ClassificationAlgorithm)] int estimationId)
         {
             using (var sope = _dependencyResolver.BeginScope())
             {
-                var algorithmEstimationService = sope.Get<IAlgorithmEstimationService>();
+                var estimationService = sope.Get<IEstimationService>();
 
-                await algorithmEstimationService.ExecuteClassifierEstimationAsync(algorithmEstimationId);
+                await estimationService.ExecuteClassifierEstimationAsync(estimationId);
             }
         }
     }

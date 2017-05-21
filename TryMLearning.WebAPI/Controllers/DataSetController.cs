@@ -16,13 +16,16 @@ namespace TryMLearning.WebAPI.Controllers
     {
         private readonly IDataSetService _dataSetService;
         private readonly ISampleService<ClassificationSample> _classificationSampleService;
+        private readonly IClassAliasService _classAliasService;
 
         public DataSetController(
             IDataSetService dataSetService,
-            ISampleService<ClassificationSample> classificationSampleService)
+            ISampleService<ClassificationSample> classificationSampleService,
+            IClassAliasService classAliasService)
         {
             _dataSetService = dataSetService;
             _classificationSampleService = classificationSampleService;
+            _classAliasService = classAliasService;
         }
 
         [HttpGet]
@@ -30,6 +33,13 @@ namespace TryMLearning.WebAPI.Controllers
         public async Task<DataSet> GetDataSetAsync(int dataSetId)
         {
             return await _dataSetService.GetDataSetAsync(dataSetId);
+        }
+
+        [HttpGet]
+        [Route("{dataSetId:int}/classes")]
+        public async Task<List<ClassAlias>> GetClassAliasesAsync(int dataSetId)
+        {
+            return await _classAliasService.GetClassAliases(dataSetId);
         }
 
         [HttpGet]

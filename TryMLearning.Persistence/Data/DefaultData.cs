@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using Microsoft.AspNet.Identity;
 using TryMLearning.Model;
 using TryMLearning.Model.Constants;
+using TryMLearning.Persistence.Models;
 
 namespace TryMLearning.Persistence.Data
 {
@@ -57,7 +58,6 @@ namespace TryMLearning.Persistence.Data
                 AlgorithmId = 1,
                 Name = "Distribution",
                 Description = "There is no description",
-                Order = 0,
                 ValueType = AlgorithmParameterType.Int
             };
         }
@@ -104,6 +104,30 @@ namespace TryMLearning.Persistence.Data
                     Features = tuple.Item2
                 };
             }
+        }
+
+        public static IEnumerable<ClassAlias> GetClassAliases()
+        {
+            yield return new ClassAlias
+            {
+                DataSetId = 1,
+                ClassId = 0,
+                Alias = "Iris-setosa"
+            };
+
+            yield return new ClassAlias
+            {
+                DataSetId = 1,
+                ClassId = 1,
+                Alias = "Iris-versicolor"
+            };
+
+            yield return new ClassAlias
+            {
+                DataSetId = 1,
+                ClassId = 2,
+                Alias = "Iris-virginica"
+            };
         }
 
         private static IEnumerable<Tuple<int, double[]>> ReadFromFile(string path)

@@ -59,10 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Daos\IAlgorithmParameterValueDao.cs" />
+    <Compile Include="Daos\IClassAliasDao.cs" />
     <Compile Include="Daos\IClassificationResultDao.cs" />
     <Compile Include="Daos\IDataSetDao.cs" />
     <Compile Include="Daos\IAlgorithmParameterDao.cs" />
-    <Compile Include="Daos\IAlgorithmEstimationDao.cs" />
+    <Compile Include="Daos\IEstimationDao.cs" />
     <Compile Include="Daos\IAlgorithmDao.cs" />
     <Compile Include="Daos\ISampleDao.cs" />
     <Compile Include="Daos\IUserDao.cs" />

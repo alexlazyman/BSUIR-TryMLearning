@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Accord.Math;
-using MoreLinq;
 using TryMLearning.Application.Htlpers;
 using TryMLearning.Application.Interface.MachineLearning.Classifiers;
 using TryMLearning.Application.Interface.MachineLearning.Estimates.Classifier;
-using TryMLearning.Application.Interface.MachineLearning.Testers;
+using TryMLearning.Application.Interface.MachineLearning.Estimators;
 using TryMLearning.Model;
-using TryMLearning.Model.MachineLearning.Testers.Interfaces;
+using TryMLearning.Model.MachineLearning.Estimators.Interfaces;
 
-namespace TryMLearning.Application.MachineLearning.Testers
+namespace TryMLearning.Application.MachineLearning.Estimators
 {
-    public class QFoldCrossValidation : IClassifierTester
+    public class QFoldCrossValidation : IClassifierEstimator
     {
         private readonly IQFoldCrossValidationConfig _config;
 

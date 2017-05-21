@@ -53,6 +53,12 @@ namespace TryMLearning.Persistence.Migrations
                     .Select(Mapper.Map<ClassificationSampleDbEntity>));
 
             context.SaveChanges();
+
+            context.ClassAliases.AddRange(
+                DefaultData.GetClassAliases()
+                    .Select(Mapper.Map<ClassAliasDbEntity>));
+
+            context.SaveChanges();
         }
     }
 }

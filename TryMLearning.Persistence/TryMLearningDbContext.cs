@@ -1,5 +1,7 @@
-﻿using System.Data.Entity;
+﻿using System.Data;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Data.SqlClient;
 using TryMLearning.Persistence.Constants;
 using TryMLearning.Persistence.Models;
 
@@ -22,7 +24,7 @@ namespace TryMLearning.Persistence
 
         public DbSet<AlgorithmParameterValueDbEntity> AlgorithmParameterValues { get; set; }
 
-        public DbSet<AlgorithmEstimationDbEntity> AlgorithmEstimations { get; set; }
+        public DbSet<EstimationDbEntity> Estimations { get; set; }
 
         public DbSet<DataSetDbEntity> DataSets { get; set; }
 
@@ -34,22 +36,13 @@ namespace TryMLearning.Persistence
 
         public DbSet<UserDbEntity> Users { get; set; }
 
+        public DbSet<ClassAliasDbEntity> ClassAliases { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions
-                .Remove<PluralizingTableNameConvention>();
-
-            modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
-                .HasRequired(v => v.AlgorithmEstimation)
-                .WithMany(s => s.AlgorithmParameterValues)
-                .HasForeignKey(v => v.AlgorithmEstimationId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<AlgorithmParameterValueDbEntity>()
-                .HasRequired(v => v.AlgorithmParameter)
-                .WithMany()
-                .HasForeignKey(v => v.AlgorithmParameterId)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
             modelBuilder.Entity<ClassificationSampleDbEntity>()
                 .HasMany(m => m.FeatureTuples)
@@ -61,20 +54,17 @@ namespace TryMLearning.Persistence
                     c.MapRightKey("TupleId");
                 });
 
-            modelBuilder.Entity<DataSetDbEntity>()
-                .HasRequired(e => e.Author)
-                .WithMany()
-                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<EstimationDbEntity>()
+                .HasMany(e => e.AlgorithmParameterValues)
+                .WithRequired(e => e.Estimation)
+                .HasForeignKey(e => e.EstimationId)
+                .WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<AlgorithmDbEntity>()
-                .HasRequired(e => e.Author)
-                .WithMany()
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<AlgorithmEstimationDbEntity>()
-                .HasRequired(e => e.User)
-                .WithMany()
-                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<EstimationDbEntity>()
+                .HasMany(e => e.ClassificationResults)
+                .WithRequired(e => e.Estimation)
+                .HasForeignKey(e => e.EstimationId)
+                .WillCascadeOnDelete(true);
         }
     }
 }

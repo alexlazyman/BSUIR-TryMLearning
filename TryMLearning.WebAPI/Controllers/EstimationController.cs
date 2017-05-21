@@ -14,33 +14,33 @@ namespace TryMLearning.WebAPI.Controllers
     [RoutePrefix("api/estimation")]
     public class EstimationController : ApiController
     {
-        private readonly IAlgorithmEstimationService _algorithmEstimationService;
+        private readonly IEstimationService _estimationService;
 
         public EstimationController(
-            IAlgorithmEstimationService algorithmEstimationService)
+            IEstimationService estimationService)
         {
-            _algorithmEstimationService = algorithmEstimationService;
+            _estimationService = estimationService;
         }
 
         [HttpGet]
-        [Route("{algorithmEstimationId:int}")]
-        public async Task<AlgorithmEstimation> GetAlgorithmEstimationAsync(int algorithmEstimationId)
+        [Route("{estimationId:int}")]
+        public async Task<Estimation> GetEstimationAsync(int estimationId)
         {
-            return await _algorithmEstimationService.GetAlgorithmEstimationAsync(algorithmEstimationId);
+            return await _estimationService.GetEstimationAsync(estimationId);
         }
 
         [HttpGet]
         [Route("")]
-        public async Task<List<AlgorithmEstimation>> GetAllAlgorithmEstimationsAsync()
+        public async Task<List<Estimation>> GetAllEstimationsAsync()
         {
-            return await _algorithmEstimationService.GetAllAlgorithmEstimationsAsync();
+            return await _estimationService.GetAllEstimationsAsync();
         }
 
         [HttpDelete]
-        [Route("{algorithmEstimationId:int}")]
-        public async Task DeleteAlgorithmEstimationAsync(int algorithmEstimationId)
+        [Route("{estimationId:int}")]
+        public async Task DeleteEstimationAsync(int estimationId)
         {
-            await _algorithmEstimationService.DeleteAlgorithmEstimationAsync(algorithmEstimationId);
+            await _estimationService.DeleteEstimationAsync(estimationId);
         }
     }
 }

@@ -77,7 +77,7 @@
             spinnerSvc.registerLoader();
             estimationSvc.estimateProm(vm.estimation)
                 .then(function (estimation) {
-                    $state.go('client.estimation.resultComposer', { id: estimation.algorithmEstimationId });
+                    $state.go('client.estimation.resultComposer', { id: estimation.estimationId });
                 })
                 .finally(function () {
                     spinnerSvc.unregisterLoader();

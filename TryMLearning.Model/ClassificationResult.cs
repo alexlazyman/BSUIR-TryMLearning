@@ -4,7 +4,7 @@
     {
         public int ClassificationResultId { get; set; }
 
-        public int AlgorithmEstimationId { get; set; }
+        public int EstimationId { get; set; }
 
         public int Index { get; set; }
 

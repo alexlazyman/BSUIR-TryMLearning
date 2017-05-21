@@ -13,7 +13,7 @@ namespace TryMLearning.Persistence.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201705191428262_Initial"; }
+            get { return "201705211606223_Initial"; }
         }
         
         string IMigrationMetadata.Source

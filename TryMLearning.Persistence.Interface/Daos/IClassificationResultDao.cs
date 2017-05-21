@@ -8,6 +8,6 @@ namespace TryMLearning.Persistence.Interface.Daos
     {
         Task<List<ClassificationResult>> InsertClassificationResultsAsync(List<ClassificationResult> classificationResults);
 
-        Task<List<ClassificationResult>> GetClassificationResultsAsync(int algorithmEstimationId);
+        Task<List<ClassificationResult>> GetClassificationResultsAsync(int estimationId);
     }
 }

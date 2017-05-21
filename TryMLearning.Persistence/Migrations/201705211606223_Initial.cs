@@ -8,22 +8,19 @@ namespace TryMLearning.Persistence.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.AlgorithmEstimation",
+                "dbo.AlgorithmParameter",
                 c => new
                     {
-                        AlgorithmEstimationId = c.Int(nullable: false, identity: true),
-                        Status = c.Int(nullable: false),
-                        UserId = c.Int(nullable: false),
+                        AlgorithmParameterId = c.Int(nullable: false, identity: true),
                         AlgorithmId = c.Int(nullable: false),
-                        DataSetId = c.Int(nullable: false),
+                        Name = c.String(maxLength: 256),
+                        Description = c.String(maxLength: 1024),
+                        Order = c.Short(nullable: false),
+                        ValueType = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.AlgorithmEstimationId)
-                .ForeignKey("dbo.Algorithm", t => t.AlgorithmId, cascadeDelete: true)
-                .ForeignKey("dbo.DataSet", t => t.DataSetId, cascadeDelete: true)
-                .ForeignKey("dbo.User", t => t.UserId)
-                .Index(t => t.UserId)
-                .Index(t => t.AlgorithmId)
-                .Index(t => t.DataSetId);
+                .PrimaryKey(t => t.AlgorithmParameterId)
+                .ForeignKey("dbo.Algorithm", t => t.AlgorithmId)
+                .Index(t => t.AlgorithmId);
             
             CreateTable(
                 "dbo.Algorithm",
@@ -42,21 +39,6 @@ namespace TryMLearning.Persistence.Migrations
                 .Index(t => t.Alias, unique: true);
             
             CreateTable(
-                "dbo.AlgorithmParameter",
-                c => new
-                    {
-                        AlgorithmParameterId = c.Int(nullable: false, identity: true),
-                        AlgorithmId = c.Int(nullable: false),
-                        Name = c.String(maxLength: 256),
-                        Description = c.String(maxLength: 1024),
-                        Order = c.Short(nullable: false),
-                        ValueType = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.AlgorithmParameterId)
-                .ForeignKey("dbo.Algorithm", t => t.AlgorithmId, cascadeDelete: true)
-                .Index(t => t.AlgorithmId);
-            
-            CreateTable(
                 "dbo.User",
                 c => new
                     {
@@ -73,16 +55,49 @@ namespace TryMLearning.Persistence.Migrations
                     {
                         AlgorithmParameterValueId = c.Int(nullable: false, identity: true),
                         AlgorithmParameterId = c.Int(nullable: false),
-                        AlgorithmEstimationId = c.Int(nullable: false),
+                        EstimationId = c.Int(nullable: false),
                         IntVal = c.Int(),
                         DoubleVal = c.Double(),
                         StringVal = c.String(maxLength: 1024),
                     })
                 .PrimaryKey(t => t.AlgorithmParameterValueId)
-                .ForeignKey("dbo.AlgorithmEstimation", t => t.AlgorithmEstimationId)
                 .ForeignKey("dbo.AlgorithmParameter", t => t.AlgorithmParameterId)
+                .ForeignKey("dbo.Estimation", t => t.EstimationId, cascadeDelete: true)
                 .Index(t => t.AlgorithmParameterId)
-                .Index(t => t.AlgorithmEstimationId);
+                .Index(t => t.EstimationId);
+            
+            CreateTable(
+                "dbo.Estimation",
+                c => new
+                    {
+                        EstimationId = c.Int(nullable: false, identity: true),
+                        Status = c.Int(nullable: false),
+                        UserId = c.Int(nullable: false),
+                        Access = c.Int(nullable: false),
+                        AlgorithmId = c.Int(nullable: false),
+                        DataSetId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.EstimationId)
+                .ForeignKey("dbo.Algorithm", t => t.AlgorithmId)
+                .ForeignKey("dbo.DataSet", t => t.DataSetId)
+                .ForeignKey("dbo.User", t => t.UserId)
+                .Index(t => t.UserId)
+                .Index(t => t.AlgorithmId)
+                .Index(t => t.DataSetId);
+            
+            CreateTable(
+                "dbo.ClassificationResult",
+                c => new
+                    {
+                        ClassificationResultId = c.Int(nullable: false, identity: true),
+                        EstimationId = c.Int(nullable: false),
+                        Index = c.Int(nullable: false),
+                        ExpectedClass = c.Int(nullable: false),
+                        ActualClass = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ClassificationResultId)
+                .ForeignKey("dbo.Estimation", t => t.EstimationId, cascadeDelete: true)
+                .Index(t => t.EstimationId);
             
             CreateTable(
                 "dbo.DataSet",
@@ -99,6 +114,18 @@ namespace TryMLearning.Persistence.Migrations
                 .Index(t => t.AuthorId);
             
             CreateTable(
+                "dbo.ClassAlias",
+                c => new
+                    {
+                        DataSetId = c.Int(nullable: false),
+                        ClassId = c.Int(nullable: false),
+                        Alias = c.String(maxLength: 256),
+                    })
+                .PrimaryKey(t => new { t.DataSetId, t.ClassId })
+                .ForeignKey("dbo.DataSet", t => t.DataSetId)
+                .Index(t => new { t.DataSetId, t.ClassId }, unique: true, name: "DataSetAndClass");
+            
+            CreateTable(
                 "dbo.ClassificationSample",
                 c => new
                     {
@@ -108,7 +135,7 @@ namespace TryMLearning.Persistence.Migrations
                         Count = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ClassificationSampleId)
-                .ForeignKey("dbo.DataSet", t => t.DataSetId, cascadeDelete: true)
+                .ForeignKey("dbo.DataSet", t => t.DataSetId)
                 .Index(t => t.DataSetId);
             
             CreateTable(
@@ -185,20 +212,6 @@ namespace TryMLearning.Persistence.Migrations
                 .PrimaryKey(t => t.DoubleTupleId);
             
             CreateTable(
-                "dbo.ClassificationResult",
-                c => new
-                    {
-                        ClassificationResultId = c.Int(nullable: false, identity: true),
-                        AlgorithmEstimationId = c.Int(nullable: false),
-                        Index = c.Int(nullable: false),
-                        ExpectedClass = c.Int(nullable: false),
-                        ActualClass = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.ClassificationResultId)
-                .ForeignKey("dbo.AlgorithmEstimation", t => t.AlgorithmEstimationId, cascadeDelete: true)
-                .Index(t => t.AlgorithmEstimationId);
-            
-            CreateTable(
                 "rel.ClassificationSampleDoubleTuple",
                 c => new
                     {
@@ -206,8 +219,8 @@ namespace TryMLearning.Persistence.Migrations
                         TupleId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => new { t.SampleId, t.TupleId })
-                .ForeignKey("dbo.ClassificationSample", t => t.SampleId, cascadeDelete: true)
-                .ForeignKey("dbo.DoubleTuple", t => t.TupleId, cascadeDelete: true)
+                .ForeignKey("dbo.ClassificationSample", t => t.SampleId)
+                .ForeignKey("dbo.DoubleTuple", t => t.TupleId)
                 .Index(t => t.SampleId)
                 .Index(t => t.TupleId);
             
@@ -215,41 +228,44 @@ namespace TryMLearning.Persistence.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.ClassificationResult", "AlgorithmEstimationId", "dbo.AlgorithmEstimation");
             DropForeignKey("rel.ClassificationSampleDoubleTuple", "TupleId", "dbo.DoubleTuple");
             DropForeignKey("rel.ClassificationSampleDoubleTuple", "SampleId", "dbo.ClassificationSample");
             DropForeignKey("dbo.ClassificationSample", "DataSetId", "dbo.DataSet");
-            DropForeignKey("dbo.AlgorithmEstimation", "UserId", "dbo.User");
-            DropForeignKey("dbo.AlgorithmEstimation", "DataSetId", "dbo.DataSet");
+            DropForeignKey("dbo.Estimation", "UserId", "dbo.User");
+            DropForeignKey("dbo.Estimation", "DataSetId", "dbo.DataSet");
+            DropForeignKey("dbo.ClassAlias", "DataSetId", "dbo.DataSet");
             DropForeignKey("dbo.DataSet", "AuthorId", "dbo.User");
+            DropForeignKey("dbo.ClassificationResult", "EstimationId", "dbo.Estimation");
+            DropForeignKey("dbo.AlgorithmParameterValue", "EstimationId", "dbo.Estimation");
+            DropForeignKey("dbo.Estimation", "AlgorithmId", "dbo.Algorithm");
             DropForeignKey("dbo.AlgorithmParameterValue", "AlgorithmParameterId", "dbo.AlgorithmParameter");
-            DropForeignKey("dbo.AlgorithmParameterValue", "AlgorithmEstimationId", "dbo.AlgorithmEstimation");
-            DropForeignKey("dbo.AlgorithmEstimation", "AlgorithmId", "dbo.Algorithm");
             DropForeignKey("dbo.Algorithm", "AuthorId", "dbo.User");
             DropForeignKey("dbo.AlgorithmParameter", "AlgorithmId", "dbo.Algorithm");
             DropIndex("rel.ClassificationSampleDoubleTuple", new[] { "TupleId" });
             DropIndex("rel.ClassificationSampleDoubleTuple", new[] { "SampleId" });
-            DropIndex("dbo.ClassificationResult", new[] { "AlgorithmEstimationId" });
             DropIndex("dbo.ClassificationSample", new[] { "DataSetId" });
+            DropIndex("dbo.ClassAlias", "DataSetAndClass");
             DropIndex("dbo.DataSet", new[] { "AuthorId" });
-            DropIndex("dbo.AlgorithmParameterValue", new[] { "AlgorithmEstimationId" });
+            DropIndex("dbo.ClassificationResult", new[] { "EstimationId" });
+            DropIndex("dbo.Estimation", new[] { "DataSetId" });
+            DropIndex("dbo.Estimation", new[] { "AlgorithmId" });
+            DropIndex("dbo.Estimation", new[] { "UserId" });
+            DropIndex("dbo.AlgorithmParameterValue", new[] { "EstimationId" });
             DropIndex("dbo.AlgorithmParameterValue", new[] { "AlgorithmParameterId" });
-            DropIndex("dbo.AlgorithmParameter", new[] { "AlgorithmId" });
             DropIndex("dbo.Algorithm", new[] { "Alias" });
             DropIndex("dbo.Algorithm", new[] { "AuthorId" });
-            DropIndex("dbo.AlgorithmEstimation", new[] { "DataSetId" });
-            DropIndex("dbo.AlgorithmEstimation", new[] { "AlgorithmId" });
-            DropIndex("dbo.AlgorithmEstimation", new[] { "UserId" });
+            DropIndex("dbo.AlgorithmParameter", new[] { "AlgorithmId" });
             DropTable("rel.ClassificationSampleDoubleTuple");
-            DropTable("dbo.ClassificationResult");
             DropTable("dbo.DoubleTuple");
             DropTable("dbo.ClassificationSample");
+            DropTable("dbo.ClassAlias");
             DropTable("dbo.DataSet");
+            DropTable("dbo.ClassificationResult");
+            DropTable("dbo.Estimation");
             DropTable("dbo.AlgorithmParameterValue");
             DropTable("dbo.User");
-            DropTable("dbo.AlgorithmParameter");
             DropTable("dbo.Algorithm");
-            DropTable("dbo.AlgorithmEstimation");
+            DropTable("dbo.AlgorithmParameter");
         }
     }
 }

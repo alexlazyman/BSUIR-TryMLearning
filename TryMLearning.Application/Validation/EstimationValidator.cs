@@ -6,13 +6,13 @@ using TryMLearning.Model.Validation;
 
 namespace TryMLearning.Application.Validation
 {
-    public class AlgorithmEstimationValidator : IValidator<AlgorithmEstimation>
+    public class EstimationValidator : IValidator<Estimation>
     {
-        public AlgorithmEstimationValidator()
+        public EstimationValidator()
         {
         }
 
-        public Task<ValidationResult> ValidateAsync(AlgorithmEstimation entity)
+        public Task<ValidationResult> ValidateAsync(Estimation entity)
         {
             // TODO: Implement validation
             return Task.FromResult(new ValidationResult());

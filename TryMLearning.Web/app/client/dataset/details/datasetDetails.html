@@ -18,7 +18,7 @@
             <tbody>
                 <tr data-ng-repeat="sample in vm.samples">
                     <td data-ng-bind=":: $index + 1"></td>
-                    <td data-ng-bind=":: sample.class"></td>
+                    <td data-ng-bind=":: sample.classId | classAlias:vm.classAliases"></td>
                     <td data-ng-bind=":: sample.features | joinBy:', '"></td>
                 </tr>
             </tbody>

@@ -73,14 +73,18 @@
                 selectedEstimations.splice(i, 1);
             }
 
-            var ids = _.map(selectedEstimations, function (e) { return e.algorithmEstimationId; });
+            var ids = _.map(selectedEstimations, function (e) { return e.estimationId; });
 
             $state.params.id = ids;
         }
 
         function estimationDeleteClick(estimation) {
+            if (!confirm('Are you sure want to delete estimation?')) {
+                return;
+            }
+
             spinnerSvc.registerLoader();
-            estimationSvc.deleteProm(estimation.algorithmEstimationId)
+            estimationSvc.deleteProm(estimation.estimationId)
                 .then(function () {
                     var i = _.findIndex(vm.estimations, estimation);
                     vm.estimations.splice(i, 1);

@@ -21,10 +21,10 @@ namespace TryMLearning.Persistence.Models
         [ForeignKey(nameof(AlgorithmParameterId))]
         public virtual AlgorithmParameterDbEntity AlgorithmParameter { get; set; }
 
-        public int AlgorithmEstimationId { get; set; }
+        public int EstimationId { get; set; }
 
-        [ForeignKey(nameof(AlgorithmEstimationId))]
-        public virtual AlgorithmEstimationDbEntity AlgorithmEstimation { get; set; }
+        [ForeignKey(nameof(EstimationId))]
+        public virtual EstimationDbEntity Estimation { get; set; }
 
         [Column("IntVal")]
         public int? IntValue { get; set; }

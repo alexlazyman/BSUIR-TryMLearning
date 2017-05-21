@@ -26,19 +26,16 @@
     }
 
     classDefaultEstimateComposerCtrl.$inject = [
-        'config'
     ];
 
     function classDefaultEstimateComposerCtrl(
-        config
     ) {
         var vm = this;
-
-        vm.classifierEstimateAliases = config.classifierEstimates;
 
         activate();
 
         function activate() {
+
         }
     }
 

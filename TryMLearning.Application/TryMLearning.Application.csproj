@@ -104,16 +104,17 @@
     <Compile Include="MachineLearning\Estimates\Classifier\Default\DefaultEstimate.cs" />
     <Compile Include="MachineLearning\Estimates\Classifier\Roc\RocEstimate.cs" />
     <Compile Include="MachineLearning\Estimates\Classifier\BaseClassifierEstimate.cs" />
-    <Compile Include="MachineLearning\Testers\QFoldCrossValidation.cs" />
+    <Compile Include="MachineLearning\Estimators\QFoldCrossValidation.cs" />
     <Compile Include="Services\AlgorithmService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AlgorithmEstimationService.cs" />
+    <Compile Include="Services\ClassAliasService.cs" />
+    <Compile Include="Services\EstimationService.cs" />
     <Compile Include="Services\ClassificationSampleService.cs" />
     <Compile Include="Services\ClassificationResultService.cs" />
     <Compile Include="Services\DataSetService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Validation\AlgorithmParameterValidator.cs" />
-    <Compile Include="Validation\AlgorithmEstimationValidator.cs" />
+    <Compile Include="Validation\EstimationValidator.cs" />
     <Compile Include="Validation\AlgorithmValidator.cs" />
   </ItemGroup>
   <ItemGroup>

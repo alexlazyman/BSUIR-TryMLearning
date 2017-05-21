@@ -100,25 +100,27 @@
     <Compile Include="Configuration\AutoMapperConfiguration.cs" />
     <Compile Include="Constants\DatabaseNames.cs" />
     <Compile Include="Daos\AlgorithmParameterValueDao.cs" />
+    <Compile Include="Daos\ClassAliasDao.cs" />
     <Compile Include="Daos\ClassificationSampleDao.cs" />
     <Compile Include="Daos\ClassificationResultDao.cs" />
     <Compile Include="Daos\DataSetDao.cs" />
     <Compile Include="Daos\AlgorithmParameterDao.cs" />
-    <Compile Include="Daos\AlgorithmEstimationDao.cs" />
+    <Compile Include="Daos\EstimationDao.cs" />
     <Compile Include="Daos\UserDao.cs" />
     <Compile Include="Data\DefaultData.cs" />
     <Compile Include="Helpers\DbContextExtensions.cs" />
     <Compile Include="Interfaces\IDbEntity.cs" />
-    <Compile Include="Migrations\201705191428262_Initial.cs" />
-    <Compile Include="Migrations\201705191428262_Initial.Designer.cs">
-      <DependentUpon>201705191428262_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201705211606223_Initial.cs" />
+    <Compile Include="Migrations\201705211606223_Initial.Designer.cs">
+      <DependentUpon>201705211606223_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ClassAliasDbEntity.cs" />
     <Compile Include="Models\ClassificationResultDbEntity.cs" />
     <Compile Include="Models\AlgorithmDbEntity.cs" />
     <Compile Include="Models\AlgorithmParameterDbEntity.cs" />
     <Compile Include="Models\AlgorithmParameterValueDbEntity.cs" />
-    <Compile Include="Models\AlgorithmEstimationDbEntity.cs" />
+    <Compile Include="Models\EstimationDbEntity.cs" />
     <Compile Include="Models\ClassificationSampleDbEntity.cs" />
     <Compile Include="Models\DataSetDbEntity.cs" />
     <Compile Include="Models\DoubleTupleDbEntity.cs" />
@@ -156,8 +158,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705191428262_Initial.resx">
-      <DependentUpon>201705191428262_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705211606223_Initial.resx">
+      <DependentUpon>201705211606223_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

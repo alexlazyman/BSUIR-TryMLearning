@@ -2,17 +2,20 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>#</th>
+                <th class="estimation-table__cell-cmp"></th>
+                <th class="estimation-table__cell-index">#</th>
                 <th>Status</th>
                 <th>Algorithm</th>
                 <th>Data Set</th>
                 <th>Parameters</th>
-                <th>Actions</th>
-                <th>CMP</th>
+                <th class="estimation-table__cell-actions"></th>
             </tr>
         </thead>
         <tbody>
             <tr data-ng-repeat="estimation in vm.estimations | filter:vm.selectedEstimationFilter">
+                <td>
+                    <input type="checkbox" data-ng-model="estimation.$selected" data-ng-change="vm.selectEstimationClick(estimation)"/>
+                </td>
                 <td data-ng-bind=":: $index + 1"></td>
                 <td data-ng-bind=":: vm.stringifyStatus(estimation.status)"></td>
                 <td>
@@ -25,11 +28,12 @@
                     <div data-ng-repeat="param in estimation.algorithm.parameters">{{ :: param.name }}: <strong>{{ :: vm.getParamValue(param, estimation.parameterValues) }}</strong></div>
                 </td>
                 <td>
-                    <a class="btn btn-default" data-ui-sref="client.estimation.resultComposer({id: estimation.algorithmEstimationId})">Result</a>
-                    <a class="btn btn-default" href="" data-ng-click="vm.estimationDeleteClick(estimation)">Delete</a>
-                </td>
-                <td>
-                    <input type="checkbox" data-ng-model="estimation.$selected" data-ng-change="vm.selectEstimationClick(estimation)"/>
+                    <div class="show-row-hover pull-right">
+                        <button class="btn-transparent glyphicon glyphicon-trash"
+                                ng-click="vm.estimationDeleteClick(estimation)"></button>
+                        <a class="btn-transparent glyphicon glyphicon-info-sign"
+                           ui-sref="client.estimation.resultComposer({id: estimation.estimationId})"></a>
+                    </div>
                 </td>
             </tr>
         </tbody>

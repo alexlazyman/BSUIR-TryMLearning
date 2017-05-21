@@ -138,6 +138,7 @@
     <Content Include="app\client\clientMaster.html" />
     <Content Include="app\client\clientMasterCtrl.js" />
     <Content Include="app\shared\config.js" />
+    <Content Include="app\shared\filters\classAlias.js" />
     <Content Include="app\shared\filters\percent.js" />
     <Content Include="app\shared\interceptors\notAuthorizedInterceptor.js" />
     <Content Include="app\shared\services\estimationSvc.js" />

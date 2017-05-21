@@ -5,7 +5,6 @@ using TryMLearning.Model.Constants;
 
 namespace TryMLearning.Model
 {
-    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public class Algorithm
     {
         public Algorithm()

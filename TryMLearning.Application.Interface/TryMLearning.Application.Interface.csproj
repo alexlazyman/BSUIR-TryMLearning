@@ -61,13 +61,14 @@
     <Compile Include="Contexts\IUserContext.cs" />
     <Compile Include="MachineLearning\Classifiers\IClassifier.cs" />
     <Compile Include="MachineLearning\Estimates\Classifier\IClassifierEstimate.cs" />
-    <Compile Include="MachineLearning\Testers\IClassifierTester.cs" />
+    <Compile Include="MachineLearning\Estimators\IClassifierEstimator.cs" />
     <Compile Include="MachineLearning\IClassifierEstimateFactory.cs" />
     <Compile Include="MachineLearning\IClassifierFactory.cs" />
+    <Compile Include="Services\IClassAliasService.cs" />
     <Compile Include="Services\IClassificationResultService.cs" />
     <Compile Include="Services\ISampleService.cs" />
     <Compile Include="Services\IDataSetService.cs" />
-    <Compile Include="Services\IAlgorithmEstimationService.cs" />
+    <Compile Include="Services\IEstimationService.cs" />
     <Compile Include="Services\IAlgorithmService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IUserService.cs" />

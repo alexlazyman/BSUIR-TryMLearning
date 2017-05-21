@@ -1,6 +1,6 @@
-﻿using TryMLearning.Model.MachineLearning.Testers.Interfaces;
+﻿using TryMLearning.Model.MachineLearning.Estimators.Interfaces;
 
-namespace TryMLearning.Model.MachineLearning.Testers
+namespace TryMLearning.Model.MachineLearning.Estimators
 {
     public class QFoldCrossValidationConfig : IQFoldCrossValidationConfig
     {

@@ -18,10 +18,10 @@ namespace TryMLearning.Persistence.Models
         [Key]
         public int ClassificationResultId { get; set; }
 
-        public int AlgorithmEstimationId { get; set; }
+        public int EstimationId { get; set; }
         
-        [ForeignKey(nameof(AlgorithmEstimationId))]
-        public virtual AlgorithmEstimationDbEntity AlgorithmEstimation { get; set; }
+        [ForeignKey(nameof(EstimationId))]
+        public virtual EstimationDbEntity Estimation { get; set; }
 
         public int Index { get; set; }
 

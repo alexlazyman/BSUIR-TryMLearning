@@ -1,9 +1,10 @@
 ﻿namespace TryMLearning.Model
 {
-    public enum AlgorithmEstimationStatus
+    public enum EstimationStatus
     {
         Waiting = 0,
         InProgress = 1,
-        Completed = 2
+        Completed = 2,
+        Error = 3
     }
 }
