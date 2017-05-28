@@ -12,10 +12,26 @@ namespace TryMLearning.Application.Validation
         {
         }
 
-        public Task<ValidationResult> ValidateAsync(Estimation entity)
+        public async Task<ValidationResult> ValidateAsync(Estimation estimation)
         {
-            // TODO: Implement validation
-            return Task.FromResult(new ValidationResult());
+            var validationResult = new ValidationResult();
+
+            if (estimation == null)
+            {
+                return ValidationResult.Invalid(new ValidationError(nameof(estimation), "Estimation required"));
+            }
+
+            if (estimation.Algorithm == null || estimation.Algorithm.AlgorithmId < 0)
+            {
+                return ValidationResult.Invalid(new ValidationError(nameof(estimation.Algorithm), "Algorithm required"));
+            }
+
+            if (estimation.DataSet == null || estimation.DataSet.DataSetId < 0)
+            {
+                return ValidationResult.Invalid(new ValidationError(nameof(estimation.DataSet), "DataSet required"));
+            }
+
+            return validationResult;
         }
     }
 }

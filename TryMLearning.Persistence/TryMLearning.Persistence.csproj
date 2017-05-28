@@ -110,9 +110,9 @@
     <Compile Include="Data\DefaultData.cs" />
     <Compile Include="Helpers\DbContextExtensions.cs" />
     <Compile Include="Interfaces\IDbEntity.cs" />
-    <Compile Include="Migrations\201705211606223_Initial.cs" />
-    <Compile Include="Migrations\201705211606223_Initial.Designer.cs">
-      <DependentUpon>201705211606223_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201705271115096_Initial.cs" />
+    <Compile Include="Migrations\201705271115096_Initial.Designer.cs">
+      <DependentUpon>201705271115096_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ClassAliasDbEntity.cs" />
@@ -158,8 +158,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705211606223_Initial.resx">
-      <DependentUpon>201705211606223_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705271115096_Initial.resx">
+      <DependentUpon>201705271115096_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

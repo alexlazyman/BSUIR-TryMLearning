@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryMLearning.WebAPI", "TryM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryMLearning.Web", "TryMLearning.Web\TryMLearning.Web.csproj", "{830F9BD7-54AD-41B6-B937-65F52B77B8EE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6BF8DE32-3AB6-49B5-8566-DA4CA45E55FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryMLearning.Application.Tests", "TryMLearning.Application.Tests\TryMLearning.Application.Tests.csproj", "{5C290989-AC8F-405F-A145-BA8A347C3BA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,8 +95,19 @@ Global
 		{830F9BD7-54AD-41B6-B937-65F52B77B8EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{830F9BD7-54AD-41B6-B937-65F52B77B8EE}.Release|x64.ActiveCfg = Release|x64
 		{830F9BD7-54AD-41B6-B937-65F52B77B8EE}.Release|x64.Build.0 = Release|x64
+		{5C290989-AC8F-405F-A145-BA8A347C3BA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C290989-AC8F-405F-A145-BA8A347C3BA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C290989-AC8F-405F-A145-BA8A347C3BA8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5C290989-AC8F-405F-A145-BA8A347C3BA8}.Debug|x64.Build.0 = Debug|Any CPU
+		{5C290989-AC8F-405F-A145-BA8A347C3BA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C290989-AC8F-405F-A145-BA8A347C3BA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C290989-AC8F-405F-A145-BA8A347C3BA8}.Release|x64.ActiveCfg = Release|Any CPU
+		{5C290989-AC8F-405F-A145-BA8A347C3BA8}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5C290989-AC8F-405F-A145-BA8A347C3BA8} = {6BF8DE32-3AB6-49B5-8566-DA4CA45E55FB}
 	EndGlobalSection
 EndGlobal

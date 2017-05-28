@@ -15,7 +15,6 @@ namespace TryMLearning.Persistence.Migrations
                         AlgorithmId = c.Int(nullable: false),
                         Name = c.String(maxLength: 256),
                         Description = c.String(maxLength: 1024),
-                        Order = c.Short(nullable: false),
                         ValueType = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.AlgorithmParameterId)
@@ -231,9 +230,9 @@ namespace TryMLearning.Persistence.Migrations
             DropForeignKey("rel.ClassificationSampleDoubleTuple", "TupleId", "dbo.DoubleTuple");
             DropForeignKey("rel.ClassificationSampleDoubleTuple", "SampleId", "dbo.ClassificationSample");
             DropForeignKey("dbo.ClassificationSample", "DataSetId", "dbo.DataSet");
+            DropForeignKey("dbo.ClassAlias", "DataSetId", "dbo.DataSet");
             DropForeignKey("dbo.Estimation", "UserId", "dbo.User");
             DropForeignKey("dbo.Estimation", "DataSetId", "dbo.DataSet");
-            DropForeignKey("dbo.ClassAlias", "DataSetId", "dbo.DataSet");
             DropForeignKey("dbo.DataSet", "AuthorId", "dbo.User");
             DropForeignKey("dbo.ClassificationResult", "EstimationId", "dbo.Estimation");
             DropForeignKey("dbo.AlgorithmParameterValue", "EstimationId", "dbo.Estimation");
